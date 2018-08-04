@@ -6,10 +6,10 @@ namespace MazeV.Maze_Logic
 {
     public class MazeNodeDataBuilder
     {
-        private int fGridEnd;
-        private int fGridSize;
-        private int fGridStart;
-        private int fMininumRequiredPaths;
+        private readonly int fGridEnd;
+        private readonly int fGridSize;
+        private readonly int fGridStart;
+        private readonly int fMininumRequiredPaths;
 
         public MazeNodeDataBuilder(int gridSize, int minimumPaths)
         {
@@ -49,15 +49,13 @@ namespace MazeV.Maze_Logic
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
 
-                int neighbourCount = node.Neighbours.Count;
-
                 while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
                 {
                     int neigbourId = randomizer.Next(copyOfNeigours.Count);
                     int pathToNodeId = copyOfNeigours[neigbourId];
                     copyOfNeigours.RemoveAt(neigbourId);
 
-                    if (node.Path.Contains(pathToNodeId) || !IsPathValid(node, nodeData.NodesByIndex[pathToNodeId], node, 1, nodeData))
+                    if ((node.Path.Contains(pathToNodeId) || !IsPathValid(node, nodeData.NodesByIndex[pathToNodeId], node, 1, nodeData)))
                         continue;
 
                     SetPath(node, pathToNodeId, nodeData);

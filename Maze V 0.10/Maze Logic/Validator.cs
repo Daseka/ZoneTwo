@@ -8,10 +8,10 @@ namespace MazeV.Maze_Logic
 {
     public static class Validator
     {
-        public static bool IsFutureLocationValid(Location currentLocation, Location futureLocation, Dictionary<int, Node> listOfNodes)
+        public static bool IsFutureLocationValid(Location currentLocation, Location futureLocation,MazeNodeData nodeData)
         {
-            Node currentNode = listOfNodes.Where(x => x.Value.Location == currentLocation).Select(x => x.Value).FirstOrDefault();
-            Node futureNode = listOfNodes.Where(x => x.Value.Location == futureLocation).Select(x => x.Value).FirstOrDefault();
+            Node currentNode = nodeData.NodesByIndex.Where(x => x.Value.Location == currentLocation).Select(x => x.Value).FirstOrDefault();
+            Node futureNode = nodeData.NodesByIndex.Where(x => x.Value.Location == futureLocation).Select(x => x.Value).FirstOrDefault();
 
             if (currentNode == null || futureNode == null)
                 return false;

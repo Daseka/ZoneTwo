@@ -13,12 +13,12 @@ namespace MazeV.Maze_Logic
         private MazeViewData fMazeView;
         private Dictionary<Location, Node> fNodesByLocation;
 
-        public RotateCommand(Rotation rotation,Player player, MazeViewData mazeView, Dictionary<Location,Node> nodesByLocation)
+        public RotateCommand(Rotation rotation,Player player, MazeViewData mazeView, MazeNodeData nodeData)
         {
             fRotation = rotation;
             fPlayer = player;
             fMazeView = mazeView;
-            fNodesByLocation = nodesByLocation;            
+            fNodesByLocation = nodeData.NodesByLocation;            
         }   
         public void Execute()
         {

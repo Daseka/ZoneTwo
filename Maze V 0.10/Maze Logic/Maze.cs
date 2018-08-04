@@ -9,24 +9,20 @@ using System.Windows.Forms;
 namespace MazeV.Maze_Logic
 {
     public class Maze
-    {
-        private int fMininumRequiredPaths;
-        private int fGridSize;
-        private int fGridStart;
-        private int fGridEnd;
-              
+    {              
         private UnitFactory fUnitFactory;
         private MazeViewRotator fMazeViewRotator;
         private UnitMover fUnitMover;
 
-        public MazeNodeData MazeNodeLayout { get; private set; }
+        public MazeNodeData NodeData { get; private set; }
         public UnitList UnitList { get; set; }        
-        public MazeViewData MazeView { get; private set; }
+        public MazeViewData ViewData { get; private set; }
         public Player Hero { get { return UnitList.GetPlayer(); }  }
 
-        public Maze()
+        public Maze(MazeNodeData nodeData, MazeViewData viewData)
         {
-            
+            NodeData = nodeData;
+            ViewData = viewData;
         }                                                          
 
         private bool SpawnUnitAtLocation(UnitType unitType, Location location)
@@ -50,7 +46,7 @@ namespace MazeV.Maze_Logic
         /// Initializes the Node Location list and the Node Id list 
         /// </summary>
         /// <param name="gridSize"></param>
-        public void Initialize(int gridSize, int minimumPaths)
+        public void Initialize()
         {
             UnitList = new UnitList();
             fUnitFactory = new UnitFactory();                                                         
@@ -58,16 +54,11 @@ namespace MazeV.Maze_Logic
 
             fUnitMover = new UnitMover();
             SpawnUnitAtLocation(UnitType.Player, new Location());
-
-            fMininumRequiredPaths = minimumPaths;
-                                              
-
-            MazeView = new MazeViewData(fGridStart, fGridEnd, fGridSize, NodesByLocation);
         }                
 
         public void ProcessPlayerInNode()
         {
-            Node NodeThatPlayerIsIn = MazeNodeLayout.NodesByIndex.Where(x => x.Value.Location == Hero.CurrentLocation).Select(x => x.Value).FirstOrDefault();
+            Node NodeThatPlayerIsIn = NodeData.NodesByIndex.Where(x => x.Value.Location == Hero.CurrentLocation).Select(x => x.Value).FirstOrDefault();
             if (NodeThatPlayerIsIn == null)
                 return;
 

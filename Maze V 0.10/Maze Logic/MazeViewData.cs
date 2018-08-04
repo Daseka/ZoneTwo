@@ -16,7 +16,7 @@ namespace MazeV.Maze_Logic
         public Axis LeftRightRotationAxis { get; set; }
         public List<Location> MovementCube { get; set; }
 
-        public MazeViewData(int start, int end, int size,Dictionary<Location,Node> nodesByLocation)
+        public MazeViewData(int start, int end, int size,MazeNodeData nodeData)
         {
             ViewSize = size;
             ViewEnd = end;
@@ -25,7 +25,7 @@ namespace MazeV.Maze_Logic
             UpDownRotationAxis = Axis.XAxis;
             LeftRightRotationAxis = Axis.YAxis;
 
-            CreateInitialView(nodesByLocation,0);
+            CreateInitialView(nodeData,0);
             InitializeMovementCube();
         }
 
@@ -41,14 +41,13 @@ namespace MazeV.Maze_Logic
                             };
         }     
 
-        private void CreateInitialView(Dictionary<Location,Node>nodesByLocation, int zLevel)
+        private void CreateInitialView(MazeNodeData nodeData, int zLevel)
         {
             for (int y = ViewStart; y <= ViewEnd; y++)
             {
                 for (int x = ViewStart; x <= ViewEnd; x++)
                 {
-                    Node node = null;
-                    if (nodesByLocation.TryGetValue(new Location(x,y, zLevel), out node))                                         
+                    if (nodeData.NodesByLocation.TryGetValue(new Location(x,y, zLevel), out Node node))                                         
                         this.Add(node);
                 }
             }
@@ -56,8 +55,7 @@ namespace MazeV.Maze_Logic
 
         public Node GetNodeAt(Location location)
         {
-            Node node = this.FirstOrDefault(x => x.Location == location);
-            return node;
+            return this.FirstOrDefault(x => x.Location == location);            
         }            
     }
 }

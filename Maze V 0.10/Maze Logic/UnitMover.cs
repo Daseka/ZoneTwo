@@ -23,11 +23,11 @@ namespace MazeV.Maze_Logic
         }
 
         //TODO: Need to make simpler
-        private bool DoMovePlayer(Direction direction, Player player, Dictionary<int, Node> listOfNodes, MazeViewData mazeView,bool tryReverseDirection)
+        private bool DoMovePlayer(Direction direction, Player player, MazeNodeData nodeData, MazeViewData mazeView,bool tryReverseDirection)
         {
             Location futureLocation = player.CurrentLocation.GetCopy() + mazeView.MovementCube[(int)direction];            
 
-            if (Validator.IsFutureLocationValid(player.CurrentLocation, futureLocation, listOfNodes))
+            if (Validator.IsFutureLocationValid(player.CurrentLocation, futureLocation, nodeData))
             {
                 player.CurrentMovementDirection = direction;
                 player.AssignLocation(futureLocation);
@@ -38,7 +38,7 @@ namespace MazeV.Maze_Logic
                 Direction reverseDirection = GetReverseDirection(direction);
                 futureLocation = player.CurrentLocation.GetCopy() + mazeView.MovementCube[(int)reverseDirection];
 
-                if (Validator.IsFutureLocationValid(player.CurrentLocation,futureLocation,listOfNodes))
+                if (Validator.IsFutureLocationValid(player.CurrentLocation,futureLocation,nodeData))
                 {
                     player.CurrentMovementDirection = reverseDirection;
                     player.FutureMovementDirection = reverseDirection;
@@ -51,11 +51,11 @@ namespace MazeV.Maze_Logic
             return false;
         }
 
-        public bool MovePlayer(Direction direction, Player player, Dictionary<int, Node> listOfNodes, MazeViewData mazeView)
+        public bool MovePlayer(Direction direction, Player player, MazeNodeData nodeData, MazeViewData mazeView)
         {
-            if (!DoMovePlayer(direction, player, listOfNodes, mazeView,false))
+            if (!DoMovePlayer(direction, player, nodeData, mazeView,false))
             {
-                if (!DoMovePlayer(player.CurrentMovementDirection, player, listOfNodes, mazeView, true))
+                if (!DoMovePlayer(player.CurrentMovementDirection, player, nodeData, mazeView, true))
                     return false;
             }
 

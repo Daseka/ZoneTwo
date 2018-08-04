@@ -5,7 +5,7 @@ namespace MazeV
 {
     public partial class Form1 : Form
     {
-        private Maze fMaze = new Maze();
+        private Maze fMaze ;
         private Timer fAnimator;
 
         public Form1()
@@ -24,16 +24,20 @@ namespace MazeV
 
         private void InitializeMaze()
         {
-            fMaze.Initialize(11, 3);
-            fMaze.GenerateLayoutData(12345);
+            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
+            MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
+            MazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
+
+            fMaze = new Maze(nodeData, viewData);
+            fMaze.Initialize();            
         }
 
         private void InitializeKeybindings()
         {
-            Keybindings.Add(Keys.Up, new RotateCommand(Rotation.Up, fMaze.Hero, fMaze.MazeView, fMaze.NodesByLocation));
-            Keybindings.Add(Keys.Down, new RotateCommand(Rotation.Down, fMaze.Hero, fMaze.MazeView, fMaze.NodesByLocation));
-            Keybindings.Add(Keys.Left, new RotateCommand(Rotation.Left, fMaze.Hero, fMaze.MazeView, fMaze.NodesByLocation));
-            Keybindings.Add(Keys.Right, new RotateCommand(Rotation.Right, fMaze.Hero, fMaze.MazeView, fMaze.NodesByLocation));
+            Keybindings.Add(Keys.Up, new RotateCommand(Rotation.Up, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
+            Keybindings.Add(Keys.Down, new RotateCommand(Rotation.Down, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
+            Keybindings.Add(Keys.Left, new RotateCommand(Rotation.Left, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
+            Keybindings.Add(Keys.Right, new RotateCommand(Rotation.Right, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
 
             Keybindings.Add(Keys.W, new MoveCommand(Direction.Up, fMaze.Hero));
             Keybindings.Add(Keys.S, new MoveCommand(Direction.Down, fMaze.Hero));
@@ -45,7 +49,7 @@ namespace MazeV
         {
             UnitMover unitMove = new UnitMover();
             Player player = fMaze.UnitList.GetPlayer();
-            unitMove.MovePlayer(player.FutureMovementDirection, player, fMaze.NodesByIndex, fMaze.MazeView);
+            unitMove.MovePlayer(player.FutureMovementDirection, player, fMaze.NodeData, fMaze.ViewData);
         }
 
         private void FAnimator_Tick1(object sender, System.EventArgs e)                    
@@ -67,7 +71,7 @@ namespace MazeV
         {
             IVisualizer visualizer = new CanvasVisualizer(e.Graphics);
 
-            visualizer.Draw(fMaze.MazeView, fMaze.UnitList);            
+            visualizer.Draw(fMaze.ViewData, fMaze.UnitList);            
             fMaze.ProcessPlayerInNode();
         }
     }

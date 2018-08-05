@@ -39,7 +39,7 @@ namespace MazeV.Maze_Logic
 
         public bool Equals(RoundedDouble other)
         {
-            return Math.Round(Value, 8) == Math.Round(other?.Value, 8);
+            return Math.Round(Value, 8) == Math.Round(other, 8);
         }
 
         public override bool Equals(object obj)

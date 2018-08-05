@@ -13,7 +13,7 @@ namespace MazeV.Maze_Logic
 
         public MazeNodeDataBuilder(int gridSize, int minimumPaths)
         {
-            // Gridsize needs to be uneven to have a middle position that is not a fraction            
+            // Gridsize needs to be uneven to have a middle position that is not a fraction
             fGridSize = MakeGridSizeUneven(gridSize);
             fGridStart = GetGridStart(gridSize);
             fGridEnd = GetGridEnd(gridSize);
@@ -75,7 +75,7 @@ namespace MazeV.Maze_Logic
 
             foreach (Node neighbourNode in allPossibleNeigbours)
             {
-                NeighbourInfo tempNeighbour = new NeighbourInfo() { Id = neighbourNode.Id, Location = neighbourNode.Location };
+                NeighbourInfo tempNeighbour = new NeighbourInfo { Id = neighbourNode.Id, Location = neighbourNode.Location };
                 neighbours.Add(tempNeighbour);
             }
 
@@ -84,10 +84,10 @@ namespace MazeV.Maze_Logic
 
         private int GetGridEnd(int gridSize)
         {
-            gridSize = MakeGridSizeUneven(gridSize);
-            int subtractor = GetSubtractor(gridSize);
+            int size = MakeGridSizeUneven(gridSize);
+            int subtractor = GetSubtractor(size);
 
-            return gridSize - subtractor;
+            return size - subtractor;
         }
 
         private int GetGridStart(int gridSize)
@@ -106,9 +106,9 @@ namespace MazeV.Maze_Logic
 
         private int GetSubtractor(int gridSize)
         {
-            gridSize = MakeGridSizeUneven(gridSize);
+            int unevenGridSize = MakeGridSizeUneven(gridSize);
             int divider = 2;
-            return (gridSize / divider) + (gridSize % divider);
+            return (unevenGridSize / divider) + (unevenGridSize % divider);
         }
 
         private bool HasMinimumRequiredPaths(Node vertex)
@@ -118,7 +118,7 @@ namespace MazeV.Maze_Logic
 
         private MazeNodeData InitializeMazeNodeData()
         {
-            Dictionary<Location, Node>  nodesByLocation = new Dictionary<Location, Node>();
+            Dictionary<Location, Node> nodesByLocation = new Dictionary<Location, Node>();
             Dictionary<int, Node> nodesByIndex = new Dictionary<int, Node>();
 
             int count = 0;
@@ -179,11 +179,11 @@ namespace MazeV.Maze_Logic
 
         private int MakeGridSizeUneven(int gridSize)
         {
-            return gridSize % 2 == 1 ? gridSize : gridSize + 1;
+            return gridSize % 2 != 0 ? gridSize : gridSize + 1;
         }
 
         /// <summary>
-        /// Clears all Path data 
+        /// Clears all Path data
         /// </summary>
         private void ResetPathData(MazeNodeData nodeData)
         {

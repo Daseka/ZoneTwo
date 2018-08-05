@@ -81,6 +81,7 @@
     <Compile Include="Maze Logic\Player.cs" />
     <Compile Include="Maze Logic\RotateCommand.cs" />
     <Compile Include="Maze Logic\Rotation.cs" />
+    <Compile Include="Maze Logic\RoundedDouble.cs" />
     <Compile Include="Maze Logic\Shape.cs" />
     <Compile Include="Maze Logic\UnitFactory.cs" />
     <Compile Include="Maze Logic\UnitList.cs" />

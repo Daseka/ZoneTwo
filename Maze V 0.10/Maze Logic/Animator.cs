@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 
 namespace MazeV.Maze_Logic
 {
-    class Animator
+    internal class Animator
     {
-        private Timer fTimer;
+        private readonly Timer fTimer;
 
         public Animator()
         {

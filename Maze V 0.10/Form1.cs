@@ -5,15 +5,15 @@ namespace MazeV
 {
     public partial class Form1 : Form
     {
-        private Maze fMaze ;
-        private Timer fAnimator;
+        private Maze fMaze;
+        private readonly Timer fAnimator;
 
         public Form1()
         {
             InitializeComponent();
             InitializeMaze();
             InitializeKeybindings();
-            
+
             this.DoubleBuffered = true;
 
             fAnimator = new Timer();
@@ -29,7 +29,7 @@ namespace MazeV
             MazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
 
             fMaze = new Maze(nodeData, viewData);
-            fMaze.Initialize();            
+            fMaze.Initialize();
         }
 
         private void InitializeKeybindings()
@@ -52,18 +52,18 @@ namespace MazeV
             unitMove.MovePlayer(player.FutureMovementDirection, player, fMaze.NodeData, fMaze.ViewData);
         }
 
-        private void FAnimator_Tick1(object sender, System.EventArgs e)                    
+        private void FAnimator_Tick1(object sender, System.EventArgs e)
         {
             MoveUnits();
 
             pictureBox1.Refresh();
         }
-    
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             ICommand command = Keybindings.GetCommand(keyData);
             command.Execute();
-            
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -71,7 +71,7 @@ namespace MazeV
         {
             IVisualizer visualizer = new CanvasVisualizer(e.Graphics);
 
-            visualizer.Draw(fMaze.ViewData, fMaze.UnitList);            
+            visualizer.Draw(fMaze.ViewData, fMaze.UnitList);
             fMaze.ProcessPlayerInNode();
         }
     }

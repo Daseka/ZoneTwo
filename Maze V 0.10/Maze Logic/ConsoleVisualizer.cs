@@ -1,16 +1,10 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MazeV.Maze_Logic
 {
     public class ConsoleVisualizer : IVisualizer
     {
-
         /// <summary>
         /// returns true if vertex has edge to its horizontal neighbour in x + 1 direction
         /// </summary>
@@ -25,7 +19,7 @@ namespace MazeV.Maze_Logic
         /// returns true if vertex has edge to neighbour in y + 1 direction
         /// </summary>
         /// <param name="vertex"></param>
-        /// <returns></returns> 
+        /// <returns></returns>
         private bool ShouldDrawVerticalPath(Node current, Node bottom)
         {
             return Validator.DoesPathToNodeExist(current, bottom);
@@ -40,7 +34,6 @@ namespace MazeV.Maze_Logic
 
             Console.Clear();
             Console.WriteLine();
-            Console.WriteLine();
 
             for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)
             {
@@ -49,7 +42,6 @@ namespace MazeV.Maze_Logic
                     Node current = null;
                     if (counter < mazeView.Count)
                         current = mazeView[counter];
-
 
                     Location locationToRight = current.Location + mazeView.MovementCube[(int)Direction.Right];
                     Location locationAtBottom = current.Location + mazeView.MovementCube[(int)Direction.Down];
@@ -64,7 +56,7 @@ namespace MazeV.Maze_Logic
                         horizontalEdges.AppendFormat("{1}{0}", symbol, "X");
                     }
                     else
-                    {                        
+                    {
                         int point = current.CollectablePoint;
                         horizontalEdges.AppendFormat("{1}{0}", symbol, point);
                     }
@@ -84,5 +76,4 @@ namespace MazeV.Maze_Logic
             }
         }
     }
-
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MazeV.Maze_Logic
+﻿namespace MazeV.Maze_Logic
 {
     public class Player : BaseUnit
     {
@@ -12,7 +6,7 @@ namespace MazeV.Maze_Logic
         {
             //empty constructor
         }
-        public Axis ViewingAxis { get; set; }
 
+        public Axis ViewingAxis { get; set; }
     }
 }

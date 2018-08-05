@@ -1,14 +1,8 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
 namespace MazeV.Maze_Logic
 {
-
     public class EmptyCommand : ICommand
     {
+        //Empty command instead of null
         public void Execute() { }
     }
-
 }

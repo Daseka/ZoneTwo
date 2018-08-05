@@ -1,34 +1,48 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MazeV.Maze_Logic
 {
-
-    public class CanvasVisualizer: IVisualizer
+    public class CanvasVisualizer : IVisualizer
     {
-        private Graphics fGraphic;
-        private readonly int fNodeSize = 50;
-        private readonly int fHalfOfNodeSize = 50 / 2;
         private readonly int fCollectableSize = 6;
+        private readonly Graphics fGraphic;
         private readonly int fHalfOfCollectableSize = 6 / 2;
-        private readonly int fUnitSize = 10;
+        private readonly int fHalfOfNodeSize = 50 / 2;
         private readonly int fHalfOfUnitSize = 10 / 2;
+        private readonly int fNodeSize = 50;
+        private readonly int fUnitSize = 10;
 
         public CanvasVisualizer(Graphics graphic)
         {
             fGraphic = graphic;
         }
 
-        private void DrawNode(int x, int y, Node node, Graphics grapic, MazeViewData mazeView,UnitList unitList)
-        {            
+        public void Draw(MazeViewData mazeView, UnitList unitList)
+        {
+            if (fGraphic == null)
+                throw new ArgumentException("No Graphic found cant draw");
+
+            fGraphic.Clear(Color.White);
+
+            int index = 0;
+
+            for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)
+            {
+                for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
+                {
+                    Node node = mazeView[index];
+                    DrawNode(x, y, node, fGraphic, mazeView, unitList);
+                    index++;
+                }
+            }
+        }
+
+        private void DrawNode(int x, int y, Node node, Graphics grapic, MazeViewData mazeView, UnitList unitList)
+        {
             Pen pen = new Pen(Color.Blue);
-                        
-            int graphicOffset = 1 -  mazeView.ViewStart;
+
+            int graphicOffset = 1 - mazeView.ViewStart;
 
             int indeX = (x + graphicOffset) * fNodeSize;
             int indeY = (y + graphicOffset) * fNodeSize;
@@ -69,26 +83,5 @@ namespace MazeV.Maze_Logic
             if (!Validator.DoesPathToNodeExist(node, leftNode))
                 grapic.DrawLine(pen, bottomLeft, topLeft);
         }
-
-        public void Draw(MazeViewData mazeView, UnitList unitList)
-        {
-            if (fGraphic == null)
-                throw new Exception("No Graphic found cant draw");
-
-            fGraphic.Clear(Color.White);
-
-            int index = 0;
-
-            for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)
-            {
-                for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
-                {
-                    Node node = mazeView[index];
-                    DrawNode(x, y, node, fGraphic,mazeView,unitList);
-                    index++;
-                }
-            }
-        }
     }
-
 }

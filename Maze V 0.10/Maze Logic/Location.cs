@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeV.Maze_Logic
 {
-           
-    public class Location
+    public class Location : IEquatable<Location>
     {
-        private static Location[] fVectors = new Location[]{
+        private static Location[] fVectors = new[]{
                                                 new Location(1,0,0),new Location(-1,0,0),
                                                 new Location(0,1,0),new Location(0,-1,0),
                                                 new Location(0,0,1),new Location(0,0,-1)
                                              };
-        
 
-        public double PointX { get; set; }
-        public double PointY { get; set; }
-        public double PointZ { get; set; }
+        public RoundedDouble PointX { get; set; }
+
+        public RoundedDouble PointY { get; set; }
+
+        public RoundedDouble PointZ { get; set; }
 
         public Location()
         {
@@ -27,16 +24,11 @@ namespace MazeV.Maze_Logic
             PointZ = 0;
         }
 
-        public Location(double x, double y = 0, double z = 0)
+        public Location(double x, double y, double z)
         {
             PointX = x;
             PointY = y;
             PointZ = z;
-        }
-
-        public static bool operator ==(Location a, Location b)
-        {
-            return a.Equals(b);
         }
 
         public static bool operator !=(Location a, Location b)
@@ -54,16 +46,35 @@ namespace MazeV.Maze_Logic
             return location;
         }
 
+        public static bool operator ==(Location a, Location b)
+        {
+            return a.Equals(b);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)
                 return false;
 
-            Location location = obj as Location;
-            if (location == null)
-                return false;
+            return Equals(obj as Location);
+        }
 
-            return (PointX == location.PointX && PointY == location.PointY && PointZ == location.PointZ);
+        public bool Equals(Location location)
+        {
+            return (PointX == location?.PointX && PointY == location?.PointY && PointZ == location?.PointZ);
+        }
+
+        public List<Location> GetAllPossibleNeighbours()
+        {
+            List<Location> neighbours = new List<Location>();
+
+            foreach (Location vector in Location.fVectors)
+            {
+                Location neighbour = this + vector;
+                neighbours.Add(neighbour);
+            }
+
+            return neighbours;
         }
 
         public Location GetCopy()
@@ -79,20 +90,6 @@ namespace MazeV.Maze_Logic
         public override string ToString()
         {
             return string.Format("x={0} y={1} z={2}", PointX, PointY, PointZ);
-        }
-
-        public List<Location> GetAllPossibleNeighbours()
-        {
-            List<Location> neighbours = new List<Location>();
-
-            foreach (Location vector in Location.fVectors)
-            {
-                Location neighbour = this + vector;
-                neighbours.Add(neighbour);
-                
-            }
-
-            return neighbours;
         }
     }
 }

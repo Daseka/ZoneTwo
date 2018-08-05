@@ -8,7 +8,7 @@ namespace MazeV.Maze_Logic
 
         public RoundedDouble(double value)
         {
-            Value = Math.Round(value,8);
+            Value = Math.Round(value, 8);
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace MazeV.Maze_Logic
 
         /// <summary>
         /// Implicit double to RoundedDouble converter. Makes this possible: RoundedDouble num = 8.0d;
-        /// </summary>        
+        /// </summary>
         public static implicit operator RoundedDouble(double value)
         {
             return new RoundedDouble(value);
@@ -39,13 +39,12 @@ namespace MazeV.Maze_Logic
 
         public bool Equals(RoundedDouble other)
         {
-            return Math.Round(Value, 8) == Math.Round(other.Value, 8);
+            return Math.Round(Value, 8) == Math.Round(other?.Value, 8);
         }
 
         public override bool Equals(object obj)
         {
-            RoundedDouble value = obj as RoundedDouble;
-            return Value == value?.Value;
+            return Equals(obj as RoundedDouble);
         }
 
         public override int GetHashCode()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MazeV.Maze_Logic
@@ -17,6 +18,14 @@ namespace MazeV.Maze_Logic
         public override bool Equals(object obj)
         {
             return Equals(obj as NodeLine);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 363529913;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Point>.Default.GetHashCode(Point1);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Point>.Default.GetHashCode(Point2);
+            return hashCode;
         }
 
         public override string ToString()

@@ -44,7 +44,7 @@ namespace MazeV.Maze_Logic
             Random randomizer = new Random(seed);
             List<int> copyOfNeigours = new List<int>();
 
-            foreach (Node node in nodeData.NodesByIndex.Values.ToList().OrderBy(x => x.Neighbours.Count))
+            foreach (Node node in nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count))
             {
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));

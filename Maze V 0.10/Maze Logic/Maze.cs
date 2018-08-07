@@ -39,21 +39,20 @@ namespace MazeV.Maze_Logic
                 NodeThatPlayerIsIn.CollectablePoint = 0;
         }
 
-        private bool SpawnUnitAtLocation(UnitType unitType, Location location)
+        private void SpawnUnitAtLocation(UnitType unitType, Location location)
         {
             IUnit spawn = fUnitFactory.CreateUnit(unitType);
             if (spawn == null)
-                return false;
+                return;
 
             if (Validator.IsLocationOccupied(location, UnitList))
-                return false;
+                return;
 
             if (unitType == UnitType.Player && Validator.IsPlayerMaximumReached(UnitList))
-                return false;
+                return;
 
             spawn.AssignLocation(location);
             UnitList.Add(spawn);
-            return true;
         }
     }
 }

@@ -9,10 +9,10 @@ namespace MazeV.Maze_Logic
         public Point Point1 { get; set; }
         public Point Point2 { get; set; }
 
-        public bool Equals(NodeLine line)
+        public bool Equals(NodeLine other)
         {
-            return Point1.Equals(line?.Point1) && Point2.Equals(line?.Point2)
-                   || Point2.Equals(line?.Point1) && Point1.Equals(line?.Point2);
+            return Point1.Equals(other?.Point1) && Point2.Equals(other?.Point2)
+                   || Point2.Equals(other?.Point1) && Point1.Equals(other?.Point2);
         }
 
         public override bool Equals(object obj)

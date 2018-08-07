@@ -8,6 +8,11 @@ namespace MazeV.Maze_Logic
     [Serializable]
     public class UnitList : Dictionary<Guid, IUnit>
     {
+        public UnitList()
+        {
+            // empty constructor. needed because of serialization constructor
+        }
+
         protected UnitList(SerializationInfo serializationInfo, StreamingContext streamingContext)
         {
             // sonarqube requested it

@@ -25,7 +25,7 @@ namespace MazeV.Maze_Logic
 
         public int GetEmptyNodeCount()
         {
-            return NodesByIndex.Where(x => x.Value.CollectablePoint == 0).Count();
+            return NodesByIndex.Count(x => x.Value.CollectablePoint == 0);
         }
 
         /// <summary>

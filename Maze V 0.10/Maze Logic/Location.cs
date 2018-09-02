@@ -12,9 +12,7 @@ namespace MazeV.Maze_Logic
                                              };
 
         public RoundedDouble PointX { get; set; }
-
         public RoundedDouble PointY { get; set; }
-
         public RoundedDouble PointZ { get; set; }
 
         public Location()

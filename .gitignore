@@ -6,3 +6,9 @@ Maze V 0\.10/obj/Debug/
 \.vs/MazeV/v15/Server/sqlite3/
 
 \.cr/user/Editor/Painting/
+
+*.xml
+
+\.vs/MazeV/v15/
+
+Maze V 0\.10/bin/Debug/

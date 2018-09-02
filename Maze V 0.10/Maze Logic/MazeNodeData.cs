@@ -23,9 +23,9 @@ namespace MazeV.Maze_Logic
             }
         }
 
-        public int GetEmptyNodeCount()
+        public int GetCollectableNodes()
         {
-            return NodesByIndex.Count(x => x.Value.CollectablePoint == 0);
+            return NodesByIndex.Count(x => !x.Value.CollectablePoint.IsCollected);
         }
 
         /// <summary>

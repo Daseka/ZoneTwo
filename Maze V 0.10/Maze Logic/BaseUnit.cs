@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,15 @@ namespace MazeV.Maze_Logic
         {
             PreviousLocation = CurrentLocation.GetCopy();
             CurrentLocation = location.GetCopy();
-        }        
+        }
+
+        public void Draw(Graphics graphics, Rectangle rectangle, Node node)
+        {
+            if (node.Location != CurrentLocation)
+                return;
+            
+            graphics.FillRectangle(Brushes.Red, rectangle);
+        }
 
         public BaseUnit()
         {

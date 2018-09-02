@@ -56,9 +56,8 @@ namespace MazeV.Maze_Logic
                         horizontalEdges.AppendFormat("{1}{0}", symbol, "X");
                     }
                     else
-                    {
-                        int point = current.CollectablePoint;
-                        horizontalEdges.AppendFormat("{1}{0}", symbol, point);
+                    {                        
+                        horizontalEdges.AppendFormat($"{symbol}{current.CollectablePoint.IsCollected}");
                     }
 
                     symbol = ShouldDrawVerticalPath(current, bottom) ? "|" : " ";

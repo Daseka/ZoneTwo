@@ -35,8 +35,7 @@ namespace MazeV.Maze_Logic
             if (NodeThatPlayerIsIn == null)
                 return;
 
-            if (NodeThatPlayerIsIn.CollectablePoint > 0)
-                NodeThatPlayerIsIn.CollectablePoint = 0;
+            NodeThatPlayerIsIn.CollectablePoint.Collect();
         }
 
         private void SpawnUnitAtLocation(UnitType unitType, Location location)

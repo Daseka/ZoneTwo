@@ -24,7 +24,7 @@ namespace MazeV
 
         private void InitializeMaze()
         {
-            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
+            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(5, 3);
             MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
             MazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
 
@@ -55,8 +55,17 @@ namespace MazeV
         private void FAnimator_Tick1(object sender, System.EventArgs e)
         {
             MoveUnits();
+            UpdateNodeScore();
 
             pictureBox1.Refresh();
+        }
+
+        private void UpdateNodeScore()
+        {
+            int totalNodes = fMaze.NodeData.GetTotalNodeCount();
+            int collectableNodes = fMaze.NodeData.GetCollectableNodes();
+
+            this.Text = $" {collectableNodes} / {totalNodes} ";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

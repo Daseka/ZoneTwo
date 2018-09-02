@@ -5,24 +5,15 @@ namespace MazeV.Maze_Logic
 {
     public class CanvasVisualizer : IVisualizer
     {
-        private readonly int fCollectableSize = 6;
         private readonly Graphics fGraphic;
-        private readonly int fHalfOfCollectableSize = 6 / 2;
-        private readonly int fHalfOfNodeSize = 50 / 2;
-        private readonly int fHalfOfUnitSize = 10 / 2;
-        private readonly int fNodeSize = 50;
-        private readonly int fUnitSize = 10;
 
         public CanvasVisualizer(Graphics graphic)
-        {
-            fGraphic = graphic;
+        {                          
+            fGraphic = graphic?? throw new ArgumentException("No Graphic found cant draw"); 
         }
 
         public void Draw(MazeViewData mazeView, UnitList unitList)
-        {
-            if (fGraphic == null)
-                throw new ArgumentException("No Graphic found cant draw");
-
+        {       
             fGraphic.Clear(Color.White);
 
             int index = 0;
@@ -38,50 +29,43 @@ namespace MazeV.Maze_Logic
             }
         }
 
+        private int GetNodePoint(int xOrY, int nodeSquareSize, int mazeViewStart)
+        {
+            int graphicOffset = 1 - mazeViewStart;
+            return (xOrY + graphicOffset) * nodeSquareSize;
+        }
+
         private void DrawNode(int x, int y, Node node, Graphics grapic, MazeViewData mazeView, UnitList unitList)
         {
-            Pen pen = new Pen(Color.Blue);
+            int indeX = GetNodePoint(x, node.SquareSize, mazeView.ViewStart);
+            int indeY = GetNodePoint(y, node.SquareSize, mazeView.ViewStart);
 
-            int graphicOffset = 1 - mazeView.ViewStart;
+            DrawNode(node, grapic, mazeView, indeX, indeY);
+            DrawCollectable(node, grapic, indeX, indeY);            
+            DrawPlayer(node, grapic, unitList, indeX, indeY);                       
+        }
 
-            int indeX = (x + graphicOffset) * fNodeSize;
-            int indeY = (y + graphicOffset) * fNodeSize;
+        private static void DrawNode(Node node, Graphics grapic, MazeViewData mazeView, int indeX, int indeY)
+        {
+            int HalfOfNodeSize = DefaultSettings.HalfOfNodeSize;
+            Point topLeft = new Point(indeX - HalfOfNodeSize, indeY - HalfOfNodeSize);
+            Point topRight = new Point(indeX + HalfOfNodeSize, indeY - HalfOfNodeSize);
+            Point bottomLeft = new Point(indeX - HalfOfNodeSize, indeY + HalfOfNodeSize);
+            Point bottomRight = new Point(indeX + HalfOfNodeSize, indeY + HalfOfNodeSize);
+            node.Draw(node, grapic, mazeView, topLeft, topRight, bottomLeft, bottomRight);
+        }
 
-            if (node.CollectablePoint > 0)
-            {
-                Rectangle rect = new Rectangle(indeX - fHalfOfCollectableSize, indeY - fHalfOfCollectableSize, fCollectableSize, fCollectableSize);
-                grapic.FillEllipse(Brushes.Gray, rect);
-            }
-
+        private static void DrawPlayer(Node node, Graphics grapic, UnitList unitList, int indeX, int indeY)
+        {
             Player player = unitList.GetPlayer();
+            Rectangle playerRect = new Rectangle(indeX - DefaultSettings.HalfOfUnitSize, indeY - DefaultSettings.HalfOfUnitSize, DefaultSettings.UnitSize, DefaultSettings.UnitSize);
+            player.Draw(grapic, playerRect, node);
+        }
 
-            if (node.Location == player.CurrentLocation)
-            {
-                Rectangle rect = new Rectangle(indeX - fHalfOfUnitSize, indeY - fHalfOfUnitSize, fUnitSize, fUnitSize);
-                grapic.FillRectangle(Brushes.Red, rect);
-            }
-
-            Point topLeft = new Point(indeX - fHalfOfNodeSize, indeY - fHalfOfNodeSize);
-            Point topRight = new Point(indeX + fHalfOfNodeSize, indeY - fHalfOfNodeSize);
-            Point bottomLeft = new Point(indeX - fHalfOfNodeSize, indeY + fHalfOfNodeSize);
-            Point bottomRight = new Point(indeX + fHalfOfNodeSize, indeY + fHalfOfNodeSize);
-
-            Node leftNode = node.GetNeigbour(mazeView, Direction.Left);
-            Node bottomNode = node.GetNeigbour(mazeView, Direction.Down);
-            Node rightNode = node.GetNeigbour(mazeView, Direction.Right);
-            Node topNode = node.GetNeigbour(mazeView, Direction.Up);
-
-            if (!Validator.DoesPathToNodeExist(node, topNode))
-                grapic.DrawLine(pen, topLeft, topRight);
-
-            if (!Validator.DoesPathToNodeExist(node, rightNode))
-                grapic.DrawLine(pen, topRight, bottomRight);
-
-            if (!Validator.DoesPathToNodeExist(node, bottomNode))
-                grapic.DrawLine(pen, bottomRight, bottomLeft);
-
-            if (!Validator.DoesPathToNodeExist(node, leftNode))
-                grapic.DrawLine(pen, bottomLeft, topLeft);
+        private static void DrawCollectable(Node node, Graphics grapic, int indeX, int indeY)
+        {
+            Rectangle rectangle = new Rectangle(indeX - DefaultSettings.HalfOfCollectableSize, indeY - DefaultSettings.HalfOfCollectableSize, DefaultSettings.CollectableSize, DefaultSettings.CollectableSize);
+            node.CollectablePoint.Draw(grapic, rectangle);
         }
     }
 }

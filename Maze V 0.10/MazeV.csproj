@@ -34,11 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics">
-      <HintPath>..\..\..\Maze v 0.03\Maze\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="MathNet.Numerics, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.5.1\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,8 +63,10 @@
     <Compile Include="Maze Logic\BaseUnit.cs" />
     <Compile Include="Maze Logic\CanvasVisualizer.cs" />
     <Compile Include="Maze Logic\ConsoleVisualizer.cs" />
+    <Compile Include="Maze Logic\DefaultSettings.cs" />
     <Compile Include="Maze Logic\Direction.cs" />
     <Compile Include="Maze Logic\EmptyCommand.cs" />
+    <Compile Include="Maze Logic\ICollectableItem.cs" />
     <Compile Include="Maze Logic\IUnit.cs" />
     <Compile Include="Maze Logic\ICommand.cs" />
     <Compile Include="Maze Logic\IVisualizer.cs" />
@@ -102,6 +106,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

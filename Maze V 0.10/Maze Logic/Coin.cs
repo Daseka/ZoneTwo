@@ -5,21 +5,20 @@ namespace MazeV.Maze_Logic
 {
     internal class Coin : ICollectableItem
     {
-        private Action<Graphics, Rectangle> fDoDrawing;
-        private bool fIsCollected;
+        private Action<Graphics, Rectangle> fDoDrawing;        
         private readonly Size fSize;
-        bool ICollectableItem.IsCollected => fIsCollected;
+        public bool IsCollected { get; private set; }
 
         public Coin()
         {
-            fIsCollected = false;
+            IsCollected = false;
             fSize = new Size(DefaultSettings.CollectableSize, DefaultSettings.CollectableSize);
             fDoDrawing = (grapics, rectangle) => grapics.FillEllipse(Brushes.Gold, rectangle);
         }
 
         public void Collect()
         {
-            fIsCollected = true;
+            IsCollected = true;
             fDoDrawing = null;
         }
 

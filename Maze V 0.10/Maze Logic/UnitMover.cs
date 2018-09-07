@@ -6,7 +6,7 @@ namespace MazeV.Maze_Logic
 {
     public class UnitMover
     {
-        IMovementLogic fMovementLogic;
+        private readonly IMovementLogic fMovementLogic;
 
         public UnitMover(IMovementLogic movementLogic)
         {

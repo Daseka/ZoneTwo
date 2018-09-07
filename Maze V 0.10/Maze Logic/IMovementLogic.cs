@@ -11,7 +11,7 @@ namespace MazeV.Maze_Logic
 
     public class DefaultMovementLogic : IMovementLogic
     {
-        private Dictionary<Func<Direction, Player, MazeNodeData, MazeViewData, bool>, Action<Direction,Player,MazeViewData>> 
+        private readonly Dictionary<Func<Direction, Player, MazeNodeData, MazeViewData, bool>, Action<Direction,Player,MazeViewData>> 
             fMovementPriorityList = new Dictionary<Func<Direction, Player, MazeNodeData, MazeViewData, bool>, Action<Direction, Player, MazeViewData>>();
         
         /// <summary>
@@ -51,8 +51,7 @@ namespace MazeV.Maze_Logic
         }
 
         private void AssignCurrentDirection(Direction direction, Player player, MazeViewData mazeView)
-        {
-            player.CurrentMovementDirection = player.CurrentMovementDirection;
+        {            
             Location futureLocation = player.CurrentLocation.GetCopy() + mazeView.MovementCube[(int)player.CurrentMovementDirection];
             player.AssignLocation(futureLocation);
         }

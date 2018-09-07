@@ -31,11 +31,8 @@ namespace MazeV.Maze_Logic
 
         public void ProcessPlayerInNode()
         {
-            Node NodeThatPlayerIsIn = NodeData.NodesByIndex.Where(x => x.Value.Location == Hero.CurrentLocation).Select(x => x.Value).FirstOrDefault();
-            if (NodeThatPlayerIsIn == null)
-                return;
-
-            NodeThatPlayerIsIn.CollectablePoint.Collect();
+            Node NodeThatPlayerIsIn = NodeData.NodesByIndex.Where(x => x.Value.Location == Hero.CurrentLocation).Select(x => x.Value).FirstOrDefault();           
+            NodeThatPlayerIsIn?.CollectablePoint.Collect();
         }
 
         private void SpawnUnitAtLocation(UnitType unitType, Location location)

@@ -62,11 +62,13 @@
     <Compile Include="Maze Logic\Axis.cs" />
     <Compile Include="Maze Logic\BaseUnit.cs" />
     <Compile Include="Maze Logic\CanvasVisualizer.cs" />
+    <Compile Include="Maze Logic\Coin.cs" />
     <Compile Include="Maze Logic\ConsoleVisualizer.cs" />
     <Compile Include="Maze Logic\DefaultSettings.cs" />
     <Compile Include="Maze Logic\Direction.cs" />
     <Compile Include="Maze Logic\EmptyCommand.cs" />
     <Compile Include="Maze Logic\ICollectableItem.cs" />
+    <Compile Include="Maze Logic\IMovementLogic.cs" />
     <Compile Include="Maze Logic\IUnit.cs" />
     <Compile Include="Maze Logic\ICommand.cs" />
     <Compile Include="Maze Logic\IVisualizer.cs" />

@@ -49,20 +49,22 @@ namespace MazeV.Maze_Logic
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
 
-                while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
-                {
-                    int neigbourId = randomizer.Next(copyOfNeigours.Count);
-                    int pathToNodeId = copyOfNeigours[neigbourId];
-                    copyOfNeigours.RemoveAt(neigbourId);
-
-                    if ((node.Path.Contains(pathToNodeId) || !IsPathValid(node, nodeData.NodesByIndex[pathToNodeId], node, 1, nodeData)))
-                        continue;
-
-                    SetPath(node, pathToNodeId, nodeData);
-                }
+                SetMinimumRequiredPathsForNode(nodeData, randomizer, copyOfNeigours, node);
             }
 
             return nodeData;
+        }
+
+        private void SetMinimumRequiredPathsForNode(MazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, Node node)
+        {
+            while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
+            {
+                int neigbourId = randomizer.Next(copyOfNeigours.Count);
+                int pathToNodeId = copyOfNeigours[neigbourId];
+                copyOfNeigours.RemoveAt(neigbourId);
+
+                SetPath(node, pathToNodeId, nodeData);
+            }
         }
 
         /// <summary>
@@ -195,6 +197,9 @@ namespace MazeV.Maze_Logic
         /// </summary>
         private void SetPath(Node node, int idOfDestinationNode, MazeNodeData nodeData)
         {
+            if ((node.Path.Contains(idOfDestinationNode) || !IsPathValid(node, nodeData.NodesByIndex[idOfDestinationNode], node, 1, nodeData)))
+                return;
+
             node.Path.Add(idOfDestinationNode);
             nodeData.NodesByIndex[idOfDestinationNode].Path.Add(node.Id);
         }

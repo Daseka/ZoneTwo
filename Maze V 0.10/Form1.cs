@@ -1,4 +1,5 @@
 ﻿using MazeV.Maze_Logic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MazeV
@@ -13,7 +14,7 @@ namespace MazeV
             InitializeComponent();
             InitializeMaze();
             InitializeKeybindings();
-
+            
             this.DoubleBuffered = true;
 
             fAnimator = new Timer();
@@ -24,7 +25,7 @@ namespace MazeV
 
         private void InitializeMaze()
         {
-            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(5, 3);
+            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
             MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
             MazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
 
@@ -47,7 +48,8 @@ namespace MazeV
 
         private void MoveUnits()
         {
-            UnitMover unitMove = new UnitMover();
+            UnitMover unitMove = new UnitMover(new DefaultMovementLogic());
+
             Player player = fMaze.UnitList.GetPlayer();
             unitMove.MovePlayer(player.FutureMovementDirection, player, fMaze.NodeData, fMaze.ViewData);
         }

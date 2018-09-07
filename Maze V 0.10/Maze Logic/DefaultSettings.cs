@@ -1,6 +1,6 @@
 ﻿namespace MazeV.Maze_Logic
 {
-    public class DefaultSettings
+    public static class DefaultSettings
     {
         public static int NodeSize => 50;
         public static int CollectableSize => 6;

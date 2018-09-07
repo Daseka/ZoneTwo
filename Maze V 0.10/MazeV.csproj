@@ -68,6 +68,7 @@
     <Compile Include="Maze Logic\Direction.cs" />
     <Compile Include="Maze Logic\EmptyCommand.cs" />
     <Compile Include="Maze Logic\ICollectableItem.cs" />
+    <Compile Include="Maze Logic\IMovementLogic.cs" />
     <Compile Include="Maze Logic\IUnit.cs" />
     <Compile Include="Maze Logic\ICommand.cs" />
     <Compile Include="Maze Logic\IVisualizer.cs" />

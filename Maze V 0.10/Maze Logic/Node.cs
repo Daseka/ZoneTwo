@@ -20,7 +20,8 @@ namespace MazeV.Maze_Logic
         public List<int> Path { get; set; }
         public Shape shape { get; set; }
         public Location Location { get; set; }
-        public ICollectableItem CollectablePoint { get; set; }
+        public ICollectableItem CollectablePoint { get; }
+        public IUnit Unit { get; set; }
         public int SquareSize { get; }
 
         public Node()

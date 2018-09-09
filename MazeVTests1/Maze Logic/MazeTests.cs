@@ -14,13 +14,13 @@ namespace MazeV.Maze_Logic.Tests
         [TestMethod()]
         public void InitializeTest()
         {
-            MazeNodeData nodeData = new MazeNodeData(new Dictionary<int, Node>(), new Dictionary<Location, Node>());
+            MazeNodeData nodeData = new MazeNodeData(new Dictionary<int, INode>(), new Dictionary<ILocation, INode>());
             MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData);
             Maze maze = new Maze(nodeData,viewData);
             maze.Initialize();
 
             int numberOfNodesTotal = maze.NodeData.Count;
-            int numberOfNodesView = maze.ViewData.Count;
+            int numberOfNodesView = maze.ViewData.MazeNodes.Count;
             int numberOfUnits = maze.UnitList.Count;
 
             Assert.AreEqual(1, numberOfUnits, $"Only the player should be created. Unit count should be 1 : {numberOfUnits}");

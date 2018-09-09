@@ -8,10 +8,10 @@ namespace MazeV.Maze_Logic
 {
     public static class Validator
     {
-        public static bool IsFutureLocationValid(Location currentLocation, Location futureLocation, MazeNodeData nodeData)
+        public static bool IsFutureLocationValid(ILocation currentLocation, ILocation futureLocation, MazeNodeData nodeData)
         {
-            Node currentNode = nodeData.NodesByIndex.Where(x => x.Value.Location == currentLocation).Select(x => x.Value).FirstOrDefault();
-            Node futureNode = nodeData.NodesByIndex.Where(x => x.Value.Location == futureLocation).Select(x => x.Value).FirstOrDefault();
+            INode currentNode = nodeData.NodesByIndex.Where(x => x.Value.Location.Equals( currentLocation)).Select(x => x.Value).FirstOrDefault();
+            INode futureNode = nodeData.NodesByIndex.Where(x => x.Value.Location.Equals( futureLocation)).Select(x => x.Value).FirstOrDefault();
 
             int id = (futureNode?.Id).GetValueOrDefault(-1);
             return currentNode.Path.Contains(id);
@@ -19,7 +19,7 @@ namespace MazeV.Maze_Logic
 
         public static bool IsLocationOccupied(Location location, UnitList unitList)
         {
-            IUnit unit = unitList.Values.FirstOrDefault(x => x.CurrentLocation == location);
+            IUnit unit = unitList.Values.FirstOrDefault(x => x.CurrentLocation.Equals(location));
 
             return unit != null;
         }
@@ -45,9 +45,7 @@ namespace MazeV.Maze_Logic
                 return false;
 
             int position = -1;
-            List<int> foundNodeIds = new List<int>();
-
-            foundNodeIds.Add(1);
+            List<int> foundNodeIds = new List<int>() { 1 };           
 
             do
             {
@@ -61,7 +59,7 @@ namespace MazeV.Maze_Logic
             return foundNodeIds.Count >= nodeData.NodesByIndex.Count;            
         }
 
-        public static bool DoesPathToNodeExist(Node currentNode, Node nextNode)
+        public static bool DoesPathToNodeExist(INode currentNode, INode nextNode)
         {
             if (currentNode == null || nextNode == null)
                 return false;            

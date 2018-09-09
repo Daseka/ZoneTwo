@@ -2,6 +2,6 @@
 {
     public class Player : BaseUnit
     {
-        public Axis ViewingAxis { get; set; }
+       //nothing yet
     }
 }

@@ -6,7 +6,7 @@ namespace MazeV.Maze_Logic
 {
     public class MazeViewRotator
     {
-        public void RotateView(Rotation rotation, Player player, MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        public void RotateView(Rotation rotation, IUnit player, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
             player.ViewingAxis = GetFreeRotationAxis(mazeView);
             DoMoveViewToOrigin(mazeView, nodesByLocation);
@@ -41,9 +41,9 @@ namespace MazeV.Maze_Logic
             DoMoveViewToPlayer(player, mazeView, nodesByLocation);
         }
 
-        private void ApplyRotation(List<Location> vectorsToRotate, Matrix<double> rotationMatrix)
+        private void ApplyRotation(List<ILocation> vectorsToRotate, Matrix<double> rotationMatrix)
         {
-            foreach (Location item in vectorsToRotate)
+            foreach (ILocation item in vectorsToRotate)
             {
                 Vector<double> rotatedVector = rotationMatrix * Vector<double>.Build.Dense(new[]{item.PointX.Value
                                                                                                 ,item.PointY.Value
@@ -59,11 +59,11 @@ namespace MazeV.Maze_Logic
             return degrees * Math.PI / 180.0;
         }
 
-        private void DoMoveView(Vector<double> vectorToMoveBy, MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        private void DoMoveView(Vector<double> vectorToMoveBy, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            for (int i = 0; i < mazeView.Count; i++)
+            for (int i = 0; i < mazeView.MazeNodes.Count; i++)
             {
-                Node item = mazeView[i];
+                INode item = mazeView.MazeNodes[i];
 
                 Vector<double> movedVector = vectorToMoveBy + Vector<double>.Build.Dense(new[]{item.Location.PointX.Value
                                                                                                 ,item.Location.PointY.Value
@@ -74,18 +74,18 @@ namespace MazeV.Maze_Logic
 
                 Location temp = new Location(pointX, pointY, pointZ);
 
-                nodesByLocation.TryGetValue(temp, out Node node);
-                mazeView[i] = node;
+                nodesByLocation.TryGetValue(temp, out INode node);
+                mazeView.MazeNodes[i] = node;
             }
         }
 
-        private void DoMoveViewToOrigin(MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        private void DoMoveViewToOrigin(IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            int middle = (int)Math.Round((double)mazeView.Count / 2);
+            int middle = (int)Math.Round((double)mazeView.MazeNodes.Count / 2);
 
-            Vector<double> centerOfView = Vector<double>.Build.Dense(new double[] { mazeView[middle].Location.PointX
-                                                                                    , mazeView[middle].Location.PointY
-                                                                                    , mazeView[middle].Location.PointZ });
+            Vector<double> centerOfView = Vector<double>.Build.Dense(new double[] { mazeView.MazeNodes[middle].Location.PointX
+                                                                                    , mazeView.MazeNodes[middle].Location.PointY
+                                                                                    , mazeView.MazeNodes[middle].Location.PointZ });
 
             Vector<double> origin = Vector<double>.Build.Dense(new double[] { 0, 0, 0 });
 
@@ -94,7 +94,7 @@ namespace MazeV.Maze_Logic
             DoMoveView(movement, mazeView, nodesByLocation);
         }
 
-        private void DoMoveViewToPlayer(Player player, MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        private void DoMoveViewToPlayer(IUnit player, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
             Vector<double> movement = null;
 
@@ -108,7 +108,7 @@ namespace MazeV.Maze_Logic
                     movement = Vector<double>.Build.Dense(new double[] { 0, player.CurrentLocation.PointY, 0 });
                     break;
 
-                case Axis.Zaxis:
+                case Axis.ZAxis:
                     movement = Vector<double>.Build.Dense(new double[] { 0, 0, player.CurrentLocation.PointZ });
                     break;
             }
@@ -116,7 +116,7 @@ namespace MazeV.Maze_Logic
             DoMoveView(movement, mazeView, nodesByLocation);
         }
 
-        private void DoRotate(Axis axis, double degrees, MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        private void DoRotate(Axis axis, double degrees, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
             double angle = DegreesToRadial(degrees);
 
@@ -136,7 +136,7 @@ namespace MazeV.Maze_Logic
                                                                             , new[] { Math.Sin(angle), 0.0, Math.Cos(angle) });
                     break;
 
-                case Axis.Zaxis:
+                case Axis.ZAxis:
                     rotationMatrix = Matrix<double>.Build.DenseOfColumnArrays(new[] { Math.Cos(angle), Math.Sin(angle), 0.0 }
                                                                             , new[] { -Math.Sin(angle), Math.Cos(angle), 0.0 }
                                                                             , new[] { 0.0, 0.0, 1.0 });
@@ -150,11 +150,11 @@ namespace MazeV.Maze_Logic
             ApplyRotation(mazeView.MovementCube, rotationMatrix);
         }
 
-        private void DoRotateView(Matrix<double> rotationMatrix, MazeViewData mazeView, Dictionary<Location, Node> nodesByLocation)
+        private void DoRotateView(Matrix<double> rotationMatrix, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            for (int i = 0; i < mazeView.Count; i++)
+            for (int i = 0; i < mazeView.MazeNodes.Count; i++)
             {
-                Node item = mazeView[i];
+                INode item = mazeView.MazeNodes[i];
 
                 Vector<double> rotatedVector = rotationMatrix * Vector<double>.Build.Dense(new[]{item.Location.PointX.Value
                                                                                                 ,item.Location.PointY.Value
@@ -163,14 +163,14 @@ namespace MazeV.Maze_Logic
                 double pointY = Math.Round(rotatedVector[1], 2);
                 double pointZ = Math.Round(rotatedVector[2], 2);
 
-                Location temp = new Location(pointX, pointY, pointZ);
+                ILocation temp = new Location(pointX, pointY, pointZ);
 
-                nodesByLocation.TryGetValue(temp, out Node node);
-                mazeView[i] = node;
+                nodesByLocation.TryGetValue(temp, out INode node);
+                mazeView.MazeNodes[i] = node;
             }
         }
 
-        private Axis GetFreeRotationAxis(MazeViewData mazeView)
+        private Axis GetFreeRotationAxis(IMazeViewData mazeView)
         {
             Axis rotationAxis = Axis.XAxis;
             foreach (Axis axis in Enum.GetValues(typeof(Axis)))

@@ -10,6 +10,6 @@ namespace MazeV.Maze_Logic
     {
         XAxis
         , YAxis
-        , Zaxis
+        , ZAxis
     }
 }

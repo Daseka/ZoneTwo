@@ -17,8 +17,7 @@ namespace MazeV
             
             this.DoubleBuffered = true;
 
-            fAnimator = new Timer();
-            fAnimator.Interval = 500;
+            fAnimator = new Timer() { Interval = 500, };            
             fAnimator.Tick += FAnimator_Tick1;
             fAnimator.Start();
         }
@@ -27,7 +26,7 @@ namespace MazeV
         {
             MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
             MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
-            MazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
+            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
 
             fMaze = new Maze(nodeData, viewData);
             fMaze.Initialize();
@@ -40,10 +39,10 @@ namespace MazeV
             Keybindings.Add(Keys.Left, new RotateCommand(Rotation.Left, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
             Keybindings.Add(Keys.Right, new RotateCommand(Rotation.Right, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
 
-            Keybindings.Add(Keys.W, new MoveCommand(Direction.Up, fMaze.Hero));
-            Keybindings.Add(Keys.S, new MoveCommand(Direction.Down, fMaze.Hero));
-            Keybindings.Add(Keys.A, new MoveCommand(Direction.Left, fMaze.Hero));
-            Keybindings.Add(Keys.D, new MoveCommand(Direction.Right, fMaze.Hero));
+            Keybindings.Add(Keys.W, new MoveCommand(new UpDirection(), fMaze.Hero));
+            Keybindings.Add(Keys.S, new MoveCommand(new DownDirection(), fMaze.Hero));
+            Keybindings.Add(Keys.A, new MoveCommand(new LeftDirection(), fMaze.Hero));
+            Keybindings.Add(Keys.D, new MoveCommand(new RightDirection(), fMaze.Hero));
         }
 
         private void MoveUnits()
@@ -78,7 +77,7 @@ namespace MazeV
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void PictureBox1_Paint(object sender, PaintEventArgs e)
         {
             IVisualizer visualizer = new CanvasVisualizer(e.Graphics);
 

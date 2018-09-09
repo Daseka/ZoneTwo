@@ -10,6 +10,6 @@ namespace MazeV.Maze_Logic
     {
         public int Id { get; set; }
         public Axis Axis { get; set; }        
-        public Location Location { get; set; }
+        public ILocation Location { get; set; }
     }
 }

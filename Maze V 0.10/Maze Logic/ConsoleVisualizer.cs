@@ -10,7 +10,7 @@ namespace MazeV.Maze_Logic
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        private bool ShouldDrawHorizontalPath(Node current, Node next)
+        private bool ShouldDrawHorizontalPath(INode current, INode next)
         {
             return Validator.DoesPathToNodeExist(current, next);
         }
@@ -20,12 +20,12 @@ namespace MazeV.Maze_Logic
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        private bool ShouldDrawVerticalPath(Node current, Node bottom)
+        private bool ShouldDrawVerticalPath(INode current, INode bottom)
         {
             return Validator.DoesPathToNodeExist(current, bottom);
         }
 
-        public void Draw(MazeViewData mazeView, UnitList unitList)
+        public void Draw(IMazeViewData mazeView, UnitList unitList)
         {
             int counter = 0;
             string symbol = string.Empty;
@@ -39,15 +39,15 @@ namespace MazeV.Maze_Logic
             {
                 for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
                 {
-                    Node current = null;
-                    if (counter < mazeView.Count)
-                        current = mazeView[counter];
+                    INode current = null;
+                    if (counter < mazeView.MazeNodes.Count)
+                        current = mazeView.MazeNodes[counter];
 
-                    Location locationToRight = current.Location + mazeView.MovementCube[(int)Direction.Right];
-                    Location locationAtBottom = current.Location + mazeView.MovementCube[(int)Direction.Down];
+                    ILocation locationToRight = current.Location.Add( mazeView.MovementCube[new RightDirection().Value]);
+                    ILocation locationAtBottom = current.Location.Add( mazeView.MovementCube[new LeftDirection().Value]);
 
-                    Node right = mazeView.GetNodeAt(locationToRight);
-                    Node bottom = mazeView.GetNodeAt(locationAtBottom);
+                    INode right = mazeView.GetNodeAt(locationToRight);
+                    INode bottom = mazeView.GetNodeAt(locationAtBottom);
 
                     Player player = unitList.GetPlayer();
                     symbol = ShouldDrawHorizontalPath(current, right) ? "---" : "   ";

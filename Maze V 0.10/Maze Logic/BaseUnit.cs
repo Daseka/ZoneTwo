@@ -11,23 +11,25 @@ namespace MazeV.Maze_Logic
     {
         public Guid Id { get; set; }
 
-        public Location CurrentLocation { get; set; }
-        public Location PreviousLocation { get; set; }
-        public Direction CurrentMovementDirection { get; set; }
-        public Direction FutureMovementDirection { get; set; }       
+        public ILocation CurrentLocation { get; set; }
+        public ILocation PreviousLocation { get; set; }
+        public IDirection CurrentMovementDirection { get; set; }
+        public IDirection FutureMovementDirection { get; set; }
+        public Axis ViewingAxis { get; set; }
 
-        public void AssignLocation(Location location)
+
+        public void AssignLocation(ILocation location)
         {
             PreviousLocation = CurrentLocation.GetCopy();
-            CurrentLocation = location.GetCopy();
+            CurrentLocation = location?.GetCopy();
         }
 
-        public void Draw(Graphics graphics, Rectangle rectangle, Node node)
+        public void Draw(Graphics graphics, Rectangle rectangle, INode node)
         {
-            if (node.Location != CurrentLocation)
+            if (!node.Location.Equals( CurrentLocation) )
                 return;
             
-            graphics.FillRectangle(Brushes.Red, rectangle);
+            graphics?.FillRectangle(Brushes.Red, rectangle);
         }
 
         public BaseUnit()
@@ -35,6 +37,9 @@ namespace MazeV.Maze_Logic
             Id = Guid.NewGuid();
             CurrentLocation = new Location();
             PreviousLocation = new Location();
+
+            CurrentMovementDirection = new UpDirection();
+            FutureMovementDirection = new UpDirection();
         }
     }
 }

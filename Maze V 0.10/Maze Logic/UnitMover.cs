@@ -13,9 +13,9 @@ namespace MazeV.Maze_Logic
             fMovementLogic = movementLogic;
         }
 
-        public void MovePlayer(Direction direction, Player player, MazeNodeData nodeData, MazeViewData mazeView)
+        public void MovePlayer(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
         {
-            Action<Direction, Player, MazeViewData> movementAction = fMovementLogic.GetMovementToPreform(direction, player, nodeData, mazeView);
+            Action<IDirection, IUnit, IMazeViewData> movementAction = fMovementLogic.GetMovementToPreform(direction, player, nodeData, mazeView);
             movementAction?.Invoke(direction, player, mazeView);                      
         }       
     }

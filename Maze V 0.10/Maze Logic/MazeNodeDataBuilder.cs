@@ -33,18 +33,19 @@ namespace MazeV.Maze_Logic
             return nodeData;
         }
 
-        public MazeViewData GenerateViewData(MazeNodeData nodeData)
+        public IMazeViewData GenerateViewData(MazeNodeData nodeData, IAxisFactory axisFactory)
         {
-            return new MazeViewData(fGridStart, fGridEnd, fGridSize, nodeData);
+            return new MazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
         private MazeNodeData CreatePathData(int seed, MazeNodeData nodeData)
         {
             ResetPathData(nodeData);
+            IOrderedEnumerable<INode> sortedNodes = GetSortedNodes(nodeData);
             Random randomizer = new Random(seed);
             List<int> copyOfNeigours = new List<int>();
 
-            foreach (Node node in nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count))
+            foreach (INode node in sortedNodes)
             {
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
@@ -55,7 +56,12 @@ namespace MazeV.Maze_Logic
             return nodeData;
         }
 
-        private void SetMinimumRequiredPathsForNode(MazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, Node node)
+        private  IOrderedEnumerable<INode> GetSortedNodes(MazeNodeData nodeData)
+        {
+            return nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count);
+        }
+
+        private void SetMinimumRequiredPathsForNode(MazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, INode node)
         {
             while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
             {
@@ -70,12 +76,12 @@ namespace MazeV.Maze_Logic
         /// <summary>
         /// returns a list containing neigbours of a given node
         /// </summary>
-        private List<NeighbourInfo> FindNeighbouringNodes(Node node, MazeNodeData nodeData)
+        private List<NeighbourInfo> FindNeighbouringNodes(INode node, MazeNodeData nodeData)
         {
             List<NeighbourInfo> neighbours = new List<NeighbourInfo>();
-            IEnumerable<Node> allPossibleNeigbours = GetNeigboursOfNode(node, nodeData);
+            IEnumerable<INode> allPossibleNeigbours = GetNeigboursOfNode(node, nodeData);
 
-            foreach (Node neighbourNode in allPossibleNeigbours)
+            foreach (INode neighbourNode in allPossibleNeigbours)
             {
                 NeighbourInfo tempNeighbour = new NeighbourInfo { Id = neighbourNode.Id, Location = neighbourNode.Location };
                 neighbours.Add(tempNeighbour);
@@ -101,7 +107,7 @@ namespace MazeV.Maze_Logic
         /// <summary>
         /// Returns a sequence of nodes that are all the neigbours of the given node.
         /// </summary>
-        private IEnumerable<Node> GetNeigboursOfNode(Node node, MazeNodeData nodeData)
+        private IEnumerable<INode> GetNeigboursOfNode(INode node, MazeNodeData nodeData)
         {
             return node.GetAllPossibleNeighbours().Select(x => nodeData.GetNode(x)).Where(x => x != null);
         }
@@ -113,15 +119,15 @@ namespace MazeV.Maze_Logic
             return (unevenGridSize / divider) + (unevenGridSize % divider);
         }
 
-        private bool HasMinimumRequiredPaths(Node vertex)
+        private bool HasMinimumRequiredPaths(INode vertex)
         {
             return vertex.Neighbours.Count == vertex.Path.Count || vertex.Path.Count == fMininumRequiredPaths;
         }
 
         private MazeNodeData InitializeMazeNodeData()
         {
-            Dictionary<Location, Node> nodesByLocation = new Dictionary<Location, Node>();
-            Dictionary<int, Node> nodesByIndex = new Dictionary<int, Node>();
+            Dictionary<ILocation, INode> nodesByLocation = new Dictionary<ILocation, INode>();
+            Dictionary<int, INode> nodesByIndex = new Dictionary<int, INode>();
 
             int count = 0;
             for (int z = fGridStart; z <= fGridEnd; z++)
@@ -132,7 +138,7 @@ namespace MazeV.Maze_Logic
                     {
                         count++;
                         Location location = new Location(x, y, z);
-                        Node node = new Node() { Id = count, Location = location };
+                        INode node = new Node() { Id = count, Location = location };
 
                         nodesByIndex.Add(count, node);
                         nodesByLocation.Add(location, nodesByIndex[count]);
@@ -149,7 +155,7 @@ namespace MazeV.Maze_Logic
         private MazeNodeData InitializeNeigbours(MazeNodeData nodeData)
         {
             //initialize neigbours
-            foreach (Node node in nodeData.NodesByIndex.Values)
+            foreach (INode node in nodeData.NodesByIndex.Values)
             {
                 node.Neighbours = FindNeighbouringNodes(node, nodeData);
             }
@@ -158,10 +164,11 @@ namespace MazeV.Maze_Logic
         }
 
         /// <summary>
-        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes.
+        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes. 
+        /// A loop is made by trying to reach original node by traveling trough the neigbourNodes list 
         /// Recursive method
         /// </summary>
-        private bool IsPathValid(Node fromNode, Node toNode, Node nodeToFind, int level, MazeNodeData nodeData)
+        private bool IsPathValid(INode fromNode, INode toNode, INode nodeToFind, int level, MazeNodeData nodeData)
         {
             if (toNode.Path.Except(new[] { fromNode.Id }).Contains(nodeToFind.Id))
                 return false;
@@ -195,7 +202,7 @@ namespace MazeV.Maze_Logic
         /// <summary>
         /// Adds path from given node to destination node
         /// </summary>
-        private void SetPath(Node node, int idOfDestinationNode, MazeNodeData nodeData)
+        private void SetPath(INode node, int idOfDestinationNode, MazeNodeData nodeData)
         {
             if ((node.Path.Contains(idOfDestinationNode) || !IsPathValid(node, nodeData.NodesByIndex[idOfDestinationNode], node, 1, nodeData)))
                 return;

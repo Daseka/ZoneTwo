@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MazeV.Maze_Logic
 {
-    public class Node
+    public class Node : INode
     {
         public int Id { get; set; }
         /// <summary>
@@ -18,8 +18,8 @@ namespace MazeV.Maze_Logic
         /// A list of ids of neigbouring nodes that has a path leading to current node
         /// </summary>
         public List<int> Path { get; set; }
-        public Shape shape { get; set; }
-        public Location Location { get; set; }
+        public Shape Shape { get; set; }
+        public ILocation Location { get; set; }
         public ICollectableItem CollectablePoint { get; }
         public IUnit Unit { get; set; }
         public int SquareSize { get; }
@@ -33,24 +33,24 @@ namespace MazeV.Maze_Logic
             SquareSize = DefaultSettings.NodeSize;
         }
 
-        public List<Location> GetAllPossibleNeighbours()
+        public List<ILocation> GetAllPossibleNeighbours()
         {
             return Location.GetAllPossibleNeighbours();
         }
 
-        public Node GetNeigbour(MazeViewData mazeView, Direction direction)
+        public INode GetNeigbour(IMazeViewData mazeView, IDirection direction)
         {
-            Location location = Location + mazeView.MovementCube[(int)direction];            
+            ILocation location = Location.Add(mazeView.MovementCube[direction.Value]);            
 
             return mazeView.GetNodeAt(location); 
         }
         
-        public void Draw(Node node, Graphics grapic, MazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
+        public void Draw(INode node, Graphics grapic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
         {
-            Node leftNode = node.GetNeigbour(mazeView, Direction.Left);
-            Node bottomNode = node.GetNeigbour(mazeView, Direction.Down);
-            Node rightNode = node.GetNeigbour(mazeView, Direction.Right);
-            Node topNode = node.GetNeigbour(mazeView, Direction.Up);
+            INode leftNode = node.GetNeigbour(mazeView, new LeftDirection());
+            INode bottomNode = node.GetNeigbour(mazeView, new DownDirection());
+            INode rightNode = node.GetNeigbour(mazeView, new RightDirection());
+            INode topNode = node.GetNeigbour(mazeView, new UpDirection());
 
             Pen pen = new Pen(Color.Blue);
             if (!Validator.DoesPathToNodeExist(node, topNode))

@@ -6,10 +6,10 @@ namespace MazeV.Maze_Logic
     public class MazeNodeData
     {
         public int Count { get => NodesByIndex.Count; }
-        public Dictionary<int, Node> NodesByIndex { get; }
-        public Dictionary<Location, Node> NodesByLocation { get; }
+        public Dictionary<int, INode> NodesByIndex { get; }
+        public Dictionary<ILocation, INode> NodesByLocation { get; }
 
-        public MazeNodeData(Dictionary<int, Node> nodesByIndex, Dictionary<Location, Node> nodesByLocation)
+        public MazeNodeData(Dictionary<int, INode> nodesByIndex, Dictionary<ILocation, INode> nodesByLocation)
         {
             NodesByIndex = nodesByIndex;
             NodesByLocation = nodesByLocation;
@@ -17,7 +17,7 @@ namespace MazeV.Maze_Logic
 
         public void ClearAllPaths()
         {
-            foreach (Node node in NodesByIndex?.Values)
+            foreach (INode node in NodesByIndex?.Values)
             {
                 node.Path.Clear();
             }
@@ -31,18 +31,18 @@ namespace MazeV.Maze_Logic
         /// <summary>
         /// returns the node of given location. Returns null if node is not pressent in the NodesByLocation Dictionairy
         /// </summary>
-        public Node GetNode(Location location)
+        public INode GetNode(ILocation location)
         {
-            NodesByLocation.TryGetValue(location, out Node node);
+            NodesByLocation.TryGetValue(location, out INode node);
             return node;
         }
 
         /// <summary>
         /// returns the node of given index, Rturns null if node is not present in the NodesByLocation Dictionairy
         /// </summary>
-        public Node GetNode(int index)
+        public INode GetNode(int index)
         {
-            NodesByIndex.TryGetValue(index, out Node node);
+            NodesByIndex.TryGetValue(index, out INode node);
             return node;
         }
 

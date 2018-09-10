@@ -3,31 +3,33 @@ using System.Linq;
 
 namespace MazeV.Maze_Logic
 {
-    public class MazeViewData : List<Node>
+    public class MazeViewData :  IMazeViewData
     {
-        public Axis LeftRightRotationAxis { get; set; }
-        public List<Location> MovementCube { get; set; }
-        public Axis UpDownRotationAxis { get; set; }
+        public IAxis LeftRightRotationAxis { get; set; }
+        public List<ILocation> MovementCube { get; set; }
+        public IAxis UpDownRotationAxis { get; set; }
         public int ViewEnd { get; set; }
         public int ViewSize { get; set; }
         public int ViewStart { get; set; }
+        public IList<INode> MazeNodes { get ; set ; }
 
-        public MazeViewData(int start, int end, int size, MazeNodeData nodeData)
+        public MazeViewData(int start, int end, int size, MazeNodeData nodeData, IAxisFactory axisFactory)
         {
             ViewSize = size;
             ViewEnd = end;
             ViewStart = start;
 
-            UpDownRotationAxis = Axis.XAxis;
-            LeftRightRotationAxis = Axis.YAxis;
+            UpDownRotationAxis = axisFactory.CreateXAxis();
+            LeftRightRotationAxis = axisFactory.CreateYAxis();
+            MazeNodes = new List<INode>();
 
             CreateInitialView(nodeData, 0);
             InitializeMovementCube();
         }
 
-        public Node GetNodeAt(Location location)
+        public INode GetNodeAt(ILocation location)
         {
-            return this.FirstOrDefault(x => x.Location == location);
+            return MazeNodes.FirstOrDefault(x => x.Location.Equals( location));
         }
 
         private void CreateInitialView(MazeNodeData nodeData, int zLevel)
@@ -36,15 +38,15 @@ namespace MazeV.Maze_Logic
             {
                 for (int x = ViewStart; x <= ViewEnd; x++)
                 {
-                    if (nodeData.NodesByLocation.TryGetValue(new Location(x, y, zLevel), out Node node))
-                        this.Add(node);
+                    if (nodeData.NodesByLocation.TryGetValue(new Location(x, y, zLevel), out INode node))
+                        MazeNodes.Add(node);
                 }
             }
         }
 
         private void InitializeMovementCube()
         {
-            MovementCube = new List<Location>(){
+            MovementCube = new List<ILocation>(){
                                 new Location(-1,0,0)
                                 ,new Location(1,0,0)
                                 ,new Location(0,-1,0)

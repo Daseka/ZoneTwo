@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,20 +60,29 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Maze Logic\Animator.cs" />
-    <Compile Include="Maze Logic\Axis.cs" />
+    <Compile Include="Maze Logic\AxisFactory.cs" />
     <Compile Include="Maze Logic\BaseUnit.cs" />
     <Compile Include="Maze Logic\CanvasVisualizer.cs" />
     <Compile Include="Maze Logic\Coin.cs" />
     <Compile Include="Maze Logic\ConsoleVisualizer.cs" />
+    <Compile Include="Maze Logic\DefaultMovementLogic.cs" />
     <Compile Include="Maze Logic\DefaultSettings.cs" />
-    <Compile Include="Maze Logic\Direction.cs" />
+    <Compile Include="Maze Logic\DownRotation.cs" />
     <Compile Include="Maze Logic\EmptyCommand.cs" />
+    <Compile Include="Maze Logic\IAxis.cs" />
+    <Compile Include="Maze Logic\IAxisFactory.cs" />
     <Compile Include="Maze Logic\ICollectableItem.cs" />
+    <Compile Include="Maze Logic\IDirection.cs" />
+    <Compile Include="Maze Logic\ILocation.cs" />
+    <Compile Include="Maze Logic\IMazeViewData.cs" />
     <Compile Include="Maze Logic\IMovementLogic.cs" />
+    <Compile Include="Maze Logic\INode.cs" />
+    <Compile Include="Maze Logic\IRotation.cs" />
     <Compile Include="Maze Logic\IUnit.cs" />
     <Compile Include="Maze Logic\ICommand.cs" />
     <Compile Include="Maze Logic\IVisualizer.cs" />
     <Compile Include="Maze Logic\Keybindings.cs" />
+    <Compile Include="Maze Logic\LeftRotation.cs" />
     <Compile Include="Maze Logic\Location.cs" />
     <Compile Include="Maze Logic\Maze.cs" />
     <Compile Include="Maze Logic\MazeNodeData.cs" />
@@ -85,14 +95,18 @@
     <Compile Include="Maze Logic\Node.cs" />
     <Compile Include="Maze Logic\NodeLine.cs" />
     <Compile Include="Maze Logic\Player.cs" />
+    <Compile Include="Maze Logic\RightRotation.cs" />
     <Compile Include="Maze Logic\RotateCommand.cs" />
-    <Compile Include="Maze Logic\Rotation.cs" />
     <Compile Include="Maze Logic\RoundedDouble.cs" />
     <Compile Include="Maze Logic\Shape.cs" />
     <Compile Include="Maze Logic\UnitFactory.cs" />
     <Compile Include="Maze Logic\UnitList.cs" />
     <Compile Include="Maze Logic\UnitMover.cs" />
+    <Compile Include="Maze Logic\UpRotation.cs" />
     <Compile Include="Maze Logic\Validator.cs" />
+    <Compile Include="Maze Logic\XAxis.cs" />
+    <Compile Include="Maze Logic\YAxis.cs" />
+    <Compile Include="Maze Logic\ZAxis.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

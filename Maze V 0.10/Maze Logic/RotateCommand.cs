@@ -4,22 +4,24 @@ namespace MazeV.Maze_Logic
 {
     public class RotateCommand : ICommand
     {
-        private readonly Rotation fRotation;
-        private readonly Player fPlayer;
-        private readonly MazeViewData fMazeView;
-        private readonly Dictionary<Location, Node> fNodesByLocation;
+        private readonly IRotation fRotation;
+        private readonly IUnit fPlayer;
+        private readonly IMazeViewData fMazeView;
+        private readonly Dictionary<ILocation, INode> fNodesByLocation;
+        private readonly IAxisFactory fAxisFactory;
 
-        public RotateCommand(Rotation rotation, Player player, MazeViewData mazeView, MazeNodeData nodeData)
+        public RotateCommand(IRotation rotation, IUnit player, IMazeViewData mazeView, MazeNodeData nodeData, IAxisFactory factory)
         {
             fRotation = rotation;
             fPlayer = player;
             fMazeView = mazeView;
             fNodesByLocation = nodeData.NodesByLocation;
+            fAxisFactory = factory;
         }
 
         public void Execute()
         {
-            MazeViewRotator rotator = new MazeViewRotator();
+            MazeViewRotator rotator = new MazeViewRotator(fAxisFactory);
             rotator.RotateView(fRotation, fPlayer, fMazeView, fNodesByLocation);
         }
     }

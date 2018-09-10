@@ -12,17 +12,16 @@ namespace MazeV.Maze_Logic
             fGraphic = graphic?? throw new ArgumentException("No Graphic found cant draw"); 
         }
 
-        public void Draw(MazeViewData mazeView, UnitList unitList)
+        public void Draw(IMazeViewData mazeView, UnitList unitList)
         {       
             fGraphic.Clear(Color.White);
-
             int index = 0;
 
             for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)
             {
                 for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
                 {
-                    Node node = mazeView[index];
+                    INode node = mazeView.MazeNodes[index];
                     DrawNode(x, y, node, fGraphic, mazeView, unitList);
                     index++;
                 }
@@ -35,7 +34,7 @@ namespace MazeV.Maze_Logic
             return (xOrY + graphicOffset) * nodeSquareSize;
         }
 
-        private void DrawNode(int x, int y, Node node, Graphics grapic, MazeViewData mazeView, UnitList unitList)
+        private void DrawNode(int x, int y, INode node, Graphics grapic, IMazeViewData mazeView, UnitList unitList)
         {
             int indeX = GetNodePoint(x, node.SquareSize, mazeView.ViewStart);
             int indeY = GetNodePoint(y, node.SquareSize, mazeView.ViewStart);
@@ -45,7 +44,7 @@ namespace MazeV.Maze_Logic
             DrawPlayer(node, grapic, unitList, indeX, indeY);                       
         }
 
-        private static void DrawNode(Node node, Graphics grapic, MazeViewData mazeView, int indeX, int indeY)
+        private static void DrawNode(INode node, Graphics grapic, IMazeViewData mazeView, int indeX, int indeY)
         {
             int HalfOfNodeSize = DefaultSettings.HalfOfNodeSize;
             Point topLeft = new Point(indeX - HalfOfNodeSize, indeY - HalfOfNodeSize);
@@ -55,14 +54,14 @@ namespace MazeV.Maze_Logic
             node.Draw(node, grapic, mazeView, topLeft, topRight, bottomLeft, bottomRight);
         }
 
-        private static void DrawPlayer(Node node, Graphics grapic, UnitList unitList, int indeX, int indeY)
+        private static void DrawPlayer(INode node, Graphics grapic, UnitList unitList, int indeX, int indeY)
         {
             Player player = unitList.GetPlayer();
             Rectangle playerRect = new Rectangle(indeX - DefaultSettings.HalfOfUnitSize, indeY - DefaultSettings.HalfOfUnitSize, DefaultSettings.UnitSize, DefaultSettings.UnitSize);
             player.Draw(grapic, playerRect, node);
         }
 
-        private static void DrawCollectable(Node node, Graphics grapic, int indeX, int indeY)
+        private static void DrawCollectable(INode node, Graphics grapic, int indeX, int indeY)
         {
             Rectangle rectangle = new Rectangle(indeX - DefaultSettings.HalfOfCollectableSize, indeY - DefaultSettings.HalfOfCollectableSize, DefaultSettings.CollectableSize, DefaultSettings.CollectableSize);
             node.CollectablePoint.Draw(grapic, rectangle);

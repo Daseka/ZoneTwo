@@ -8,9 +8,9 @@ namespace MazeV.Maze_Logic
     public class MoveCommand : ICommand
     {
         private readonly IUnit fUnit;
-        private readonly Direction fDirection;
+        private readonly IDirection fDirection;
 
-        public MoveCommand(Direction direction, IUnit unit)
+        public MoveCommand(IDirection direction, IUnit unit)
         {
             fUnit = unit;
             fDirection = direction;

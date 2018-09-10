@@ -11,13 +11,14 @@ namespace MazeV.Maze_Logic
 
     public interface IUnit
     {
-        Location CurrentLocation { get; }
-        Location PreviousLocation { get; }
+        ILocation CurrentLocation { get; }
+        ILocation PreviousLocation { get; }
         Guid Id { get; set; }
-        Direction CurrentMovementDirection { get; set; }
-        Direction FutureMovementDirection { get; set; }       
+        IDirection CurrentMovementDirection { get; set; }
+        IDirection FutureMovementDirection { get; set; }
 
-        void AssignLocation(Location location);
-        void Draw(Graphics graphics, Rectangle rectangle, Node node);
+        void AssignLocation(ILocation location);
+        void Draw(Graphics graphics, Rectangle rectangle, INode node);
+        IAxis ViewingAxis { get; set; }
     }
 }

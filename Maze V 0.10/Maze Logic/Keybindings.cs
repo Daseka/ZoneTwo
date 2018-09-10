@@ -15,10 +15,8 @@ namespace MazeV.Maze_Logic
         }
 
         public static ICommand GetCommand(Keys key)
-        {
-            ICommand command = null;
-            fBindingList.TryGetValue(key, out command);
-
+        {           
+            fBindingList.TryGetValue(key, out ICommand command);
             return command ?? new EmptyCommand(); 
         }
     }

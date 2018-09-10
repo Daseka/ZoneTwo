@@ -10,7 +10,7 @@ namespace MazeV.Maze_Logic
 {
     public interface IVisualizer
     {
-        void Draw(MazeViewData mazeView,UnitList unitList);
+        void Draw(IMazeViewData mazeView,UnitList unitList);
     }
 
 }

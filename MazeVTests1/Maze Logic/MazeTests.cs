@@ -15,7 +15,7 @@ namespace MazeV.Maze_Logic.Tests
         public void InitializeTest()
         {
             MazeNodeData nodeData = new MazeNodeData(new Dictionary<int, INode>(), new Dictionary<ILocation, INode>());
-            MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData);
+            MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData,new AxisFactory());
             Maze maze = new Maze(nodeData,viewData);
             maze.Initialize();
 

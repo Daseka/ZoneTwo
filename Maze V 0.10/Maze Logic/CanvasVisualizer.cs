@@ -15,7 +15,6 @@ namespace MazeV.Maze_Logic
         public void Draw(IMazeViewData mazeView, UnitList unitList)
         {       
             fGraphic.Clear(Color.White);
-
             int index = 0;
 
             for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)

@@ -15,10 +15,10 @@ namespace MazeV.Maze_Logic
         ILocation PreviousLocation { get; }
         Guid Id { get; set; }
         IDirection CurrentMovementDirection { get; set; }
-        IDirection FutureMovementDirection { get; set; }       
+        IDirection FutureMovementDirection { get; set; }
 
         void AssignLocation(ILocation location);
         void Draw(Graphics graphics, Rectangle rectangle, INode node);
-        Axis ViewingAxis { get; set; }
+        IAxis ViewingAxis { get; set; }
     }
 }

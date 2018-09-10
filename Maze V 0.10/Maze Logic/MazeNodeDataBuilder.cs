@@ -33,18 +33,19 @@ namespace MazeV.Maze_Logic
             return nodeData;
         }
 
-        public IMazeViewData GenerateViewData(MazeNodeData nodeData)
+        public IMazeViewData GenerateViewData(MazeNodeData nodeData, IAxisFactory axisFactory)
         {
-            return new MazeViewData(fGridStart, fGridEnd, fGridSize, nodeData);
+            return new MazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
         private MazeNodeData CreatePathData(int seed, MazeNodeData nodeData)
         {
             ResetPathData(nodeData);
+            IOrderedEnumerable<INode> sortedNodes = GetSortedNodes(nodeData);
             Random randomizer = new Random(seed);
             List<int> copyOfNeigours = new List<int>();
 
-            foreach (INode node in nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count))
+            foreach (INode node in sortedNodes)
             {
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
@@ -53,6 +54,11 @@ namespace MazeV.Maze_Logic
             }
 
             return nodeData;
+        }
+
+        private  IOrderedEnumerable<INode> GetSortedNodes(MazeNodeData nodeData)
+        {
+            return nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count);
         }
 
         private void SetMinimumRequiredPathsForNode(MazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, INode node)
@@ -158,7 +164,8 @@ namespace MazeV.Maze_Logic
         }
 
         /// <summary>
-        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes.
+        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes. 
+        /// A loop is made by trying to reach original node by traveling trough the neigbourNodes list 
         /// Recursive method
         /// </summary>
         private bool IsPathValid(INode fromNode, INode toNode, INode nodeToFind, int level, MazeNodeData nodeData)

@@ -15,7 +15,7 @@ namespace MazeV.Maze_Logic
         public ILocation PreviousLocation { get; set; }
         public IDirection CurrentMovementDirection { get; set; }
         public IDirection FutureMovementDirection { get; set; }
-        public Axis ViewingAxis { get; set; }
+        public IAxis ViewingAxis { get; set; }
 
 
         public void AssignLocation(ILocation location)

@@ -5,22 +5,22 @@ namespace MazeV.Maze_Logic
 {
     public class MazeViewData :  IMazeViewData
     {
-        public Axis LeftRightRotationAxis { get; set; }
+        public IAxis LeftRightRotationAxis { get; set; }
         public List<ILocation> MovementCube { get; set; }
-        public Axis UpDownRotationAxis { get; set; }
+        public IAxis UpDownRotationAxis { get; set; }
         public int ViewEnd { get; set; }
         public int ViewSize { get; set; }
         public int ViewStart { get; set; }
         public IList<INode> MazeNodes { get ; set ; }
 
-        public MazeViewData(int start, int end, int size, MazeNodeData nodeData)
+        public MazeViewData(int start, int end, int size, MazeNodeData nodeData, IAxisFactory axisFactory)
         {
             ViewSize = size;
             ViewEnd = end;
             ViewStart = start;
 
-            UpDownRotationAxis = Axis.XAxis;
-            LeftRightRotationAxis = Axis.YAxis;
+            UpDownRotationAxis = axisFactory.CreateXAxis();
+            LeftRightRotationAxis = axisFactory.CreateYAxis();
             MazeNodes = new List<INode>();
 
             CreateInitialView(nodeData, 0);

@@ -12,8 +12,9 @@ namespace MazeV
         public Form1()
         {
             InitializeComponent();
-            InitializeMaze();
-            InitializeKeybindings();
+            IAxisFactory axisFactory = new AxisFactory();
+            InitializeMaze(axisFactory);
+            InitializeKeybindings(axisFactory);
             
             this.DoubleBuffered = true;
 
@@ -22,22 +23,22 @@ namespace MazeV
             fAnimator.Start();
         }
 
-        private void InitializeMaze()
+        private void InitializeMaze(IAxisFactory axisFactory)
         {
             MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
             MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
-            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData);
+            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData,axisFactory);
 
             fMaze = new Maze(nodeData, viewData);
             fMaze.Initialize();
         }
 
-        private void InitializeKeybindings()
+        private void InitializeKeybindings(IAxisFactory axisFactory)
         {
-            Keybindings.Add(Keys.Up, new RotateCommand(Rotation.Up, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
-            Keybindings.Add(Keys.Down, new RotateCommand(Rotation.Down, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
-            Keybindings.Add(Keys.Left, new RotateCommand(Rotation.Left, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
-            Keybindings.Add(Keys.Right, new RotateCommand(Rotation.Right, fMaze.Hero, fMaze.ViewData, fMaze.NodeData));
+            Keybindings.Add(Keys.Up, new RotateCommand(new UpRotation(), fMaze.Hero, fMaze.ViewData, fMaze.NodeData,axisFactory));
+            Keybindings.Add(Keys.Down, new RotateCommand(new DownRotation(), fMaze.Hero, fMaze.ViewData, fMaze.NodeData,axisFactory));
+            Keybindings.Add(Keys.Left, new RotateCommand(new LeftRotation(), fMaze.Hero, fMaze.ViewData, fMaze.NodeData,axisFactory));
+            Keybindings.Add(Keys.Right, new RotateCommand(new RightRotation(), fMaze.Hero, fMaze.ViewData, fMaze.NodeData,axisFactory));
 
             Keybindings.Add(Keys.W, new MoveCommand(new UpDirection(), fMaze.Hero));
             Keybindings.Add(Keys.S, new MoveCommand(new DownDirection(), fMaze.Hero));

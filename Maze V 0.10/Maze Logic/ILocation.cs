@@ -8,8 +8,7 @@ namespace MazeV.Maze_Logic
         RoundedDouble PointX { get; set; }
         RoundedDouble PointY { get; set; }
         RoundedDouble PointZ { get; set; }
-
-        //bool Equals(ILocation other);
+        
         bool Equals(object obj);
         List<ILocation> GetAllPossibleNeighbours();
         ILocation GetCopy();

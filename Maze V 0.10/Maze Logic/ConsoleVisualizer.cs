@@ -43,6 +43,9 @@ namespace MazeV.Maze_Logic
                     if (counter < mazeView.MazeNodes.Count)
                         current = mazeView.MazeNodes[counter];
 
+                    if (current == null)
+                        continue;
+                    
                     ILocation locationToRight = current.Location.Add( mazeView.MovementCube[new RightDirection().Value]);
                     ILocation locationAtBottom = current.Location.Add( mazeView.MovementCube[new LeftDirection().Value]);
 

@@ -6,7 +6,7 @@ namespace MazeV.Maze_Logic
 {
     public class MazeViewRotator
     {
-        IAxisFactory fAxisFactory = new AxisFactory();
+        private readonly IAxisFactory fAxisFactory = new AxisFactory();
 
         public MazeViewRotator(IAxisFactory factory)
         {

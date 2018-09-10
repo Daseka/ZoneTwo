@@ -78,7 +78,7 @@ namespace MazeV
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void PictureBox1_Paint(object sender, PaintEventArgs e)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             IVisualizer visualizer = new CanvasVisualizer(e.Graphics);
 

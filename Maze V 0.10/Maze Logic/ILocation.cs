@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MazeV.Maze_Logic
 {
-    public interface ILocation: IEquatable<ILocation>
+    public interface ILocation
     {
         RoundedDouble PointX { get; set; }
         RoundedDouble PointY { get; set; }

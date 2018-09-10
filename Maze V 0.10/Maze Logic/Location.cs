@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MazeV.Maze_Logic
 {
-    public sealed class Location :  ILocation
+    public sealed class Location : ILocation, IEquatable<Location>
     {
         private readonly static ILocation[] fVectors = new ILocation[]{
                                                 new Location(1,0,0),new Location(-1,0,0),
@@ -47,12 +47,7 @@ namespace MazeV.Maze_Logic
 
             return Equals(obj as Location);
         }
-
-        public bool Equals(ILocation other)
-        {
-            return Equals(other as Location);
-        }
-
+       
         public bool Equals(Location other)
         {
             return (PointX == other?.PointX && PointY == other?.PointY && PointZ == other?.PointZ);

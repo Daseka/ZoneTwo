@@ -7,11 +7,11 @@ namespace MazeV.Maze_Logic
         private UnitFactory fUnitFactory;
 
         public IUnit Hero { get { return UnitList.GetPlayer(); } }
-        public MazeNodeData NodeData { get; private set; }
+        public IMazeNodeData NodeData { get; private set; }
         public UnitList UnitList { get; set; }
         public IMazeViewData ViewData { get; private set; }
 
-        public Maze(MazeNodeData nodeData, IMazeViewData viewData)
+        public Maze(IMazeNodeData nodeData, IMazeViewData viewData)
         {
             NodeData = nodeData;
             ViewData = viewData;

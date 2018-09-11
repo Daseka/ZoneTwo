@@ -13,7 +13,7 @@ namespace MazeV.Maze_Logic
         public int ViewStart { get; set; }
         public IList<INode> MazeNodes { get ; set ; }
 
-        public MazeViewData(int start, int end, int size, MazeNodeData nodeData, IAxisFactory axisFactory)
+        public MazeViewData(int start, int end, int size, IMazeNodeData nodeData, IAxisFactory axisFactory)
         {
             ViewSize = size;
             ViewEnd = end;
@@ -32,7 +32,7 @@ namespace MazeV.Maze_Logic
             return MazeNodes.FirstOrDefault(x => x.Location.Equals( location));
         }
 
-        private void CreateInitialView(MazeNodeData nodeData, int zLevel)
+        private void CreateInitialView(IMazeNodeData nodeData, int zLevel)
         {
             for (int y = ViewStart; y <= ViewEnd; y++)
             {

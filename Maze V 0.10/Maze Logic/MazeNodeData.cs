@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MazeV.Maze_Logic
 {
-    public class MazeNodeData
+    public class MazeNodeData : IMazeNodeData
     {
         public int Count { get => NodesByIndex.Count; }
         public Dictionary<int, INode> NodesByIndex { get; }

@@ -26,7 +26,7 @@ namespace MazeV
         private void InitializeMaze(IAxisFactory axisFactory)
         {
             MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
-            MazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
+            IMazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
             IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData,axisFactory);
 
             fMaze = new Maze(nodeData, viewData);

@@ -6,8 +6,8 @@ namespace MazeV.Maze_Logic
 {
     public class DefaultMovementLogic : IMovementLogic
     {
-        private readonly Dictionary<Func<IDirection, IUnit, MazeNodeData, IMazeViewData, bool>, Action<IDirection,IUnit, IMazeViewData>> 
-            fMovementPriorityList = new Dictionary<Func<IDirection, IUnit, MazeNodeData, IMazeViewData, bool>, Action<IDirection, IUnit, IMazeViewData>>();
+        private readonly Dictionary<Func<IDirection, IUnit, IMazeNodeData, IMazeViewData, bool>, Action<IDirection,IUnit, IMazeViewData>> 
+            fMovementPriorityList = new Dictionary<Func<IDirection, IUnit, IMazeNodeData, IMazeViewData, bool>, Action<IDirection, IUnit, IMazeViewData>>();
         
         /// <summary>
         // 1: try move player in last received direction
@@ -21,12 +21,12 @@ namespace MazeV.Maze_Logic
             fMovementPriorityList.Add(TryReverseDirection, AssignReverseDirection);
         }
 
-        public Action<IDirection, IUnit, IMazeViewData> GetMovementToPreform(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
+        public Action<IDirection, IUnit, IMazeViewData> GetMovementToPreform(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             return fMovementPriorityList.Where((kp => kp.Key(direction, player, nodeData, mazeView))).FirstOrDefault().Value;
         }
 
-        private bool TryNewDirection(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
+        private bool TryNewDirection(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             ILocation location = player.CurrentLocation.GetCopy().Add( mazeView.MovementCube[direction.Value]);
             return Validator.IsFutureLocationValid(player.CurrentLocation, location, nodeData);
@@ -39,7 +39,7 @@ namespace MazeV.Maze_Logic
             player.AssignLocation(futureLocation);
         }
 
-        private bool TryCurrentDirection(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
+        private bool TryCurrentDirection(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             ILocation location = player.CurrentLocation.GetCopy().Add(mazeView.MovementCube[player.CurrentMovementDirection.Value]);
             return Validator.IsFutureLocationValid(player.CurrentLocation, location, nodeData);
@@ -51,7 +51,7 @@ namespace MazeV.Maze_Logic
             player.AssignLocation(futureLocation);
         }
 
-        private bool TryReverseDirection(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
+        private bool TryReverseDirection(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             IDirection reverseDirection = player.CurrentMovementDirection.ReverseDirection;
             ILocation futureLocation = player.CurrentLocation.GetCopy().Add(mazeView.MovementCube[reverseDirection.Value]);

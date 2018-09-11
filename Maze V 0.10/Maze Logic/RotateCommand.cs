@@ -10,7 +10,7 @@ namespace MazeV.Maze_Logic
         private readonly Dictionary<ILocation, INode> fNodesByLocation;
         private readonly IAxisFactory fAxisFactory;
 
-        public RotateCommand(IRotation rotation, IUnit player, IMazeViewData mazeView, MazeNodeData nodeData, IAxisFactory factory)
+        public RotateCommand(IRotation rotation, IUnit player, IMazeViewData mazeView, IMazeNodeData nodeData, IAxisFactory factory)
         {
             fRotation = rotation;
             fPlayer = player;

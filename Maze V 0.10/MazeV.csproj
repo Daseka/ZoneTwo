@@ -74,6 +74,7 @@
     <Compile Include="Maze Logic\ICollectableItem.cs" />
     <Compile Include="Maze Logic\IDirection.cs" />
     <Compile Include="Maze Logic\ILocation.cs" />
+    <Compile Include="Maze Logic\IMazeNodeData.cs" />
     <Compile Include="Maze Logic\IMazeViewData.cs" />
     <Compile Include="Maze Logic\IMovementLogic.cs" />
     <Compile Include="Maze Logic\INode.cs" />

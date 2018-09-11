@@ -8,7 +8,7 @@ namespace MazeV.Maze_Logic
 {
     public static class Validator
     {
-        public static bool IsFutureLocationValid(ILocation currentLocation, ILocation futureLocation, MazeNodeData nodeData)
+        public static bool IsFutureLocationValid(ILocation currentLocation, ILocation futureLocation, IMazeNodeData nodeData)
         {
             INode currentNode = GetNodeAtLocation(currentLocation, nodeData);
             INode futureNode = GetNodeAtLocation(futureLocation, nodeData);
@@ -17,7 +17,7 @@ namespace MazeV.Maze_Logic
             return currentNode.Path.Contains(id);
         }
 
-        private static INode GetNodeAtLocation(ILocation currentLocation, MazeNodeData nodeData)
+        private static INode GetNodeAtLocation(ILocation currentLocation, IMazeNodeData nodeData)
         {
             return nodeData.NodesByIndex.Where(x => x.Value.Location.Equals(currentLocation)).Select(x => x.Value).FirstOrDefault();
         }
@@ -44,7 +44,7 @@ namespace MazeV.Maze_Logic
         /// given vertex to all other vertices
         /// </summary>
         /// <returns></returns>
-        public static bool IsLayoutValid(MazeNodeData nodeData)
+        public static bool IsLayoutValid(IMazeNodeData nodeData)
         {
             if (nodeData.NodesByIndex.Count == 0)
                 return false;

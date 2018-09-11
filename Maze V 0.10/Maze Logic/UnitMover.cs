@@ -13,7 +13,7 @@ namespace MazeV.Maze_Logic
             fMovementLogic = movementLogic;
         }
 
-        public void MovePlayer(IDirection direction, IUnit player, MazeNodeData nodeData, IMazeViewData mazeView)
+        public void MovePlayer(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             Action<IDirection, IUnit, IMazeViewData> movementAction = fMovementLogic.GetMovementToPreform(direction, player, nodeData, mazeView);
             movementAction?.Invoke(direction, player, mazeView);                      

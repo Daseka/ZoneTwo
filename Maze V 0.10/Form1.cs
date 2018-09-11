@@ -13,7 +13,8 @@ namespace MazeV
         {
             InitializeComponent();
             IAxisFactory axisFactory = new AxisFactory();
-            InitializeMaze(axisFactory);
+            IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
+            InitializeMaze(axisFactory,mazeViewDataFactory);
             InitializeKeybindings(axisFactory);
             
             this.DoubleBuffered = true;
@@ -23,11 +24,11 @@ namespace MazeV
             fAnimator.Start();
         }
 
-        private void InitializeMaze(IAxisFactory axisFactory)
+        private void InitializeMaze(IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
         {
             MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(11, 3);
             IMazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
-            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData,axisFactory);
+            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData,axisFactory,mazeViewDataFactory);
 
             fMaze = new Maze(nodeData, viewData);
             fMaze.Initialize();

@@ -33,9 +33,9 @@ namespace MazeV.Maze_Logic
             return nodeData;
         }
 
-        public IMazeViewData GenerateViewData(IMazeNodeData nodeData, IAxisFactory axisFactory)
+        public IMazeViewData GenerateViewData(IMazeNodeData nodeData, IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
         {
-            return new MazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
+            return  mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
          private IMazeNodeData CreatePathData(int seed, IMazeNodeData nodeData)

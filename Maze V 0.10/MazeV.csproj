@@ -76,6 +76,7 @@
     <Compile Include="Maze Logic\ILocation.cs" />
     <Compile Include="Maze Logic\IMazeNodeData.cs" />
     <Compile Include="Maze Logic\IMazeViewData.cs" />
+    <Compile Include="Maze Logic\IMazeViewDataFactory.cs" />
     <Compile Include="Maze Logic\IMovementLogic.cs" />
     <Compile Include="Maze Logic\INode.cs" />
     <Compile Include="Maze Logic\IRotation.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Maze Logic\MazeNodeData.cs" />
     <Compile Include="Maze Logic\MazeNodeDataBuilder.cs" />
     <Compile Include="Maze Logic\MazeViewData.cs" />
+    <Compile Include="Maze Logic\MazeViewDataFactory.cs" />
     <Compile Include="Maze Logic\MazeViewRotator.cs" />
     <Compile Include="Maze Logic\Monster.cs" />
     <Compile Include="Maze Logic\MoveCommand.cs" />

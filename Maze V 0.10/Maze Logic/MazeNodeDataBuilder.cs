@@ -43,9 +43,7 @@ namespace MazeV.Maze_Logic
             ResetPathData(nodeData);
             IOrderedEnumerable<INode> sortedNodes = SortNodeData(nodeData);
             Random randomizer = new Random(seed);
-            nodeData = SetPathsForNodeData(nodeData, sortedNodes, randomizer);
-
-            return nodeData;
+            return SetPathsForNodeData(nodeData, sortedNodes, randomizer);            
         }
 
         private IMazeNodeData SetPathsForNodeData(IMazeNodeData nodeData, IOrderedEnumerable<INode> sortedNodes, Random randomizer)

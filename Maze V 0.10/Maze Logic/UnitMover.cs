@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MazeV.Maze_Logic
 {
@@ -16,7 +14,7 @@ namespace MazeV.Maze_Logic
         public void MovePlayer(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
             Action<IDirection, IUnit, IMazeViewData> movementAction = fMovementLogic.GetMovementToPreform(direction, player, nodeData, mazeView);
-            movementAction?.Invoke(direction, player, mazeView);                      
-        }       
+            movementAction?.Invoke(direction, player, mazeView);
+        }
     }
 }

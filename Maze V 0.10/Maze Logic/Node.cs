@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeV.Maze_Logic
 {
     public class Node : INode
     {
+        public ICollectableItem CollectablePoint { get; }
+
         public int Id { get; set; }
+
+        public ILocation Location { get; set; }
+
         /// <summary>
         /// A list of all neigbours of current node
         /// </summary>
-        public List<NeighbourInfo> Neighbours { get; set; }
+        public IList<NeighbourInfo> Neighbours { get; set; }
+
         /// <summary>
         /// A list of ids of neigbouring nodes that has a path leading to current node
         /// </summary>
-        public List<int> Path { get; set; }
+        public IList<int> Path { get; set; }
+
         public Shape Shape { get; set; }
-        public ILocation Location { get; set; }
-        public ICollectableItem CollectablePoint { get; }
-        public IUnit Unit { get; set; }
+
         public int SquareSize { get; }
+
+        public IUnit Unit { get; set; }
 
         public Node()
         {
@@ -33,18 +36,6 @@ namespace MazeV.Maze_Logic
             SquareSize = DefaultSettings.NodeSize;
         }
 
-        public List<ILocation> GetAllPossibleNeighbours()
-        {
-            return Location.GetAllPossibleNeighbours();
-        }
-
-        public INode GetNeigbour(IMazeViewData mazeView, IDirection direction)
-        {
-            ILocation location = Location.Add(mazeView.MovementCube[direction.Value]);            
-
-            return mazeView.GetNodeAt(location); 
-        }
-        
         public void Draw(INode node, Graphics grapic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
         {
             INode leftNode = node.GetNeigbour(mazeView, new LeftDirection());
@@ -64,6 +55,18 @@ namespace MazeV.Maze_Logic
 
             if (!Validator.DoesPathToNodeExist(node, leftNode))
                 grapic.DrawLine(pen, bottomLeft, topLeft);
+        }
+
+        public IList<ILocation> GetAllPossibleNeighbours()
+        {
+            return Location.GetAllPossibleNeighbours();
+        }
+
+        public INode GetNeigbour(IMazeViewData mazeView, IDirection direction)
+        {
+            ILocation location = Location.Add(mazeView.MovementCube[direction.Value]);
+
+            return mazeView.GetNodeAt(location);
         }
     }
 }

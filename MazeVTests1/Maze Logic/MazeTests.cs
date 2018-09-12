@@ -1,10 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MazeV.Maze_Logic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MazeV.Maze_Logic.Tests
 {
@@ -15,8 +10,8 @@ namespace MazeV.Maze_Logic.Tests
         public void InitializeTest()
         {
             MazeNodeData nodeData = new MazeNodeData(new Dictionary<int, INode>(), new Dictionary<ILocation, INode>());
-            MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData,new AxisFactory());
-            Maze maze = new Maze(nodeData,viewData);
+            MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData, new AxisFactory());
+            Maze maze = new Maze(nodeData, viewData);
             maze.Initialize();
 
             int numberOfNodesTotal = maze.NodeData.Count;
@@ -28,36 +23,36 @@ namespace MazeV.Maze_Logic.Tests
             Assert.AreEqual(27, numberOfNodesTotal, $"The 3D maze is a 3 by 3 by 3 cube. Node count should be 27 : {numberOfNodesTotal}");
         }
 
-    //    [TestMethod()]
-    //    public void GenerateLayoutDataTest()
-    //    {
-    //        Maze maze = new Maze();
-    //        bool isLayoutValid = maze.GenerateLayoutData(12345);
+        //    [TestMethod()]
+        //    public void GenerateLayoutDataTest()
+        //    {
+        //        Maze maze = new Maze();
+        //        bool isLayoutValid = maze.GenerateLayoutData(12345);
 
-    //        Assert.IsTrue(!isLayoutValid, $"Maze not Initialized isLayoutValid should be false : {isLayoutValid}");
+        //        Assert.IsTrue(!isLayoutValid, $"Maze not Initialized isLayoutValid should be false : {isLayoutValid}");
 
-    //        maze.Initialize(3, 3);
-    //        isLayoutValid = maze.GenerateLayoutData(12345);
+        //        maze.Initialize(3, 3);
+        //        isLayoutValid = maze.GenerateLayoutData(12345);
 
-    //        Assert.IsTrue(isLayoutValid, $"Maze is Initialized isLayoutValid should be true : {isLayoutValid}");
-    //    }
+        //        Assert.IsTrue(isLayoutValid, $"Maze is Initialized isLayoutValid should be true : {isLayoutValid}");
+        //    }
 
-    //    [TestMethod()]
-    //    public void ProcessPlayerInNodeTest()
-    //    {
-    //        Maze maze = new Maze();
-    //        maze.Initialize(3, 3);
+        //    [TestMethod()]
+        //    public void ProcessPlayerInNodeTest()
+        //    {
+        //        Maze maze = new Maze();
+        //        maze.Initialize(3, 3);
 
-    //        int totalNodeCount = maze.GetTotalNodeCount();
-    //        int emptyNodeCount = maze.GetEmptyNodeCount();
+        //        int totalNodeCount = maze.GetTotalNodeCount();
+        //        int emptyNodeCount = maze.GetEmptyNodeCount();
 
-    //        Assert.AreEqual(27,totalNodeCount, $"The 3D maze is a 3 by 3 by 3 cube. Node count should be 27 : {totalNodeCount}");
-    //        Assert.AreEqual(0, emptyNodeCount, $"Player in node has not been procesed. Empty nodes should be 0: {emptyNodeCount}");
+        //        Assert.AreEqual(27,totalNodeCount, $"The 3D maze is a 3 by 3 by 3 cube. Node count should be 27 : {totalNodeCount}");
+        //        Assert.AreEqual(0, emptyNodeCount, $"Player in node has not been procesed. Empty nodes should be 0: {emptyNodeCount}");
 
-    //        maze.ProcessPlayerInNode();
-    //        emptyNodeCount = maze.GetEmptyNodeCount();
+        //        maze.ProcessPlayerInNode();
+        //        emptyNodeCount = maze.GetEmptyNodeCount();
 
-    //        Assert.AreEqual(1, emptyNodeCount, $"Player in node has not been procesed. Empty nodes should be 0: {emptyNodeCount}");
-    //    }
+        //        Assert.AreEqual(1, emptyNodeCount, $"Player in node has not been procesed. Empty nodes should be 0: {emptyNodeCount}");
+        //    }
     }
 }

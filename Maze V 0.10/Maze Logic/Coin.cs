@@ -5,8 +5,9 @@ namespace MazeV.Maze_Logic
 {
     internal class Coin : ICollectableItem
     {
-        private Action<Graphics, Rectangle> fDoDrawing;        
         private readonly Size fSize;
+        private Action<Graphics, Rectangle> fDoDrawing;
+
         public bool IsCollected { get; private set; }
 
         public Coin()

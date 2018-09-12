@@ -7,6 +7,7 @@ namespace MazeV.Maze_Logic
     internal class NodeLine : IEquatable<NodeLine>
     {
         public Point Point1 { get; set; }
+
         public Point Point2 { get; set; }
 
         public bool Equals(NodeLine other)

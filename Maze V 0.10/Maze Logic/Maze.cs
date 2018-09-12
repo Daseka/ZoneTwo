@@ -7,8 +7,11 @@ namespace MazeV.Maze_Logic
         private UnitFactory fUnitFactory;
 
         public IUnit Hero { get { return UnitList.GetPlayer(); } }
+
         public IMazeNodeData NodeData { get; private set; }
+
         public UnitList UnitList { get; set; }
+
         public IMazeViewData ViewData { get; private set; }
 
         public Maze(IMazeNodeData nodeData, IMazeViewData viewData)
@@ -31,7 +34,7 @@ namespace MazeV.Maze_Logic
 
         public void ProcessPlayerInNode()
         {
-            INode NodeThatPlayerIsIn = NodeData.NodesByIndex.Where(x => x.Value.Location.Equals( Hero.CurrentLocation)).Select(x => x.Value).FirstOrDefault();           
+            INode NodeThatPlayerIsIn = NodeData.NodesByIndex.Where(x => x.Value.Location.Equals(Hero.CurrentLocation)).Select(x => x.Value).FirstOrDefault();
             NodeThatPlayerIsIn?.CollectablePoint.Collect();
         }
 

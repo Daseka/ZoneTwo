@@ -1,35 +1,37 @@
-﻿using System;
-
-
-namespace MazeV.Maze_Logic
+﻿namespace MazeV.Maze_Logic
 {
     public interface IDirection
     {
-        int Value { get; }
         IDirection ReverseDirection { get; }
-    }
-   
-    public class LeftDirection : IDirection
-    {
-        public int Value => 0;
-        public IDirection ReverseDirection => new RightDirection();       
-    }
 
-    public class RightDirection : IDirection
-    {
-        public int Value => 1;
-        public IDirection ReverseDirection => new LeftDirection();       
-    }
-
-    public class UpDirection : IDirection
-    {
-        public int Value => 2;
-        public IDirection ReverseDirection => new DownDirection();
+        int Value { get; }
     }
 
     public class DownDirection : IDirection
     {
-        public int Value => 3;
         public IDirection ReverseDirection => new UpDirection();
+
+        public int Value => 3;
+    }
+
+    public class LeftDirection : IDirection
+    {
+        public IDirection ReverseDirection => new RightDirection();
+
+        public int Value => 0;
+    }
+
+    public class RightDirection : IDirection
+    {
+        public IDirection ReverseDirection => new LeftDirection();
+
+        public int Value => 1;
+    }
+
+    public class UpDirection : IDirection
+    {
+        public IDirection ReverseDirection => new DownDirection();
+
+        public int Value => 2;
     }
 }

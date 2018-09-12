@@ -2,8 +2,10 @@
 {
     public interface IAxisFactory
     {
-        IAxis CreateZAxis();
         IAxis CreateXAxis();
+
         IAxis CreateYAxis();
+
+        IAxis CreateZAxis();
     }
 }

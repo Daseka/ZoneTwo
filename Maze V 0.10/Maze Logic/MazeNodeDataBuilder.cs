@@ -35,46 +35,26 @@ namespace MazeV.Maze_Logic
 
         public IMazeViewData GenerateViewData(IMazeNodeData nodeData, IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
         {
-            return  mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
+            return mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
-         private IMazeNodeData CreatePathData(int seed, IMazeNodeData nodeData)
+        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int count, int z, int y, int x)
+        {
+            count++;
+            Location location = new Location(x, y, z);
+            INode node = new Node() { Id = count, Location = location };
+
+            nodesByIndex.Add(count, node);
+            nodesByLocation.Add(location, nodesByIndex[count]);
+            return count;
+        }
+
+        private IMazeNodeData CreatePathData(int seed, IMazeNodeData nodeData)
         {
             ResetPathData(nodeData);
             IOrderedEnumerable<INode> sortedNodes = SortNodeData(nodeData);
             Random randomizer = new Random(seed);
-            return SetPathsForNodeData(nodeData, sortedNodes, randomizer);            
-        }
-
-        private IMazeNodeData SetPathsForNodeData(IMazeNodeData nodeData, IOrderedEnumerable<INode> sortedNodes, Random randomizer)
-        {
-            List<int> copyOfNeigours = new List<int>();
-
-            foreach (INode node in sortedNodes)
-            {
-                copyOfNeigours.Clear();
-                copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
-
-                SetMinimumRequiredPathsForNode(nodeData, randomizer, copyOfNeigours, node);
-            }
-            return nodeData;
-        }
-
-        private  IOrderedEnumerable<INode> SortNodeData(IMazeNodeData nodeData)
-        {
-            return nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count);
-        }
-
-        private void SetMinimumRequiredPathsForNode(IMazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, INode node)
-        {
-            while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
-            {
-                int neigbourId = randomizer.Next(copyOfNeigours.Count);
-                int pathToNodeId = copyOfNeigours[neigbourId];
-                copyOfNeigours.RemoveAt(neigbourId);
-
-                SetPath(node, pathToNodeId, nodeData);
-            }
+            return SetPathsForNodeData(nodeData, sortedNodes, randomizer);
         }
 
         /// <summary>
@@ -148,17 +128,6 @@ namespace MazeV.Maze_Logic
             return new MazeNodeData(nodesByIndex, nodesByLocation);
         }
 
-        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int count, int z, int y, int x)
-        {
-            count++;
-            Location location = new Location(x, y, z);
-            INode node = new Node() { Id = count, Location = location };
-
-            nodesByIndex.Add(count, node);
-            nodesByLocation.Add(location, nodesByIndex[count]);
-            return count;
-        }
-
         /// <summary>
         /// Fills in the neighbour list of each vertex
         /// </summary>
@@ -174,8 +143,8 @@ namespace MazeV.Maze_Logic
         }
 
         /// <summary>
-        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes. 
-        /// A loop is made by trying to reach original node by traveling trough the neigbourNodes list 
+        /// Checks if path is valid. path is not valid if it makes a loop using only 4 nodes.
+        /// A loop is made by trying to reach original node by traveling trough the neigbourNodes list
         /// Recursive method
         /// </summary>
         private bool IsPathValid(INode fromNode, INode toNode, INode nodeToFind, int level, IMazeNodeData nodeData)
@@ -209,6 +178,18 @@ namespace MazeV.Maze_Logic
             nodeData.ClearAllPaths();
         }
 
+        private void SetMinimumRequiredPathsForNode(IMazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, INode node)
+        {
+            while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
+            {
+                int neigbourId = randomizer.Next(copyOfNeigours.Count);
+                int pathToNodeId = copyOfNeigours[neigbourId];
+                copyOfNeigours.RemoveAt(neigbourId);
+
+                SetPath(node, pathToNodeId, nodeData);
+            }
+        }
+
         /// <summary>
         /// Adds path from given node to destination node
         /// </summary>
@@ -219,6 +200,25 @@ namespace MazeV.Maze_Logic
 
             node.Path.Add(idOfDestinationNode);
             nodeData.NodesByIndex[idOfDestinationNode].Path.Add(node.Id);
+        }
+
+        private IMazeNodeData SetPathsForNodeData(IMazeNodeData nodeData, IOrderedEnumerable<INode> sortedNodes, Random randomizer)
+        {
+            List<int> copyOfNeigours = new List<int>();
+
+            foreach (INode node in sortedNodes)
+            {
+                copyOfNeigours.Clear();
+                copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
+
+                SetMinimumRequiredPathsForNode(nodeData, randomizer, copyOfNeigours, node);
+            }
+            return nodeData;
+        }
+
+        private IOrderedEnumerable<INode> SortNodeData(IMazeNodeData nodeData)
+        {
+            return nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count);
         }
     }
 }

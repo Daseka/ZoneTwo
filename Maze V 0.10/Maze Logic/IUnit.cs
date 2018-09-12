@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeV.Maze_Logic
 {
@@ -12,13 +8,19 @@ namespace MazeV.Maze_Logic
     public interface IUnit
     {
         ILocation CurrentLocation { get; }
-        ILocation PreviousLocation { get; }
-        Guid Id { get; set; }
+
         IDirection CurrentMovementDirection { get; set; }
+
         IDirection FutureMovementDirection { get; set; }
 
-        void AssignLocation(ILocation location);
-        void Draw(Graphics graphics, Rectangle rectangle, INode node);
+        Guid Id { get; set; }
+
+        ILocation PreviousLocation { get; }
+
         IAxis ViewingAxis { get; set; }
+
+        void AssignLocation(ILocation location);
+
+        void Draw(Graphics graphics, Rectangle rectangle, INode node);
     }
 }

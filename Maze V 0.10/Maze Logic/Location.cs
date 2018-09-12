@@ -12,7 +12,9 @@ namespace MazeV.Maze_Logic
                                              };
 
         public RoundedDouble PointX { get; set; }
+
         public RoundedDouble PointY { get; set; }
+
         public RoundedDouble PointZ { get; set; }
 
         public Location()
@@ -32,14 +34,14 @@ namespace MazeV.Maze_Logic
         public ILocation Add(ILocation location)
         {
             Location newLocation = new Location()
-                                    {
-                                        PointX = PointX + location.PointX,
-                                        PointY = PointY + location.PointY,
-                                        PointZ = PointZ + location.PointZ,
-                                    };
+            {
+                PointX = PointX + location.PointX,
+                PointY = PointY + location.PointY,
+                PointZ = PointZ + location.PointZ,
+            };
             return newLocation;
         }
-        
+
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -47,7 +49,7 @@ namespace MazeV.Maze_Logic
 
             return Equals(obj as Location);
         }
-       
+
         public bool Equals(Location other)
         {
             return (PointX == other?.PointX && PointY == other?.PointY && PointZ == other?.PointZ);
@@ -79,6 +81,6 @@ namespace MazeV.Maze_Logic
         public override string ToString()
         {
             return string.Format("x={0} y={1} z={2}", PointX, PointY, PointZ);
-        }        
+        }
     }
 }

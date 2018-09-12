@@ -1,5 +1,4 @@
-﻿
-namespace MazeV.Maze_Logic
+﻿namespace MazeV.Maze_Logic
 {
     public class MazeViewDataFactory : IMazeViewDataFactory
     {

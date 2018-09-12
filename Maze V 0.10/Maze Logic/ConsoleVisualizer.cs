@@ -5,26 +5,6 @@ namespace MazeV.Maze_Logic
 {
     public class ConsoleVisualizer : IVisualizer
     {
-        /// <summary>
-        /// returns true if vertex has edge to its horizontal neighbour in x + 1 direction
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        private bool ShouldDrawHorizontalPath(INode current, INode next)
-        {
-            return Validator.DoesPathToNodeExist(current, next);
-        }
-
-        /// <summary>
-        /// returns true if vertex has edge to neighbour in y + 1 direction
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        private bool ShouldDrawVerticalPath(INode current, INode bottom)
-        {
-            return Validator.DoesPathToNodeExist(current, bottom);
-        }
-
         public void Draw(IMazeViewData mazeView, UnitList unitList)
         {
             int counter = 0;
@@ -45,9 +25,9 @@ namespace MazeV.Maze_Logic
 
                     if (current == null)
                         continue;
-                    
-                    ILocation locationToRight = current.Location.Add( mazeView.MovementCube[new RightDirection().Value]);
-                    ILocation locationAtBottom = current.Location.Add( mazeView.MovementCube[new LeftDirection().Value]);
+
+                    ILocation locationToRight = current.Location.Add(mazeView.MovementCube[new RightDirection().Value]);
+                    ILocation locationAtBottom = current.Location.Add(mazeView.MovementCube[new LeftDirection().Value]);
 
                     INode right = mazeView.GetNodeAt(locationToRight);
                     INode bottom = mazeView.GetNodeAt(locationAtBottom);
@@ -59,7 +39,7 @@ namespace MazeV.Maze_Logic
                         horizontalEdges.AppendFormat("{1}{0}", symbol, "X");
                     }
                     else
-                    {                        
+                    {
                         horizontalEdges.AppendFormat($"{symbol}{current.CollectablePoint.IsCollected}");
                     }
 
@@ -76,6 +56,26 @@ namespace MazeV.Maze_Logic
                 horizontalEdges.Clear();
                 verticalEdges.Clear();
             }
+        }
+
+        /// <summary>
+        /// returns true if vertex has edge to its horizontal neighbour in x + 1 direction
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        private bool ShouldDrawHorizontalPath(INode current, INode next)
+        {
+            return Validator.DoesPathToNodeExist(current, next);
+        }
+
+        /// <summary>
+        /// returns true if vertex has edge to neighbour in y + 1 direction
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        private bool ShouldDrawVerticalPath(INode current, INode bottom)
+        {
+            return Validator.DoesPathToNodeExist(current, bottom);
         }
     }
 }

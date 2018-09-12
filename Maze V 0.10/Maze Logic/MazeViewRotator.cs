@@ -1,6 +1,6 @@
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace MazeV.Maze_Logic
 {
@@ -18,7 +18,7 @@ namespace MazeV.Maze_Logic
             player.ViewingAxis = GetFreeRotationAxis(mazeView);
 
             DoMoveViewToOrigin(mazeView, nodesByLocation);
-            DoRotate(rotation, mazeView, nodesByLocation);           
+            DoRotate(rotation, mazeView, nodesByLocation);
 
             player.ViewingAxis = GetFreeRotationAxis(mazeView);
             DoMoveViewToPlayer(player, mazeView, nodesByLocation);
@@ -64,7 +64,7 @@ namespace MazeV.Maze_Logic
 
         private void DoMoveViewToOrigin(IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            int middle = (int)Math.Round((double)mazeView.MazeNodes.Count / 2);        
+            int middle = (int)Math.Round((double)mazeView.MazeNodes.Count / 2);
             Vector<double> centerOfView = Vector<double>.Build.Dense(new double[] { mazeView.MazeNodes[middle].Location.PointX
                                                                                     , mazeView.MazeNodes[middle].Location.PointY
                                                                                     , mazeView.MazeNodes[middle].Location.PointZ });
@@ -76,16 +76,16 @@ namespace MazeV.Maze_Logic
 
         private void DoMoveViewToPlayer(IUnit player, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            Vector<double> movement = player.ViewingAxis.GetVectorToPlayerAxis(player);            
+            Vector<double> movement = player.ViewingAxis.GetVectorToPlayerAxis(player);
             DoMoveView(movement, mazeView, nodesByLocation);
         }
 
         private void DoRotate(IRotation rotation, IMazeViewData mazeView, Dictionary<ILocation, INode> nodesByLocation)
         {
-            IAxis axis = rotation.GetRotationAxis(mazeView); 
+            IAxis axis = rotation.GetRotationAxis(mazeView);
             double angle = DegreesToRadial(rotation.GetAngle());
 
-            Matrix<double> rotationMatrix = axis.GetRotationMatrix(angle);            
+            Matrix<double> rotationMatrix = axis.GetRotationMatrix(angle);
             DoRotateView(rotationMatrix, mazeView, nodesByLocation);
             ApplyRotation(mazeView.MovementCube, rotationMatrix);
 
@@ -113,7 +113,7 @@ namespace MazeV.Maze_Logic
         }
 
         private IAxis GetFreeRotationAxis(IMazeViewData mazeView)
-        {            
+        {
             IList<IAxis> allAxis = new List<IAxis>() { fAxisFactory.CreateZAxis(), fAxisFactory.CreateXAxis(), fAxisFactory.CreateYAxis() };
 
             IAxis rotationAxis = fAxisFactory.CreateXAxis();

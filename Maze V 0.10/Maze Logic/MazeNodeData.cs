@@ -6,7 +6,9 @@ namespace MazeV.Maze_Logic
     public class MazeNodeData : IMazeNodeData
     {
         public int Count { get => NodesByIndex.Count; }
+
         public Dictionary<int, INode> NodesByIndex { get; }
+
         public Dictionary<ILocation, INode> NodesByLocation { get; }
 
         public MazeNodeData(Dictionary<int, INode> nodesByIndex, Dictionary<ILocation, INode> nodesByLocation)

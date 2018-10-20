@@ -1,6 +1,6 @@
 language: csharp
 solution: MazeV.sln
-ddons:
+addons:
   sonarcloud:
     organization: "daseka-github" # the key of the org you chose at step #3    
 script:

@@ -1,8 +1,0 @@
-language: csharp
-solution: MazeV.sln
-addons:
-  sonarcloud:
-    organization: "daseka-github" # the key of the org you chose at step #3    
-script:
-  # other script steps might be done before running the actual analysis
-  - sonar-scanner

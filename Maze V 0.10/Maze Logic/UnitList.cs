@@ -14,6 +14,7 @@ namespace MazeV.Maze_Logic
         }
 
         protected UnitList(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
         {
             // sonarqube requested it
         }

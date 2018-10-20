@@ -23,7 +23,7 @@ namespace MazeV.Maze_Logic
 
         public Action<IDirection, IUnit, IMazeViewData> GetMovementToPreform(IDirection direction, IUnit player, IMazeNodeData nodeData, IMazeViewData mazeView)
         {
-            return fMovementPriorityList.Where((kp => kp.Key(direction, player, nodeData, mazeView))).FirstOrDefault().Value;
+            return fMovementPriorityList.FirstOrDefault(kp => kp.Key(direction, player, nodeData, mazeView)).Value;
         }
 
         private void AssignCurrentDirection(IDirection direction, IUnit player, IMazeViewData mazeView)

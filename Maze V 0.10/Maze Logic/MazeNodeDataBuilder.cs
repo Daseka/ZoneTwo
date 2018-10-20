@@ -38,15 +38,15 @@ namespace MazeV.Maze_Logic
             return mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
-        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int count, int z, int y, int x)
+        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, int z, int y, int x)
         {
-            count++;
+            nodeId++;
             Location location = new Location(x, y, z);
-            INode node = new Node() { Id = count, Location = location };
+            INode node = new Node() { Id = nodeId, Location = location };
 
-            nodesByIndex.Add(count, node);
-            nodesByLocation.Add(location, nodesByIndex[count]);
-            return count;
+            nodesByIndex.Add(nodeId, node);
+            nodesByLocation.Add(location, nodesByIndex[nodeId]);
+            return nodeId;
         }
 
         private IMazeNodeData CreatePathData(int seed, IMazeNodeData nodeData)
@@ -113,14 +113,14 @@ namespace MazeV.Maze_Logic
             Dictionary<ILocation, INode> nodesByLocation = new Dictionary<ILocation, INode>();
             Dictionary<int, INode> nodesByIndex = new Dictionary<int, INode>();
 
-            int count = 0;
+            int nodeId = 0;
             for (int z = fGridStart; z <= fGridEnd; z++)
             {
                 for (int y = fGridStart; y <= fGridEnd; y++)
                 {
                     for (int x = fGridStart; x <= fGridEnd; x++)
                     {
-                        count = AddNodeAtLocaction(nodesByLocation, nodesByIndex, count, z, y, x);
+                        nodeId = AddNodeAtLocaction(nodesByLocation, nodesByIndex, nodeId, z, y, x);
                     }
                 }
             }

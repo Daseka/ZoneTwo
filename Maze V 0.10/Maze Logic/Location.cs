@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MazeV.Maze_Logic
 {
     public sealed class Location : ILocation, IEquatable<Location>
     {
-        private readonly static ILocation[] fVectors = new ILocation[]{
+        private static readonly ILocation[] fVectors = new ILocation[]{
                                                 new Location(1,0,0),new Location(-1,0,0),
                                                 new Location(0,1,0),new Location(0,-1,0),
                                                 new Location(0,0,1),new Location(0,0,-1)
@@ -44,10 +45,7 @@ namespace MazeV.Maze_Logic
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
-
-            return Equals(obj as Location);
+            return obj != null && Equals(obj as Location);
         }
 
         public bool Equals(Location other)
@@ -57,15 +55,7 @@ namespace MazeV.Maze_Logic
 
         public List<ILocation> GetAllPossibleNeighbours()
         {
-            List<ILocation> neighbours = new List<ILocation>();
-
-            foreach (Location location in fVectors)
-            {
-                ILocation neighbour = Add(location);
-                neighbours.Add(neighbour);
-            }
-
-            return neighbours;
+            return (from ILocation location in fVectors select Add(location)).ToList();
         }
 
         public ILocation GetCopy()

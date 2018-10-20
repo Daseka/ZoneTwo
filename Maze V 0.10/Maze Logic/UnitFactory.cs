@@ -36,8 +36,6 @@ namespace MazeV.Maze_Logic
             Type type = typeList.FirstOrDefault(n => n.Name == typeName);
 
             object unit = Activator.CreateInstance(type);
-            if (!(unit is IUnit))
-                return null;
 
             return unit as IUnit;
         }

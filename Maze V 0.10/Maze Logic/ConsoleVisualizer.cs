@@ -19,34 +19,7 @@ namespace MazeV.Maze_Logic
             {
                 for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
                 {
-                    INode current = null;
-                    if (counter < mazeView.MazeNodes.Count)
-                        current = mazeView.MazeNodes[counter];
-
-                    if (current == null)
-                        continue;
-
-                    ILocation locationToRight = current.Location.Add(mazeView.MovementCube[new RightDirection().Value]);
-                    ILocation locationAtBottom = current.Location.Add(mazeView.MovementCube[new LeftDirection().Value]);
-
-                    INode right = mazeView.GetNodeAt(locationToRight);
-                    INode bottom = mazeView.GetNodeAt(locationAtBottom);
-
-                    Player player = unitList.GetPlayer();
-                    symbol = ShouldDrawHorizontalPath(current, right) ? "---" : "   ";
-                    if (current.Location == player.CurrentLocation)
-                    {
-                        horizontalEdges.AppendFormat("{1}{0}", symbol, "X");
-                    }
-                    else
-                    {
-                        horizontalEdges.AppendFormat($"{symbol}{current.CollectablePoint.IsCollected}");
-                    }
-
-                    symbol = ShouldDrawVerticalPath(current, bottom) ? "|" : " ";
-                    verticalEdges.AppendFormat("{0}   ", symbol);
-
-                    counter++;
+                    DoSomething(mazeView, unitList, counter, symbol, horizontalEdges, verticalEdges);
                 }
 
                 Console.WriteLine(horizontalEdges);
@@ -56,6 +29,38 @@ namespace MazeV.Maze_Logic
                 horizontalEdges.Clear();
                 verticalEdges.Clear();
             }
+        }
+
+        private void DoSomething(IMazeViewData mazeView, UnitList unitList, int counter, string symbol, StringBuilder horizontalEdges, StringBuilder verticalEdges)
+        {
+            INode current = null;
+            if (counter < mazeView.MazeNodes.Count)
+                current = mazeView.MazeNodes[counter];
+
+            if (current == null)
+                return;
+
+            ILocation locationToRight = current.Location.Add(mazeView.MovementCube[new RightDirection().Value]);
+            ILocation locationAtBottom = current.Location.Add(mazeView.MovementCube[new LeftDirection().Value]);
+
+            INode right = mazeView.GetNodeAt(locationToRight);
+            INode bottom = mazeView.GetNodeAt(locationAtBottom);
+
+            Player player = unitList.GetPlayer();
+            symbol = ShouldDrawHorizontalPath(current, right) ? "---" : "   ";
+            if (current.Location == player.CurrentLocation)
+            {
+                horizontalEdges.AppendFormat("{1}{0}", symbol, "X");
+            }
+            else
+            {
+                horizontalEdges.AppendFormat($"{symbol}{current.CollectablePoint.IsCollected}");
+            }
+
+            symbol = ShouldDrawVerticalPath(current, bottom) ? "|" : " ";
+            verticalEdges.AppendFormat("{0}   ", symbol);
+
+            ++counter;
         }
 
         /// <summary>

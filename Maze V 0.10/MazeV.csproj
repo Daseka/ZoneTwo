@@ -64,7 +64,6 @@
     <Compile Include="Maze Logic\BaseUnit.cs" />
     <Compile Include="Maze Logic\CanvasVisualizer.cs" />
     <Compile Include="Maze Logic\Coin.cs" />
-    <Compile Include="Maze Logic\ConsoleVisualizer.cs" />
     <Compile Include="Maze Logic\DefaultMovementLogic.cs" />
     <Compile Include="Maze Logic\DefaultSettings.cs" />
     <Compile Include="Maze Logic\DownRotation.cs" />

@@ -9,8 +9,11 @@ namespace MazeV.Maze_Logic.Tests
         [TestMethod()]
         public void InitializeTest()
         {
-            MazeNodeData nodeData = new MazeNodeData(new Dictionary<int, INode>(), new Dictionary<ILocation, INode>());
-            MazeViewData viewData = new MazeViewData(3, 3, 3, nodeData, new AxisFactory());
+            IAxisFactory axisFactory = new AxisFactory();
+            IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
+            MazeNodeDataBuilder nodeBuilder = new MazeNodeDataBuilder(3, 3);
+            IMazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
+            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData, axisFactory, mazeViewDataFactory);
             Maze maze = new Maze(nodeData, viewData);
             maze.Initialize();
 

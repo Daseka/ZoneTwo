@@ -11,7 +11,6 @@ namespace MazeV.Maze_Logic.Tests
         {
             BaseUnit baseUnit = new BaseUnit();
             Location newLocation = new Location(1, 2, 3);
-            int x = 5;
 
             Assert.IsTrue(baseUnit.CurrentLocation.Equals(new Location(0, 0, 0)));
 

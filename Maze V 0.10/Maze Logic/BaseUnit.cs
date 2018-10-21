@@ -35,7 +35,6 @@ namespace MazeV.Maze_Logic
 
         public void Draw(Graphics graphics, Rectangle rectangle, INode node)
         {
-            int x = 6;
             if (!node.Location.Equals(CurrentLocation))
                 return;
 

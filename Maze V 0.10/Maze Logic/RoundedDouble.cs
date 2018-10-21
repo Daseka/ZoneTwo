@@ -27,14 +27,14 @@ namespace MazeV.Maze_Logic
             return new RoundedDouble(value);
         }
 
-        public static bool operator !=(RoundedDouble v1, RoundedDouble v2)
+        public static bool operator !=(RoundedDouble x1, RoundedDouble x2)
         {
-            return !v1.Equals(v2);
+            return !x1.Equals(x2);
         }
 
-        public static bool operator ==(RoundedDouble v1, RoundedDouble v2)
+        public static bool operator ==(RoundedDouble x1, RoundedDouble x2)
         {
-            return v1.Equals(v2);
+            return x1.Equals(x2);
         }
 
         public bool Equals(RoundedDouble other)

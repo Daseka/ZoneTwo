@@ -10,5 +10,15 @@ namespace MazeV.Maze_Logic
         {
             fTimer = new Timer();
         }
+
+        public void Start()
+        {
+            fTimer.Start();
+        }
+
+        public void Stop()
+        {
+            fTimer.Stop();
+        }
     }
 }

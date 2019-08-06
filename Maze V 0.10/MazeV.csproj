@@ -9,10 +9,25 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MazeV</RootNamespace>
     <AssemblyName>MazeV</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\Projects\Trunk Three\Ridder\Communication\RidderSonarWay.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,9 +50,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MathNet.Numerics, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.4.5.1\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -53,64 +73,69 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DteFetcher.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Maze Logic\Animator.cs" />
-    <Compile Include="Maze Logic\AxisFactory.cs" />
-    <Compile Include="Maze Logic\BaseUnit.cs" />
-    <Compile Include="Maze Logic\CanvasVisualizer.cs" />
-    <Compile Include="Maze Logic\Coin.cs" />
-    <Compile Include="Maze Logic\DefaultMovementLogic.cs" />
-    <Compile Include="Maze Logic\DefaultSettings.cs" />
-    <Compile Include="Maze Logic\DownRotation.cs" />
-    <Compile Include="Maze Logic\EmptyCommand.cs" />
-    <Compile Include="Maze Logic\IAxis.cs" />
-    <Compile Include="Maze Logic\IAxisFactory.cs" />
-    <Compile Include="Maze Logic\ICollectableItem.cs" />
-    <Compile Include="Maze Logic\IDirection.cs" />
-    <Compile Include="Maze Logic\ILocation.cs" />
-    <Compile Include="Maze Logic\IMazeNodeData.cs" />
-    <Compile Include="Maze Logic\IMazeViewData.cs" />
-    <Compile Include="Maze Logic\IMazeViewDataFactory.cs" />
-    <Compile Include="Maze Logic\IMovementLogic.cs" />
-    <Compile Include="Maze Logic\INode.cs" />
-    <Compile Include="Maze Logic\IRotation.cs" />
-    <Compile Include="Maze Logic\IUnit.cs" />
-    <Compile Include="Maze Logic\ICommand.cs" />
-    <Compile Include="Maze Logic\IVisualizer.cs" />
-    <Compile Include="Maze Logic\Keybindings.cs" />
-    <Compile Include="Maze Logic\LeftRotation.cs" />
-    <Compile Include="Maze Logic\Location.cs" />
-    <Compile Include="Maze Logic\Maze.cs" />
-    <Compile Include="Maze Logic\MazeNodeData.cs" />
-    <Compile Include="Maze Logic\MazeNodeDataBuilder.cs" />
-    <Compile Include="Maze Logic\MazeViewData.cs" />
-    <Compile Include="Maze Logic\MazeViewDataFactory.cs" />
-    <Compile Include="Maze Logic\MazeViewRotator.cs" />
-    <Compile Include="Maze Logic\Monster.cs" />
-    <Compile Include="Maze Logic\MoveCommand.cs" />
-    <Compile Include="Maze Logic\NeighbourInfo.cs" />
-    <Compile Include="Maze Logic\Node.cs" />
-    <Compile Include="Maze Logic\NodeLine.cs" />
-    <Compile Include="Maze Logic\Player.cs" />
-    <Compile Include="Maze Logic\RightRotation.cs" />
-    <Compile Include="Maze Logic\RotateCommand.cs" />
-    <Compile Include="Maze Logic\RoundedDouble.cs" />
-    <Compile Include="Maze Logic\Shape.cs" />
-    <Compile Include="Maze Logic\UnitFactory.cs" />
-    <Compile Include="Maze Logic\UnitList.cs" />
-    <Compile Include="Maze Logic\UnitMover.cs" />
-    <Compile Include="Maze Logic\UpRotation.cs" />
-    <Compile Include="Maze Logic\Validator.cs" />
-    <Compile Include="Maze Logic\XAxis.cs" />
-    <Compile Include="Maze Logic\YAxis.cs" />
-    <Compile Include="Maze Logic\ZAxis.cs" />
+    <Compile Include="MazeLogic\Animator.cs" />
+    <Compile Include="MazeLogic\AxisFactory.cs" />
+    <Compile Include="MazeLogic\Drawing\MazeGraphics.cs" />
+    <Compile Include="MazeLogic\Units\BaseUnit.cs" />
+    <Compile Include="MazeLogic\CanvasVisualizer.cs" />
+    <Compile Include="MazeLogic\Coin.cs" />
+    <Compile Include="MazeLogic\DefaultMovementLogic.cs" />
+    <Compile Include="MazeLogic\DefaultSettings.cs" />
+    <Compile Include="MazeLogic\DownRotation.cs" />
+    <Compile Include="MazeLogic\EmptyCommand.cs" />
+    <Compile Include="MazeLogic\IAxis.cs" />
+    <Compile Include="MazeLogic\IAxisFactory.cs" />
+    <Compile Include="MazeLogic\ICollectableItem.cs" />
+    <Compile Include="MazeLogic\IDirection.cs" />
+    <Compile Include="MazeLogic\ILocation.cs" />
+    <Compile Include="MazeLogic\IMazeNodeData.cs" />
+    <Compile Include="MazeLogic\IMazeViewData.cs" />
+    <Compile Include="MazeLogic\IMazeViewDataFactory.cs" />
+    <Compile Include="MazeLogic\IMovementLogic.cs" />
+    <Compile Include="MazeLogic\INode.cs" />
+    <Compile Include="MazeLogic\IRotation.cs" />
+    <Compile Include="MazeLogic\Drawing\IMazeGrapic.cs" />
+    <Compile Include="MazeLogic\Units\IUnit.cs" />
+    <Compile Include="MazeLogic\ICommand.cs" />
+    <Compile Include="MazeLogic\IVisualizer.cs" />
+    <Compile Include="MazeLogic\Keybindings.cs" />
+    <Compile Include="MazeLogic\LeftRotation.cs" />
+    <Compile Include="MazeLogic\Location.cs" />
+    <Compile Include="MazeLogic\Maze.cs" />
+    <Compile Include="MazeLogic\MazeNodeData.cs" />
+    <Compile Include="MazeLogic\MazeNodeDataBuilder.cs" />
+    <Compile Include="MazeLogic\MazeViewData.cs" />
+    <Compile Include="MazeLogic\MazeViewDataFactory.cs" />
+    <Compile Include="MazeLogic\MazeViewRotator.cs" />
+    <Compile Include="MazeLogic\Units\Monster.cs" />
+    <Compile Include="MazeLogic\MoveCommand.cs" />
+    <Compile Include="MazeLogic\NeighbourInfo.cs" />
+    <Compile Include="MazeLogic\Node.cs" />
+    <Compile Include="MazeLogic\NodeLine.cs" />
+    <Compile Include="MazeLogic\Units\Player.cs" />
+    <Compile Include="MazeLogic\RightRotation.cs" />
+    <Compile Include="MazeLogic\RotateCommand.cs" />
+    <Compile Include="MazeLogic\RoundedDouble.cs" />
+    <Compile Include="MazeLogic\Units\UnitFactory.cs" />
+    <Compile Include="MazeLogic\Units\IUnitList.cs" />
+    <Compile Include="MazeLogic\Units\UnitList.cs" />
+    <Compile Include="MazeLogic\UnitMover.cs" />
+    <Compile Include="MazeLogic\UpRotation.cs" />
+    <Compile Include="MazeLogic\Validator.cs" />
+    <Compile Include="MazeLogic\XAxis.cs" />
+    <Compile Include="MazeLogic\YAxis.cs" />
+    <Compile Include="MazeLogic\ZAxis.cs" />
+    <Compile Include="MazeLogic\Shape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunningObjects.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -137,6 +162,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

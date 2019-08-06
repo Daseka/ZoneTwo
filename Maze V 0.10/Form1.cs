@@ -1,5 +1,13 @@
-﻿using System.Windows.Forms;
-using MazeV.Maze_Logic;
+﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Forms;
+using EnvDTE;
+using MazeV.MazeLogic;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace MazeV
 {
@@ -11,12 +19,13 @@ namespace MazeV
         public Form1()
         {
             InitializeComponent();
+
             IAxisFactory axisFactory = new AxisFactory();
             IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
             InitializeMaze(axisFactory, mazeViewDataFactory);
             InitializeKeybindings(axisFactory);
 
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
 
             fAnimator = new Timer() { Interval = 500, };
             fAnimator.Tick += FAnimator_Tick1;

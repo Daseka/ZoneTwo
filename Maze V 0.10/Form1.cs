@@ -16,12 +16,9 @@ namespace MazeV
         private readonly Timer fAnimator;
         private Maze fMaze;
 
-        public Form1()
+        public Form1(IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
         {
-            InitializeComponent();
-
-            IAxisFactory axisFactory = new AxisFactory();
-            IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
+            InitializeComponent();                       
             InitializeMaze(axisFactory, mazeViewDataFactory);
             InitializeKeybindings(axisFactory);
 

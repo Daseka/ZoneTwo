@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace MazeV
@@ -12,14 +11,11 @@ namespace MazeV
         [STAThread]
         private static void Main()
         {
-            var service = new ServiceCollection();
-            service.AddScoped<Form1>();
-
-            ServiceProvider serviceProvider = service.BuildServiceProvider();                
-
+            var startUp = new StartUp();
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(serviceProvider.GetService<Form1>());
+            Application.Run(startUp.GetService<Form1>());
         }
     }
 }

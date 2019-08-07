@@ -24,7 +24,8 @@ namespace MazeVTests1.MazeLogic
             var baseUnit = new BaseUnit();
             var fakeGrapic = new FakeGrapics();
             var fakeRectangle = new Rectangle();
-            var fakeNode = new Node();
+            var settings = new DefaultSettings();
+            var fakeNode = new Node(new CoinBuilder(settings),settings);
 
             baseUnit.Draw(fakeGrapic, fakeRectangle, fakeNode);
             var expectedMethodcalled = nameof(FakeGrapics.FillRectangle);
@@ -38,7 +39,8 @@ namespace MazeVTests1.MazeLogic
             var baseUnit = new BaseUnit();
             var fakeGrapic = new FakeGrapics();
             var fakeRectangle = new Rectangle();
-            var fakeNode = new Node()
+            var settings = new DefaultSettings();
+            var fakeNode = new Node(new CoinBuilder(settings), settings)
             {
                 Location = new Location(2,2,2)
             };

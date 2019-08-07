@@ -1,9 +1,10 @@
+using MazeV.MazeLogic.Drawing;
 using MazeV.MazeLogic.Units;
 
 namespace MazeV.MazeLogic
 {
     public interface IVisualizer
     {
-        void Draw(IMazeViewData mazeView, IUnitList unitList);
+        void Draw(IMazeGraphic mazeGraphic,IMazeViewData mazeView, IUnitList unitList);
     }
 }

@@ -133,7 +133,12 @@
     </Compile>
     <Compile Include="MazeLogic\Animator.cs" />
     <Compile Include="MazeLogic\AxisFactory.cs" />
-    <Compile Include="MazeLogic\Drawing\MazeGraphics.cs" />
+    <Compile Include="MazeLogic\CoinBuilder.cs" />
+    <Compile Include="MazeLogic\Drawing\MazeGraphic.cs" />
+    <Compile Include="MazeLogic\IMazeNodeDataBuilderSettings.cs" />
+    <Compile Include="MazeLogic\MazeNodeDataBuilderSettings.cs" />
+    <Compile Include="MazeLogic\NodeBuilder.cs" />
+    <Compile Include="MazeLogic\Randomizer.cs" />
     <Compile Include="MazeLogic\Units\BaseUnit.cs" />
     <Compile Include="MazeLogic\CanvasVisualizer.cs" />
     <Compile Include="MazeLogic\Coin.cs" />

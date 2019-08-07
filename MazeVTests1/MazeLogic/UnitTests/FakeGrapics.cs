@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace MazeVTests1.MazeLogic
 {
-    public class FakeGrapics : IMazeGraphics
+    public class FakeGrapics : IMazeGraphic
     {
         public string MethodCalled { get; private set; }
 

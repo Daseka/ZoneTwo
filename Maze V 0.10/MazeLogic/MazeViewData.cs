@@ -28,7 +28,7 @@ namespace MazeV.MazeLogic
             UpDownRotationAxis = axisFactory.CreateXAxis();
             LeftRightRotationAxis = axisFactory.CreateYAxis();
             MazeNodes = CreateInitialView(nodeData, 0);
-            
+
             InitializeMovementCube();
         }
 
@@ -37,6 +37,13 @@ namespace MazeV.MazeLogic
             return MazeNodes.FirstOrDefault(x => x.Location.Equals(location));
         }
 
+        private IEnumerable<Location> CreateAllNodesForZLevel(int zLevel)
+        {
+            int count = ViewEnd - ViewStart + 1;
+            IEnumerable<int> range = Enumerable.Range(ViewStart, count);
+
+            return range.SelectMany(_ => range, (yAxis, xAxis) => new Location(xAxis, yAxis, zLevel)).ToList();
+        }
 
         private IList<INode> CreateInitialView(IMazeNodeData nodeData, int zLevel)
         {
@@ -51,14 +58,6 @@ namespace MazeV.MazeLogic
             }
 
             return nodes;
-        }
-
-        private IEnumerable<Location> CreateAllNodesForZLevel(int zLevel)
-        {
-            int count = ViewEnd - ViewStart +1;
-            IEnumerable<int> range = Enumerable.Range(ViewStart, count);
-
-            return range.SelectMany(_ => range, ( yAxis, xAxis) => new Location(xAxis, yAxis, zLevel)).ToList();
         }
 
         private void InitializeMovementCube()

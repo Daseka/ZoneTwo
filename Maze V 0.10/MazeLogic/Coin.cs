@@ -4,17 +4,17 @@ using System.Drawing;
 
 namespace MazeV.MazeLogic
 {
-    internal class Coin : ICollectableItem
+    public class Coin : ICollectableItem
     {
         private readonly Size fSize;
-        private Action<IMazeGraphics, Rectangle> fDoDrawing;
+        private Action<IMazeGraphic, Rectangle> fDoDrawing;
 
         public bool IsCollected { get; private set; }
 
-        public Coin()
+        public Coin(DefaultSettings settings)
         {
             IsCollected = false;
-            fSize = new Size(DefaultSettings.CollectableSize, DefaultSettings.CollectableSize);
+            fSize = new Size(settings.CollectableSize, settings.CollectableSize);
             fDoDrawing = (grapics, rectangle) => grapics.FillEllipse(Brushes.Gold, rectangle);
         }
 
@@ -24,7 +24,7 @@ namespace MazeV.MazeLogic
             fDoDrawing = null;
         }
 
-        public void Draw(IMazeGraphics graphics, Rectangle rectangle)
+        public void Draw(IMazeGraphic graphics, Rectangle rectangle)
         {
             fDoDrawing?.Invoke(graphics, rectangle);
         }

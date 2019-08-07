@@ -67,6 +67,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MazeLogic\FakeMazeNodeDataBuilderSettings.cs" />
     <Compile Include="MazeLogic\UnitTests\BaseUnitTests.cs" />
     <Compile Include="MazeLogic\MazeNodeDataBuilderTests.cs" />
     <Compile Include="MazeLogic\MazeTests.cs" />

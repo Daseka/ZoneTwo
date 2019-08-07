@@ -22,6 +22,6 @@ namespace MazeV.MazeLogic.Units
 
         void AssignLocation(ILocation location);
 
-        void Draw(IMazeGraphics graphics, Rectangle rectangle, INode node);
+        void Draw(IMazeGraphic graphics, Rectangle rectangle, INode node);
     }
 }

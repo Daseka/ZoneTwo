@@ -70,5 +70,10 @@ namespace MazeV.MazeLogic
 
             return mazeView.GetNodeAt(location);
         }
+
+        public override string ToString()
+        {
+            return $"{Location}";
+        }
     }
 }

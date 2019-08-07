@@ -38,10 +38,9 @@ namespace MazeV.MazeLogic
             return mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
-        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, int z, int y, int x)
+        private static int AddNodesToLists(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, Location location)
         {
-            nodeId++;
-            var location = new Location(x, y, z);
+            nodeId++;            
             INode node = new Node() { Id = nodeId, Location = location };
 
             nodesByIndex.Add(nodeId, node);
@@ -110,22 +109,30 @@ namespace MazeV.MazeLogic
 
         private IMazeNodeData InitializeMazeNodeData()
         {
+            
+
             var nodesByLocation = new Dictionary<ILocation, INode>();
             var nodesByIndex = new Dictionary<int, INode>();
-
             int nodeId = 0;
-            for (int z = fGridStart; z <= fGridEnd; z++)
+
+            IEnumerable<Location> allLocations = CreateAllLocations(fGridStart, fGridEnd);
+            foreach (var item in allLocations)
             {
-                for (int y = fGridStart; y <= fGridEnd; y++)
-                {
-                    for (int x = fGridStart; x <= fGridEnd; x++)
-                    {
-                        nodeId = AddNodeAtLocaction(nodesByLocation, nodesByIndex, nodeId, z, y, x);
-                    }
-                }
+                nodeId = AddNodesToLists(nodesByLocation, nodesByIndex, nodeId, item);
             }
 
             return new MazeNodeData(nodesByIndex, nodesByLocation);
+        }
+
+        private IEnumerable<Location> CreateAllLocations(int gridStart , int gridEnd)
+        {
+            var count = gridEnd - gridStart + 1;
+            var range = Enumerable.Range(fGridStart, count);
+
+            return range
+                .SelectMany(_ => range, (zAxis, yAxis) => new { zAxis, yAxis })
+                .SelectMany(_ => range, (pair, xAxis) => new Location(xAxis, pair.yAxis, pair.zAxis))
+                .ToList();
         }
 
         /// <summary>

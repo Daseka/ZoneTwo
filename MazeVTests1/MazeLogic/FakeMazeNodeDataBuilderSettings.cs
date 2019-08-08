@@ -1,5 +1,4 @@
-﻿
-using MazeV.MazeLogic;
+﻿using MazeV.MazeLogic.MazeNodes.Settings;
 
 namespace MazeVTests1.MazeLogic
 {

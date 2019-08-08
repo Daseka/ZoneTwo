@@ -2,6 +2,12 @@
 using Xunit;
 using MazeV.MazeLogic;
 using MazeV.MazeLogic.Units;
+using MazeV.MazeLogic.Rotation;
+using MazeV.MazeLogic.Settings;
+using MazeV.MazeLogic.MazeViews;
+using MazeV.MazeLogic.MazeNodes;
+using MazeV.MazeLogic.CollectableItems;
+using MazeV.MazeLogic.Validators;
 
 namespace MazeVTests1.MazeLogic
 {
@@ -13,12 +19,13 @@ namespace MazeVTests1.MazeLogic
             IAxisFactory axisFactory = new AxisFactory();
             IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
             var settings = new DefaultSettings();
-            var nodeBuilder = new NodeBuilder(settings, new CoinBuilder(settings));
+            var validator = new Validator();
+            var nodeBuilder = new NodeBuilder(settings, new CoinBuilder(settings), validator);
             var randomizer = new Randomizer();
             var nodeDataBuilder = new MazeNodeDataBuilder(new FakeMazeNodeDataBuilderSettings(3,3), randomizer, nodeBuilder);
             IMazeNodeData nodeData = nodeDataBuilder.GenerateNodeData(12345);
             IMazeViewData viewData = nodeDataBuilder.GenerateViewData(nodeData, axisFactory, mazeViewDataFactory);
-            var maze = new Maze(new UnitList(), new UnitFactory(randomizer));
+            var maze = new Maze(new UnitList(), new UnitFactory(randomizer), validator);
             maze.Initialize(nodeData, viewData);
 
             int numberOfNodesTotal = maze.NodeData.Count;

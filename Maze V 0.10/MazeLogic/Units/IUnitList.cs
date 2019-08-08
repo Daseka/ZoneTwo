@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MazeV.MazeLogic.MazeNodes;
+using System;
 using System.Collections.Generic;
 
 namespace MazeV.MazeLogic.Units

@@ -1,6 +1,16 @@
 ﻿using MazeV.MazeLogic;
+using MazeV.MazeLogic.CollectableItems;
 using MazeV.MazeLogic.Drawing;
+using MazeV.MazeLogic.Keybindings;
+using MazeV.MazeLogic.MazeNodes;
+using MazeV.MazeLogic.MazeNodes.Settings;
+using MazeV.MazeLogic.MazeViews;
+using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Rotation;
+using MazeV.MazeLogic.Settings;
 using MazeV.MazeLogic.Units;
+using MazeV.MazeLogic.Validators;
+using MazeV.MazeLogic.Visualizer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MazeV
@@ -34,6 +44,7 @@ namespace MazeV
             services.AddSingleton<CoinBuilder>();
             services.AddSingleton<Randomizer>();
             services.AddSingleton<Keybindings>();
+            services.AddSingleton<Validator>();
         }
 
         public T GetService<T>()

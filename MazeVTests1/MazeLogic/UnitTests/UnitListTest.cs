@@ -1,4 +1,5 @@
 ﻿using MazeV.MazeLogic;
+using MazeV.MazeLogic.MazeNodes;
 using MazeV.MazeLogic.Units;
 using System.Linq;
 using Xunit;

@@ -1,4 +1,7 @@
-﻿using MazeV.MazeLogic.Units;
+﻿using MazeV.MazeLogic.MazeNodes;
+using MazeV.MazeLogic.MazeViews;
+using MazeV.MazeLogic.Units;
+using MazeV.MazeLogic.Validators;
 using System.Linq;
 
 namespace MazeV.MazeLogic
@@ -6,6 +9,7 @@ namespace MazeV.MazeLogic
     public class Maze
     {
         private UnitFactory _unitFactory;
+        private Validator _validator;
 
         public IUnit Hero { get { return UnitList.GetPlayer(); } }
 
@@ -15,10 +19,11 @@ namespace MazeV.MazeLogic
 
         public IMazeViewData ViewData { get; private set; }
 
-        public Maze(IUnitList unitList, UnitFactory unitFactory)
+        public Maze(IUnitList unitList, UnitFactory unitFactory, Validator validator)
         {
             UnitList = unitList;
-            _unitFactory = unitFactory;            
+            _unitFactory = unitFactory;
+            _validator = validator;
         }
 
         /// <summary>
@@ -45,10 +50,10 @@ namespace MazeV.MazeLogic
             if (spawn == null)
                 return;
 
-            if (Validator.IsLocationOccupied(location, UnitList))
+            if (_validator.IsLocationOccupied(location, UnitList))
                 return;
 
-            if (unitType == UnitType.Player && Validator.IsPlayerMaximumReached(UnitList))
+            if (unitType == UnitType.Player && _validator.IsPlayerMaximumReached(UnitList))
                 return;
 
             spawn.AssignLocation(location);

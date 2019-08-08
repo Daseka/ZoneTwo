@@ -21,23 +21,18 @@ namespace MazeV
             services.AddScoped<IAxisFactory, AxisFactory>();
             services.AddScoped<IMazeViewDataFactory, MazeViewDataFactory>();
             services.AddScoped<IMazeNodeDataBuilderSettings, MazeNodeDataBuilderSettings>();
-
-            services.AddScoped<MazeNodeDataBuilder>();
-            services.AddSingleton<Randomizer>();
+            services.AddScoped<MazeNodeDataBuilder>();            
             services.AddScoped<IVisualizer, CanvasVisualizer>();
-
             services.AddScoped<Maze>();
             services.AddScoped<UnitMover>();
             services.AddScoped<IMovementLogic, DefaultMovementLogic>();
-
             services.AddScoped<IUnitList, UnitList>();
-
             services.AddScoped<UnitFactory>();
-            services.AddSingleton<DefaultSettings>();
 
+            services.AddSingleton<DefaultSettings>();
             services.AddSingleton<NodeBuilder>();
             services.AddSingleton<CoinBuilder>();
-
+            services.AddSingleton<Randomizer>();
             services.AddSingleton<Keybindings>();
         }
 

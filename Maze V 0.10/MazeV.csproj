@@ -9,10 +9,25 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MazeV</RootNamespace>
     <AssemblyName>MazeV</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\Projects\Trunk Three\Ridder\Communication\RidderSonarWay.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,11 +50,70 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics">
-      <HintPath>..\..\..\Maze v 0.03\Maze\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.5.1\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.3.0.0-preview7.19362.4\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Configuration.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Logging.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Console, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Console.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Logging.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.ConfigurationExtensions.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.6.0-preview7.19362.9\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0-preview7.19362.9\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,38 +131,68 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Maze Logic\Animator.cs" />
-    <Compile Include="Maze Logic\Axis.cs" />
-    <Compile Include="Maze Logic\BaseUnit.cs" />
-    <Compile Include="Maze Logic\CanvasVisualizer.cs" />
-    <Compile Include="Maze Logic\ConsoleVisualizer.cs" />
-    <Compile Include="Maze Logic\Direction.cs" />
-    <Compile Include="Maze Logic\EmptyCommand.cs" />
-    <Compile Include="Maze Logic\IUnit.cs" />
-    <Compile Include="Maze Logic\ICommand.cs" />
-    <Compile Include="Maze Logic\IVisualizer.cs" />
-    <Compile Include="Maze Logic\Keybindings.cs" />
-    <Compile Include="Maze Logic\Location.cs" />
-    <Compile Include="Maze Logic\Maze.cs" />
-    <Compile Include="Maze Logic\MazeNodeData.cs" />
-    <Compile Include="Maze Logic\MazeNodeDataBuilder.cs" />
-    <Compile Include="Maze Logic\MazeViewData.cs" />
-    <Compile Include="Maze Logic\MazeViewRotator.cs" />
-    <Compile Include="Maze Logic\Monster.cs" />
-    <Compile Include="Maze Logic\MoveCommand.cs" />
-    <Compile Include="Maze Logic\NeighbourInfo.cs" />
-    <Compile Include="Maze Logic\Node.cs" />
-    <Compile Include="Maze Logic\NodeLine.cs" />
-    <Compile Include="Maze Logic\Player.cs" />
-    <Compile Include="Maze Logic\RotateCommand.cs" />
-    <Compile Include="Maze Logic\Rotation.cs" />
-    <Compile Include="Maze Logic\Shape.cs" />
-    <Compile Include="Maze Logic\UnitFactory.cs" />
-    <Compile Include="Maze Logic\UnitList.cs" />
-    <Compile Include="Maze Logic\UnitMover.cs" />
-    <Compile Include="Maze Logic\Validator.cs" />
+    <Compile Include="MazeLogic\Animator.cs" />
+    <Compile Include="MazeLogic\AxisFactory.cs" />
+    <Compile Include="MazeLogic\CoinBuilder.cs" />
+    <Compile Include="MazeLogic\Drawing\MazeGraphic.cs" />
+    <Compile Include="MazeLogic\IMazeNodeDataBuilderSettings.cs" />
+    <Compile Include="MazeLogic\MazeNodeDataBuilderSettings.cs" />
+    <Compile Include="MazeLogic\NodeBuilder.cs" />
+    <Compile Include="MazeLogic\Randomizer.cs" />
+    <Compile Include="MazeLogic\Units\BaseUnit.cs" />
+    <Compile Include="MazeLogic\CanvasVisualizer.cs" />
+    <Compile Include="MazeLogic\Coin.cs" />
+    <Compile Include="MazeLogic\DefaultMovementLogic.cs" />
+    <Compile Include="MazeLogic\DefaultSettings.cs" />
+    <Compile Include="MazeLogic\DownRotation.cs" />
+    <Compile Include="MazeLogic\EmptyCommand.cs" />
+    <Compile Include="MazeLogic\IAxis.cs" />
+    <Compile Include="MazeLogic\IAxisFactory.cs" />
+    <Compile Include="MazeLogic\ICollectableItem.cs" />
+    <Compile Include="MazeLogic\IDirection.cs" />
+    <Compile Include="MazeLogic\ILocation.cs" />
+    <Compile Include="MazeLogic\IMazeNodeData.cs" />
+    <Compile Include="MazeLogic\IMazeViewData.cs" />
+    <Compile Include="MazeLogic\IMazeViewDataFactory.cs" />
+    <Compile Include="MazeLogic\IMovementLogic.cs" />
+    <Compile Include="MazeLogic\INode.cs" />
+    <Compile Include="MazeLogic\IRotation.cs" />
+    <Compile Include="MazeLogic\Drawing\IMazeGrapic.cs" />
+    <Compile Include="MazeLogic\Units\IUnit.cs" />
+    <Compile Include="MazeLogic\ICommand.cs" />
+    <Compile Include="MazeLogic\IVisualizer.cs" />
+    <Compile Include="MazeLogic\Keybindings.cs" />
+    <Compile Include="MazeLogic\LeftRotation.cs" />
+    <Compile Include="MazeLogic\Location.cs" />
+    <Compile Include="MazeLogic\Maze.cs" />
+    <Compile Include="MazeLogic\MazeNodeData.cs" />
+    <Compile Include="MazeLogic\MazeNodeDataBuilder.cs" />
+    <Compile Include="MazeLogic\MazeViewData.cs" />
+    <Compile Include="MazeLogic\MazeViewDataFactory.cs" />
+    <Compile Include="MazeLogic\MazeViewRotator.cs" />
+    <Compile Include="MazeLogic\Units\Monster.cs" />
+    <Compile Include="MazeLogic\MoveCommand.cs" />
+    <Compile Include="MazeLogic\NeighbourInfo.cs" />
+    <Compile Include="MazeLogic\Node.cs" />
+    <Compile Include="MazeLogic\NodeLine.cs" />
+    <Compile Include="MazeLogic\Units\Player.cs" />
+    <Compile Include="MazeLogic\RightRotation.cs" />
+    <Compile Include="MazeLogic\RotateCommand.cs" />
+    <Compile Include="MazeLogic\RoundedDouble.cs" />
+    <Compile Include="MazeLogic\Units\UnitFactory.cs" />
+    <Compile Include="MazeLogic\Units\IUnitList.cs" />
+    <Compile Include="MazeLogic\Units\UnitList.cs" />
+    <Compile Include="MazeLogic\UnitMover.cs" />
+    <Compile Include="MazeLogic\Units\UnitType.cs" />
+    <Compile Include="MazeLogic\UpRotation.cs" />
+    <Compile Include="MazeLogic\Validator.cs" />
+    <Compile Include="MazeLogic\XAxis.cs" />
+    <Compile Include="MazeLogic\YAxis.cs" />
+    <Compile Include="MazeLogic\ZAxis.cs" />
+    <Compile Include="MazeLogic\Shape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartUp.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +206,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,6 +219,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="Analyzers\CSharpGuidelinesAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

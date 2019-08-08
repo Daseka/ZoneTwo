@@ -37,6 +37,8 @@ namespace MazeV
 
             services.AddSingleton<NodeBuilder>();
             services.AddSingleton<CoinBuilder>();
+
+            services.AddSingleton<Keybindings>();
         }
 
         public T GetService<T>()

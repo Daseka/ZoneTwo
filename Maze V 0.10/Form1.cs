@@ -17,6 +17,7 @@ namespace MazeV
         private readonly UnitMover _unitMover;
         private readonly IVisualizer _visualizer;
         private readonly MazeNodeDataBuilder _mazeNodeDataBuilder;
+        private readonly Keybindings _keybindings;
         private readonly Timer fAnimator;
         private Maze _maze;
 
@@ -26,12 +27,14 @@ namespace MazeV
             MazeNodeDataBuilder mazeNodeDataBuilder, 
             IVisualizer visualizer,
             UnitMover unitMover,
-            Maze maze)
+            Maze maze,
+            Keybindings keybindings)
         {
             _maze = maze;
             _unitMover = unitMover;
             _visualizer = visualizer;
             _mazeNodeDataBuilder = mazeNodeDataBuilder;
+            _keybindings = keybindings;
 
             InitializeComponent();                       
             InitializeMaze(axisFactory, mazeViewDataFactory);
@@ -46,7 +49,7 @@ namespace MazeV
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            ICommand command = Keybindings.GetCommand(keyData);
+            ICommand command = _keybindings.GetCommand(keyData);
             command.Execute();
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -62,15 +65,15 @@ namespace MazeV
 
         private void InitializeKeybindings(IAxisFactory axisFactory)
         {
-            Keybindings.Add(Keys.Up, new RotateCommand(new UpRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            Keybindings.Add(Keys.Down, new RotateCommand(new DownRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            Keybindings.Add(Keys.Left, new RotateCommand(new LeftRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            Keybindings.Add(Keys.Right, new RotateCommand(new RightRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Up, new RotateCommand(new UpRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Down, new RotateCommand(new DownRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Left, new RotateCommand(new LeftRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Right, new RotateCommand(new RightRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
 
-            Keybindings.Add(Keys.W, new MoveCommand(new UpDirection(), _maze.Hero));
-            Keybindings.Add(Keys.S, new MoveCommand(new DownDirection(), _maze.Hero));
-            Keybindings.Add(Keys.A, new MoveCommand(new LeftDirection(), _maze.Hero));
-            Keybindings.Add(Keys.D, new MoveCommand(new RightDirection(), _maze.Hero));
+            _keybindings.Add(Keys.W, new MoveCommand(new UpDirection(), _maze.Hero));
+            _keybindings.Add(Keys.S, new MoveCommand(new DownDirection(), _maze.Hero));
+            _keybindings.Add(Keys.A, new MoveCommand(new LeftDirection(), _maze.Hero));
+            _keybindings.Add(Keys.D, new MoveCommand(new RightDirection(), _maze.Hero));
         }
 
         private void InitializeMaze(IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)

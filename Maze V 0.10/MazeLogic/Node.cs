@@ -29,16 +29,16 @@ namespace MazeV.MazeLogic
 
         public IUnit Unit { get; set; }
 
-        public Node()
+        public Node(CoinBuilder coinBuilder, DefaultSettings settings)
         {
             Location = new Location();
-            CollectablePoint = new Coin();
+            CollectablePoint = coinBuilder.Build();
             Path = new List<int>();
             Neighbours = new List<NeighbourInfo>();
-            SquareSize = DefaultSettings.NodeSize;
+            SquareSize = settings.NodeSize;
         }
 
-        public void Draw(INode node, IMazeGraphics graphic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
+        public void Draw(INode node, IMazeGraphic graphic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
         {
             INode leftNode = node.GetNeigbour(mazeView, new LeftDirection());
             INode bottomNode = node.GetNeigbour(mazeView, new DownDirection());
@@ -69,6 +69,11 @@ namespace MazeV.MazeLogic
             ILocation location = Location.Add(mazeView.MovementCube[direction.Value]);
 
             return mazeView.GetNodeAt(location);
+        }
+
+        public override string ToString()
+        {
+            return $"{Location}";
         }
     }
 }

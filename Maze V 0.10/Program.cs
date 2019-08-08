@@ -11,9 +11,11 @@ namespace MazeV
         [STAThread]
         private static void Main()
         {
+            var startUp = new StartUp();
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(startUp.GetService<Form1>());
         }
     }
 }

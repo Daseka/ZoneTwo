@@ -1,22 +1,25 @@
 ﻿using System.Collections.Generic;
 using Xunit;
 using MazeV.MazeLogic;
+using MazeV.MazeLogic.Units;
 
 namespace MazeVTests1.MazeLogic
 {
 
     public class MazeTests
-    {
-        
+    {        
         public void InitializeTest()
         {
             IAxisFactory axisFactory = new AxisFactory();
             IMazeViewDataFactory mazeViewDataFactory = new MazeViewDataFactory();
-            var nodeBuilder = new MazeNodeDataBuilder(3, 3);
-            IMazeNodeData nodeData = nodeBuilder.GenerateNodeData(12345);
-            IMazeViewData viewData = nodeBuilder.GenerateViewData(nodeData, axisFactory, mazeViewDataFactory);
-            var maze = new Maze(nodeData, viewData);
-            maze.Initialize();
+            var settings = new DefaultSettings();
+            var nodeBuilder = new NodeBuilder(settings, new CoinBuilder(settings));
+            var randomizer = new Randomizer();
+            var nodeDataBuilder = new MazeNodeDataBuilder(new FakeMazeNodeDataBuilderSettings(3,3), randomizer, nodeBuilder);
+            IMazeNodeData nodeData = nodeDataBuilder.GenerateNodeData(12345);
+            IMazeViewData viewData = nodeDataBuilder.GenerateViewData(nodeData, axisFactory, mazeViewDataFactory);
+            var maze = new Maze(new UnitList(), new UnitFactory(randomizer));
+            maze.Initialize(nodeData, viewData);
 
             int numberOfNodesTotal = maze.NodeData.Count;
             int numberOfNodesView = maze.ViewData.MazeNodes.Count;

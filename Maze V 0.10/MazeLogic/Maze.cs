@@ -5,7 +5,7 @@ namespace MazeV.MazeLogic
 {
     public class Maze
     {
-        private UnitFactory fUnitFactory;
+        private UnitFactory _unitFactory;
 
         public IUnit Hero { get { return UnitList.GetPlayer(); } }
 
@@ -15,20 +15,20 @@ namespace MazeV.MazeLogic
 
         public IMazeViewData ViewData { get; private set; }
 
-        public Maze(IMazeNodeData nodeData, IMazeViewData viewData)
+        public Maze(IUnitList unitList, UnitFactory unitFactory)
         {
-            NodeData = nodeData;
-            ViewData = viewData;
+            UnitList = unitList;
+            _unitFactory = unitFactory;            
         }
 
         /// <summary>
         /// Initializes the Node Location list and the Node Id list
         /// </summary>
         /// <param name="gridSize"></param>
-        public void Initialize()
+        public void Initialize(IMazeNodeData nodeData, IMazeViewData viewData)
         {
-            UnitList = new UnitList();
-            fUnitFactory = new UnitFactory();
+            NodeData = nodeData;
+            ViewData = viewData;
 
             SpawnUnitAtLocation(UnitType.Player, new Location());
         }
@@ -41,7 +41,7 @@ namespace MazeV.MazeLogic
 
         private void SpawnUnitAtLocation(UnitType unitType, Location location)
         {
-            IUnit spawn = fUnitFactory.CreateUnit(unitType);
+            IUnit spawn = _unitFactory.CreateUnit(unitType);
             if (spawn == null)
                 return;
 

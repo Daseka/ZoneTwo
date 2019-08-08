@@ -2,7 +2,7 @@
 
 namespace MazeV.MazeLogic.Drawing
 {
-    public interface IMazeGraphics
+    public interface IMazeGraphic
     {
         void FillRectangle(Brush brush, Rectangle rectangle);
         void Clear(Color color);

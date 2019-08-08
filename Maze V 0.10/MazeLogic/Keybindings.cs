@@ -3,16 +3,16 @@ using System.Windows.Forms;
 
 namespace MazeV.MazeLogic
 {
-    public static class Keybindings
+    public class Keybindings
     {
-        private static Dictionary<Keys, ICommand> fBindingList = new Dictionary<Keys, ICommand>();
+        private Dictionary<Keys, ICommand> fBindingList = new Dictionary<Keys, ICommand>();
 
-        public static void Add(Keys key, ICommand command)
+        public void Add(Keys key, ICommand command)
         {
             fBindingList[key] = command;
         }
 
-        public static ICommand GetCommand(Keys key)
+        public ICommand GetCommand(Keys key)
         {
             fBindingList.TryGetValue(key, out ICommand command);
             return command ?? new EmptyCommand();

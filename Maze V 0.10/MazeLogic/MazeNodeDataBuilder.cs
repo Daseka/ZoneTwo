@@ -7,18 +7,22 @@ namespace MazeV.MazeLogic
     public class MazeNodeDataBuilder
     {
         private readonly int fGridEnd;
+        private readonly Randomizer _randomizer;
+        private readonly NodeBuilder _nodeBuilder;
         private readonly int fGridSize;
         private readonly int fGridStart;
         private readonly int fMininumRequiredPaths;
 
-        public MazeNodeDataBuilder(int gridSize, int minimumPaths)
+        public MazeNodeDataBuilder(IMazeNodeDataBuilderSettings mazeNodeDataBuilderSettings, Randomizer randomizer, NodeBuilder nodeBuilder)
         {
+            _randomizer = randomizer;
+            _nodeBuilder = nodeBuilder;
 
-            fGridSize = MakeGridSizeUneven(gridSize);
-            fGridStart = GetGridStart(gridSize);
-            fGridEnd = GetGridEnd(gridSize);
+            fGridSize = MakeGridSizeUneven(mazeNodeDataBuilderSettings.GridSize);
+            fGridStart = GetGridStart(mazeNodeDataBuilderSettings.GridSize);
+            fGridEnd = GetGridEnd(mazeNodeDataBuilderSettings.GridSize);
 
-            fMininumRequiredPaths = minimumPaths;
+            fMininumRequiredPaths = mazeNodeDataBuilderSettings.MinimumPathsToANode;
         }
 
         /// <summary>
@@ -38,23 +42,35 @@ namespace MazeV.MazeLogic
             return mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
         }
 
-        private static int AddNodeAtLocaction(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, int z, int y, int x)
+        private int AddNodesToLists(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, Location location)
         {
             nodeId++;
-            var location = new Location(x, y, z);
-            INode node = new Node() { Id = nodeId, Location = location };
+            INode node = _nodeBuilder.Build();
+            node.Id = nodeId;
+            node.Location = location;
 
             nodesByIndex.Add(nodeId, node);
             nodesByLocation.Add(location, nodesByIndex[nodeId]);
             return nodeId;
         }
 
+        private IEnumerable<Location> CreateAllLocations(int gridStart, int gridEnd)
+        {
+            var count = gridEnd - gridStart + 1;
+            var range = Enumerable.Range(fGridStart, count);
+
+            return range
+                .SelectMany(_ => range, (zAxis, yAxis) => new { zAxis, yAxis })
+                .SelectMany(_ => range, (pair, xAxis) => new Location(xAxis, pair.yAxis, pair.zAxis))
+                .ToList();
+        }
+
         private IMazeNodeData CreatePathData(int seed, IMazeNodeData nodeData)
         {
             ResetPathData(nodeData);
             IOrderedEnumerable<INode> sortedNodes = SortNodeData(nodeData);
-            var randomizer = new Random(seed);
-            return SetPathsForNodeData(nodeData, sortedNodes, randomizer);
+            var random = _randomizer.GenerateRandom(seed);            
+            return SetPathsForNodeData(nodeData, sortedNodes, random);
         }
 
         /// <summary>
@@ -93,7 +109,7 @@ namespace MazeV.MazeLogic
         /// </summary>
         private IEnumerable<INode> GetNeigboursOfNode(INode node, IMazeNodeData nodeData)
         {
-            return node.GetAllPossibleNeighbours().Select(x => nodeData.GetNode(x)).Where(x => x != null);
+            return node.GetAllPossibleNeighbours().Select(x => nodeData.GetNode(x)).Where(x => x != null).ToList();
         }
 
         private int GetSubtractor(int gridSize)
@@ -112,17 +128,12 @@ namespace MazeV.MazeLogic
         {
             var nodesByLocation = new Dictionary<ILocation, INode>();
             var nodesByIndex = new Dictionary<int, INode>();
-
             int nodeId = 0;
-            for (int z = fGridStart; z <= fGridEnd; z++)
+
+            IEnumerable<Location> allLocations = CreateAllLocations(fGridStart, fGridEnd);
+            foreach (var item in allLocations)
             {
-                for (int y = fGridStart; y <= fGridEnd; y++)
-                {
-                    for (int x = fGridStart; x <= fGridEnd; x++)
-                    {
-                        nodeId = AddNodeAtLocaction(nodesByLocation, nodesByIndex, nodeId, z, y, x);
-                    }
-                }
+                nodeId = AddNodesToLists(nodesByLocation, nodesByIndex, nodeId, item);
             }
 
             return new MazeNodeData(nodesByIndex, nodesByLocation);
@@ -205,7 +216,7 @@ namespace MazeV.MazeLogic
             nodeData.NodesByIndex[idOfDestinationNode].Path.Add(node.Id);
         }
 
-        private IMazeNodeData SetPathsForNodeData(IMazeNodeData nodeData, IOrderedEnumerable<INode> sortedNodes, Random randomizer)
+        private IMazeNodeData SetPathsForNodeData(IMazeNodeData nodeData, IOrderedEnumerable<INode> sortedNodes, Random random)
         {
             var copyOfNeigours = new List<int>();
 
@@ -214,7 +225,7 @@ namespace MazeV.MazeLogic
                 copyOfNeigours.Clear();
                 copyOfNeigours.AddRange(node.Neighbours.Select(x => x.Id));
 
-                SetMinimumRequiredPathsForNode(nodeData, randomizer, copyOfNeigours, node);
+                SetMinimumRequiredPathsForNode(nodeData, random, copyOfNeigours, node);
             }
             return nodeData;
         }

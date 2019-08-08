@@ -29,7 +29,7 @@ namespace MazeV.MazeLogic.Units
             CurrentLocation = location?.GetCopy();
         }
 
-        public void Draw(IMazeGraphics graphics, Rectangle rectangle, INode node)
+        public void Draw(IMazeGraphic graphics, Rectangle rectangle, INode node)
         {
             if (!node.Location.Equals(CurrentLocation))
             {

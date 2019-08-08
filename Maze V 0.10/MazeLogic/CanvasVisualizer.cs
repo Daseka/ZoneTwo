@@ -7,18 +7,18 @@ namespace MazeV.MazeLogic
 {
     public class CanvasVisualizer : IVisualizer
     {
-        private readonly IMazeGraphics _mazeGraphic;
+        private readonly DefaultSettings _defaultSettings;
 
-        public CanvasVisualizer(Graphics graphic)
+        public CanvasVisualizer(DefaultSettings defaultSettings)
         {
-            _mazeGraphic = graphic is null
-                ? throw new ArgumentException("No Graphic found cant draw")
-                : new MazeGraphics(graphic);
+            _defaultSettings = defaultSettings;
         }
 
-        public void Draw(IMazeViewData mazeView, IUnitList unitList)
+        public void Draw(IMazeGraphic mazeGraphic,  IMazeViewData mazeView, IUnitList unitList)
         {
-            _mazeGraphic.Clear(Color.White);
+            ValidateGrapic(mazeGraphic);
+
+            mazeGraphic.Clear(Color.White);
             int index = 0;
 
             for (int y = mazeView.ViewStart; y <= mazeView.ViewEnd; y++)
@@ -26,26 +26,34 @@ namespace MazeV.MazeLogic
                 for (int x = mazeView.ViewStart; x <= mazeView.ViewEnd; x++)
                 {
                     INode node = mazeView.MazeNodes[index];
-                    DrawNode(x, y, node, _mazeGraphic, mazeView, unitList);
+                    DrawNode(x, y, node, mazeGraphic, mazeView, unitList);
                     index++;
                 }
             }
         }
 
-        private static void DrawCollectable(INode node, IMazeGraphics graphic, int indeX, int indeY)
+        private static void ValidateGrapic(IMazeGraphic mazeGraphic)
         {
-            int x = indeX - DefaultSettings.HalfOfCollectableSize;
-            int y = indeY - DefaultSettings.HalfOfCollectableSize;
-            int width = DefaultSettings.CollectableSize;
-            int height = DefaultSettings.CollectableSize;
+            if (mazeGraphic is null)
+            {
+                throw new ArgumentException("No Graphic found cant draw");
+            }
+        }
+
+        private void DrawCollectable(INode node, IMazeGraphic graphic, int indeX, int indeY)
+        {
+            int x = indeX - _defaultSettings.HalfOfCollectableSize;
+            int y = indeY - _defaultSettings.HalfOfCollectableSize;
+            int width = _defaultSettings.CollectableSize;
+            int height = _defaultSettings.CollectableSize;
             var rectangle = new Rectangle(x, y, width, height);
 
             node.CollectablePoint.Draw(graphic, rectangle);
         }
 
-        private static void DrawNode(INode node, IMazeGraphics graphic, IMazeViewData mazeView, int indeX, int indeY)
+        private void DrawNode(INode node, IMazeGraphic graphic, IMazeViewData mazeView, int indeX, int indeY)
         {
-            int HalfOfNodeSize = DefaultSettings.HalfOfNodeSize;
+            int HalfOfNodeSize = _defaultSettings.HalfOfNodeSize;
             var topLeft = new Point(indeX - HalfOfNodeSize, indeY - HalfOfNodeSize);
             var topRight = new Point(indeX + HalfOfNodeSize, indeY - HalfOfNodeSize);
             var bottomLeft = new Point(indeX - HalfOfNodeSize, indeY + HalfOfNodeSize);
@@ -54,19 +62,19 @@ namespace MazeV.MazeLogic
             node.Draw(node, graphic, mazeView, topLeft, topRight, bottomLeft, bottomRight);
         }
 
-        private static void DrawPlayer(INode node, IMazeGraphics graphic, IUnitList unitList, int indeX, int indeY)
+        private void DrawPlayer(INode node, IMazeGraphic graphic, IUnitList unitList, int indeX, int indeY)
         {
             IUnit player = unitList.GetPlayer();
             var playerRect = new Rectangle(
-                                    indeX - DefaultSettings.HalfOfUnitSize,
-                                    indeY - DefaultSettings.HalfOfUnitSize,
-                                    DefaultSettings.UnitSize,
-                                    DefaultSettings.UnitSize);
+                                    indeX - _defaultSettings.HalfOfUnitSize,
+                                    indeY - _defaultSettings.HalfOfUnitSize,
+                                    _defaultSettings.UnitSize,
+                                    _defaultSettings.UnitSize);
 
             player.Draw(graphic, playerRect, node);
         }
 
-        private void DrawNode(int x, int y, INode node, IMazeGraphics graphic, IMazeViewData mazeView, IUnitList unitList)
+        private void DrawNode(int x, int y, INode node, IMazeGraphic graphic, IMazeViewData mazeView, IUnitList unitList)
         {
             int indeX = GetNodePoint(x, node.SquareSize, mazeView.ViewStart);
             int indeY = GetNodePoint(y, node.SquareSize, mazeView.ViewStart);

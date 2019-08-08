@@ -9,7 +9,7 @@ namespace MazeV.MazeLogic
 
         void Collect();
 
-        void Draw(IMazeGraphics graphics, Rectangle rectangle);
+        void Draw(IMazeGraphic graphics, Rectangle rectangle);
 
         int GetSize();
     }

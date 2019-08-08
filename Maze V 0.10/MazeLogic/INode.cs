@@ -23,7 +23,7 @@ namespace MazeV.MazeLogic
 
         IUnit Unit { get; set; }
 
-        void Draw(INode node, IMazeGraphics graphic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight);
+        void Draw(INode node, IMazeGraphic graphic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight);
 
         IList<ILocation> GetAllPossibleNeighbours();
 

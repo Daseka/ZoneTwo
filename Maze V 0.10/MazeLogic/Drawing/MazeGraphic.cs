@@ -2,11 +2,11 @@
 
 namespace MazeV.MazeLogic.Drawing
 {
-    public class MazeGraphics : IMazeGraphics
+    public class MazeGraphic : IMazeGraphic
     {
         private readonly Graphics _graphic;
 
-        public MazeGraphics(Graphics graphic)
+        public MazeGraphic(Graphics graphic)
         {
             _graphic = graphic;
         }

@@ -21,3 +21,5 @@ MazeVTests1/bin/Debug/
 
 \.sonarqube/out/
 /.vs/MazeV/v16/
+
+\.vs/MazeV/lut/

@@ -183,6 +183,7 @@
     <Compile Include="MazeLogic\Units\IUnitList.cs" />
     <Compile Include="MazeLogic\Units\UnitList.cs" />
     <Compile Include="MazeLogic\UnitMover.cs" />
+    <Compile Include="MazeLogic\Units\UnitType.cs" />
     <Compile Include="MazeLogic\UpRotation.cs" />
     <Compile Include="MazeLogic\Validator.cs" />
     <Compile Include="MazeLogic\XAxis.cs" />

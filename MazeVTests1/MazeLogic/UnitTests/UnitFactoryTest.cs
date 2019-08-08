@@ -10,7 +10,7 @@ namespace MazeVTests1.MazeLogic
 
         public UnitFactoryTest()
         {
-            _unitFactory = new UnitFactory();
+            _unitFactory = new UnitFactory(new Randomizer());
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace MazeVTests1.MazeLogic
         {
             IUnit createdUnit = _unitFactory.CreateUnit(UnitType.Skeleton);
 
-            Assert.True(createdUnit is Monster);
+            Assert.Null(createdUnit);
         }
     }
 }

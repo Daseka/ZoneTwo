@@ -1,5 +1,6 @@
 using MazeV.MazeLogic.MazeNodes;
 using MazeV.MazeLogic.MazeViews;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Units;
 using System;
 

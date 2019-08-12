@@ -11,6 +11,7 @@ using MazeV.MazeLogic.Keybindings.Commands;
 using MazeV.MazeLogic.MazeNodes;
 using MazeV.MazeLogic.MazeViews;
 using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Rotation;
 using MazeV.MazeLogic.Visualizer;
 using Microsoft.VisualStudio;
@@ -21,36 +22,39 @@ namespace MazeV
 {
     public partial class Form1 : Form
     {
+        private readonly DirectionRetriever _directionRetriever;
+        private readonly Keybindings _keybindings;
+        private readonly MazeNodeDataBuilder _mazeNodeDataBuilder;
         private readonly UnitMover _unitMover;
         private readonly IVisualizer _visualizer;
-        private readonly MazeNodeDataBuilder _mazeNodeDataBuilder;
-        private readonly Keybindings _keybindings;
         private readonly Timer fAnimator;
         private Maze _maze;
 
         public Form1(
-            IAxisFactory axisFactory, 
-            IMazeViewDataFactory mazeViewDataFactory, 
-            MazeNodeDataBuilder mazeNodeDataBuilder, 
+            IAxisFactory axisFactory,
+            IMazeViewDataFactory mazeViewDataFactory,
+            MazeNodeDataBuilder mazeNodeDataBuilder,
             IVisualizer visualizer,
             UnitMover unitMover,
             Maze maze,
-            Keybindings keybindings)
+            Keybindings keybindings,
+            DirectionRetriever directionRetriever)
         {
             _maze = maze;
             _unitMover = unitMover;
             _visualizer = visualizer;
             _mazeNodeDataBuilder = mazeNodeDataBuilder;
             _keybindings = keybindings;
+            _directionRetriever = directionRetriever;
 
-            InitializeComponent();                       
+            InitializeComponent();
             InitializeMaze(axisFactory, mazeViewDataFactory);
             InitializeKeybindings(axisFactory);
 
             DoubleBuffered = true;
-            
+
             fAnimator = new Timer() { Interval = 500, };
-            fAnimator.Tick += FAnimator_Tick1;
+            fAnimator.Tick += FAnimatorOnTick;
             fAnimator.Start();
         }
 
@@ -62,7 +66,23 @@ namespace MazeV
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void FAnimator_Tick1(object sender, System.EventArgs e)
+        private void AddMovementKeybindings()
+        {
+            _keybindings.Add(Keys.W, new MoveCommand(_directionRetriever.GetUp(), _maze.Hero));
+            _keybindings.Add(Keys.S, new MoveCommand(_directionRetriever.GetDown(), _maze.Hero));
+            _keybindings.Add(Keys.A, new MoveCommand(_directionRetriever.GetLeft(), _maze.Hero));
+            _keybindings.Add(Keys.D, new MoveCommand(_directionRetriever.GetRight(), _maze.Hero));
+        }
+
+        private void AddRotaionKeybindings(IAxisFactory axisFactory)
+        {
+            _keybindings.Add(Keys.Up, new RotateCommand(new UpRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Down, new RotateCommand(new DownRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Left, new RotateCommand(new LeftRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+            _keybindings.Add(Keys.Right, new RotateCommand(new RightRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
+        }
+
+        private void FAnimatorOnTick(object sender, System.EventArgs e)
         {
             MoveUnits();
             UpdateNodeScore();
@@ -72,27 +92,20 @@ namespace MazeV
 
         private void InitializeKeybindings(IAxisFactory axisFactory)
         {
-            _keybindings.Add(Keys.Up, new RotateCommand(new UpRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            _keybindings.Add(Keys.Down, new RotateCommand(new DownRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            _keybindings.Add(Keys.Left, new RotateCommand(new LeftRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-            _keybindings.Add(Keys.Right, new RotateCommand(new RightRotation(), _maze.Hero, _maze.ViewData, _maze.NodeData, axisFactory));
-
-            _keybindings.Add(Keys.W, new MoveCommand(new UpDirection(), _maze.Hero));
-            _keybindings.Add(Keys.S, new MoveCommand(new DownDirection(), _maze.Hero));
-            _keybindings.Add(Keys.A, new MoveCommand(new LeftDirection(), _maze.Hero));
-            _keybindings.Add(Keys.D, new MoveCommand(new RightDirection(), _maze.Hero));
+            AddRotaionKeybindings(axisFactory);
+            AddMovementKeybindings();
         }
 
         private void InitializeMaze(IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
-        {            
+        {
             IMazeNodeData nodeData = _mazeNodeDataBuilder.GenerateNodeData(12345);
             IMazeViewData viewData = _mazeNodeDataBuilder.GenerateViewData(nodeData, axisFactory, mazeViewDataFactory);
-            
+
             _maze.Initialize(nodeData, viewData);
         }
 
         private void MoveUnits()
-        {            
+        {
             Player player = _maze.UnitList.GetPlayer();
             _unitMover.MovePlayer(player.FutureMovementDirection, player, _maze.NodeData, _maze.ViewData);
         }

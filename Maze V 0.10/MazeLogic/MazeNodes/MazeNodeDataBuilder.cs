@@ -9,23 +9,26 @@ namespace MazeV.MazeLogic.MazeNodes
 {
     public class MazeNodeDataBuilder
     {
-        private readonly int fGridEnd;
-        private readonly Randomizer _randomizer;
+        private readonly int _gridEnd;
+        private readonly int _gridSize;
+        private readonly int _gridStart;
+        private readonly int _mininumRequiredPaths;
         private readonly NodeBuilder _nodeBuilder;
-        private readonly int fGridSize;
-        private readonly int fGridStart;
-        private readonly int fMininumRequiredPaths;
+        private readonly Randomizer _randomizer;
 
-        public MazeNodeDataBuilder(IMazeNodeDataBuilderSettings mazeNodeDataBuilderSettings, Randomizer randomizer, NodeBuilder nodeBuilder)
+        public MazeNodeDataBuilder(
+            IMazeNodeDataBuilderSettings mazeNodeDataBuilderSettings,
+            Randomizer randomizer,
+            NodeBuilder nodeBuilder)
         {
             _randomizer = randomizer;
             _nodeBuilder = nodeBuilder;
 
-            fGridSize = MakeGridSizeUneven(mazeNodeDataBuilderSettings.GridSize);
-            fGridStart = GetGridStart(mazeNodeDataBuilderSettings.GridSize);
-            fGridEnd = GetGridEnd(mazeNodeDataBuilderSettings.GridSize);
+            _gridSize = MakeGridSizeUneven(mazeNodeDataBuilderSettings.GridSize);
+            _gridStart = GetGridStart(mazeNodeDataBuilderSettings.GridSize);
+            _gridEnd = GetGridEnd(mazeNodeDataBuilderSettings.GridSize);
 
-            fMininumRequiredPaths = mazeNodeDataBuilderSettings.MinimumPathsToANode;
+            _mininumRequiredPaths = mazeNodeDataBuilderSettings.MinimumPathsToANode;
         }
 
         /// <summary>
@@ -40,9 +43,12 @@ namespace MazeV.MazeLogic.MazeNodes
             return nodeData;
         }
 
-        public IMazeViewData GenerateViewData(IMazeNodeData nodeData, IAxisFactory axisFactory, IMazeViewDataFactory mazeViewDataFactory)
+        public IMazeViewData GenerateViewData(
+            IMazeNodeData nodeData,
+            IAxisFactory axisFactory,
+            IMazeViewDataFactory mazeViewDataFactory)
         {
-            return mazeViewDataFactory.CreateMazeViewData(fGridStart, fGridEnd, fGridSize, nodeData, axisFactory);
+            return mazeViewDataFactory.CreateMazeViewData(_gridStart, _gridEnd, _gridSize, nodeData, axisFactory);
         }
 
         private int AddNodesToLists(Dictionary<ILocation, INode> nodesByLocation, Dictionary<int, INode> nodesByIndex, int nodeId, Location location)
@@ -60,7 +66,7 @@ namespace MazeV.MazeLogic.MazeNodes
         private IEnumerable<Location> CreateAllLocations(int gridStart, int gridEnd)
         {
             var count = gridEnd - gridStart + 1;
-            var range = Enumerable.Range(fGridStart, count);
+            var range = Enumerable.Range(_gridStart, count);
 
             return range
                 .SelectMany(_ => range, (zAxis, yAxis) => new { zAxis, yAxis })
@@ -79,7 +85,7 @@ namespace MazeV.MazeLogic.MazeNodes
         /// <summary>
         /// returns a list containing neigbours of a given node
         /// </summary>
-        private List<NeighbourInfo> FindNeighbouringNodes(INode node, IMazeNodeData nodeData)
+        private IEnumerable<NeighbourInfo> FindNeighbouringNodes(INode node, IMazeNodeData nodeData)
         {
             var neighbours = new List<NeighbourInfo>();
             IEnumerable<INode> allPossibleNeigbours = GetNeigboursOfNode(node, nodeData);
@@ -112,7 +118,9 @@ namespace MazeV.MazeLogic.MazeNodes
         /// </summary>
         private IEnumerable<INode> GetNeigboursOfNode(INode node, IMazeNodeData nodeData)
         {
-            return node.GetAllPossibleNeighbours().Select(x => nodeData.GetNode(x)).Where(x => x != null).ToList();
+            return node.GetAllPossibleNeighbours()
+                .Select(location => nodeData.GetNode(location))
+                .Where(neigbour => neigbour != null).ToList();
         }
 
         private int GetSubtractor(int gridSize)
@@ -124,7 +132,7 @@ namespace MazeV.MazeLogic.MazeNodes
 
         private bool HasMinimumRequiredPaths(INode vertex)
         {
-            return vertex.Neighbours.Count == vertex.Path.Count || vertex.Path.Count == fMininumRequiredPaths;
+            return vertex.Neighbours.Count() == vertex.Path.Count() || vertex.Path.Count() == _mininumRequiredPaths;
         }
 
         private IMazeNodeData InitializeMazeNodeData()
@@ -133,7 +141,7 @@ namespace MazeV.MazeLogic.MazeNodes
             var nodesByIndex = new Dictionary<int, INode>();
             int nodeId = 0;
 
-            IEnumerable<Location> allLocations = CreateAllLocations(fGridStart, fGridEnd);
+            IEnumerable<Location> allLocations = CreateAllLocations(_gridStart, _gridEnd);
             foreach (var item in allLocations)
             {
                 nodeId = AddNodesToLists(nodesByLocation, nodesByIndex, nodeId, item);
@@ -150,7 +158,7 @@ namespace MazeV.MazeLogic.MazeNodes
             //initialize neigbours
             foreach (INode node in nodeData.NodesByIndex.Values)
             {
-                node.Neighbours = FindNeighbouringNodes(node, nodeData);
+                node.Neighbours = FindNeighbouringNodes(node, nodeData).ToList();
             }
 
             return nodeData;
@@ -164,7 +172,9 @@ namespace MazeV.MazeLogic.MazeNodes
         private bool IsPathValid(INode fromNode, INode toNode, INode nodeToFind, int level, IMazeNodeData nodeData)
         {
             if (toNode.Path.Except(new[] { fromNode.Id }).Contains(nodeToFind.Id))
+            {
                 return false;
+            }
 
             if (level < 3)
             {
@@ -172,7 +182,9 @@ namespace MazeV.MazeLogic.MazeNodes
                 foreach (int path in toNode.Path)
                 {
                     if (!IsPathValid(toNode, nodeData.NodesByIndex[path], nodeToFind, level, nodeData))
+                    {
                         return false;
+                    }
                 }
             }
 
@@ -181,7 +193,7 @@ namespace MazeV.MazeLogic.MazeNodes
 
         /// <summary>
         /// Gridsize needs to be uneven to have a middle position that is not a fraction
-        /// </summary>        
+        /// </summary>
         private int MakeGridSizeUneven(int gridSize)
         {
             return gridSize % 2 != 0 ? gridSize : gridSize + 1;
@@ -195,7 +207,11 @@ namespace MazeV.MazeLogic.MazeNodes
             nodeData.ClearAllPaths();
         }
 
-        private void SetMinimumRequiredPathsForNode(IMazeNodeData nodeData, Random randomizer, List<int> copyOfNeigours, INode node)
+        private void SetMinimumRequiredPathsForNode(
+            IMazeNodeData nodeData,
+            Random randomizer,
+            List<int> copyOfNeigours,
+            INode node)
         {
             while (!HasMinimumRequiredPaths(node) && copyOfNeigours.Count > 0)
             {
@@ -212,8 +228,11 @@ namespace MazeV.MazeLogic.MazeNodes
         /// </summary>
         private void SetPath(INode node, int idOfDestinationNode, IMazeNodeData nodeData)
         {
-            if (node.Path.Contains(idOfDestinationNode) || !IsPathValid(node, nodeData.NodesByIndex[idOfDestinationNode], node, 1, nodeData))
+            if (node.Path.Contains(idOfDestinationNode)
+                || !IsPathValid(node, nodeData.NodesByIndex[idOfDestinationNode], node, 1, nodeData))
+            {
                 return;
+            }
 
             node.Path.Add(idOfDestinationNode);
             nodeData.NodesByIndex[idOfDestinationNode].Path.Add(node.Id);
@@ -230,12 +249,13 @@ namespace MazeV.MazeLogic.MazeNodes
 
                 SetMinimumRequiredPathsForNode(nodeData, random, copyOfNeigours, node);
             }
+
             return nodeData;
         }
 
         private IOrderedEnumerable<INode> SortNodeData(IMazeNodeData nodeData)
         {
-            return nodeData.NodesByIndex.Values.OrderBy(x => x.Neighbours.Count);
+            return nodeData.NodesByIndex.Values.OrderBy(node => node.Neighbours.Count);
         }
     }
 }

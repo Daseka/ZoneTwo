@@ -2,7 +2,7 @@
 
 namespace MazeV.MazeLogic
 {
-    public sealed class RoundedDouble : IEquatable<RoundedDouble>
+    public struct RoundedDouble : IEquatable<RoundedDouble>
     {
         public double Value { get; }
 
@@ -44,7 +44,7 @@ namespace MazeV.MazeLogic
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as RoundedDouble);
+            return Equals((RoundedDouble)obj);
         }
 
         public override int GetHashCode()

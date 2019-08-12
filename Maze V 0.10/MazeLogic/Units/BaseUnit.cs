@@ -1,6 +1,6 @@
 ﻿using MazeV.MazeLogic.Drawing;
 using MazeV.MazeLogic.MazeNodes;
-using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Rotation;
 using System;
 using System.Drawing;

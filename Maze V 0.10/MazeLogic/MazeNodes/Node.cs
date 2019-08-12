@@ -1,73 +1,49 @@
 ﻿using MazeV.MazeLogic.CollectableItems;
-using MazeV.MazeLogic.Drawing;
 using MazeV.MazeLogic.MazeViews;
-using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Settings;
 using MazeV.MazeLogic.Units;
-using MazeV.MazeLogic.Validators;
+using MazeV.MazeLogic.Visualizer;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 
 namespace MazeV.MazeLogic.MazeNodes
 {
     public class Node : INode
     {
+        private readonly NodeVisualizer _nodeVisualizer;
         public ICollectableItem CollectablePoint { get; }
-
         public int Id { get; set; }
-
         public ILocation Location { get; set; }
-
         /// <summary>
         /// A list of all neigbours of current node
         /// </summary>
         public IList<NeighbourInfo> Neighbours { get; set; }
-
         /// <summary>
         /// A list of ids of neigbouring nodes that has a path leading to current node
         /// </summary>
-        public IList<int> Path { get; set; }        
-
+        public IList<int> Path { get; set; }
         public int SquareSize { get; }
-
-        private readonly Validator _validator;
-
         public IUnit Unit { get; set; }
 
-        public Node(CoinBuilder coinBuilder, DefaultSettings settings, Validator validator)
+        public Node(CoinBuilder coinBuilder, DefaultSettings settings, NodeVisualizer nodeVisualizer)
         {
-            _validator = validator;
+            _nodeVisualizer = nodeVisualizer;
             Location = new Location();
             CollectablePoint = coinBuilder.Build();
             Path = new List<int>();
             Neighbours = new List<NeighbourInfo>();
-            SquareSize = settings.NodeSize;            
+            SquareSize = settings.NodeSize;
         }
 
-        public void Draw(INode node, IMazeGraphic graphic, IMazeViewData mazeView, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
+        public void Draw(NodeVisualizerInfo nodeVisualizerInfo)
         {
-            INode leftNode = node.GetNeigbour(mazeView, new LeftDirection());
-            INode bottomNode = node.GetNeigbour(mazeView, new DownDirection());
-            INode rightNode = node.GetNeigbour(mazeView, new RightDirection());
-            INode topNode = node.GetNeigbour(mazeView, new UpDirection());
-
-            var pen = new Pen(Color.Blue);
-            if (!_validator.DoesPathToNodeExist(node, topNode))
-                graphic.DrawLine(pen, topLeft, topRight);
-
-            if (!_validator.DoesPathToNodeExist(node, rightNode))
-                graphic.DrawLine(pen, topRight, bottomRight);
-
-            if (!_validator.DoesPathToNodeExist(node, bottomNode))
-                graphic.DrawLine(pen, bottomRight, bottomLeft);
-
-            if (!_validator.DoesPathToNodeExist(node, leftNode))
-                graphic.DrawLine(pen, bottomLeft, topLeft);
+            _nodeVisualizer.DrawNode(nodeVisualizerInfo);
         }
 
         public IList<ILocation> GetAllPossibleNeighbours()
         {
-            return Location.GetAllPossibleNeighbours();
+            return Location.GetAllPossibleNeighbours().ToList();
         }
 
         public INode GetNeigbour(IMazeViewData mazeView, IDirection direction)

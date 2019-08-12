@@ -6,6 +6,7 @@ using MazeV.MazeLogic.MazeNodes;
 using MazeV.MazeLogic.MazeNodes.Settings;
 using MazeV.MazeLogic.MazeViews;
 using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Rotation;
 using MazeV.MazeLogic.Settings;
 using MazeV.MazeLogic.Units;
@@ -17,12 +18,18 @@ namespace MazeV
 {
     public class StartUp
     {
-        public ServiceCollection Services { get; }        
+        public ServiceCollection Services { get; }
 
         public StartUp()
         {
             Services = new ServiceCollection();
-            ConfigureServices(Services);            
+            ConfigureServices(Services);
+        }
+
+        public T GetService<T>()
+        {
+            var provider = Services.BuildServiceProvider();
+            return provider.GetService<T>();
         }
 
         private void ConfigureServices(IServiceCollection services)
@@ -31,7 +38,7 @@ namespace MazeV
             services.AddScoped<IAxisFactory, AxisFactory>();
             services.AddScoped<IMazeViewDataFactory, MazeViewDataFactory>();
             services.AddScoped<IMazeNodeDataBuilderSettings, MazeNodeDataBuilderSettings>();
-            services.AddScoped<MazeNodeDataBuilder>();            
+            services.AddScoped<MazeNodeDataBuilder>();
             services.AddScoped<IVisualizer, CanvasVisualizer>();
             services.AddScoped<Maze>();
             services.AddScoped<UnitMover>();
@@ -45,12 +52,12 @@ namespace MazeV
             services.AddSingleton<Randomizer>();
             services.AddSingleton<Keybindings>();
             services.AddSingleton<Validator>();
-        }
-
-        public T GetService<T>()
-        {
-            var provider = Services.BuildServiceProvider();
-            return provider.GetService<T>();
+            services.AddSingleton<NodeVisualizer>();
+            services.AddSingleton<UpDirection>();
+            services.AddSingleton<DownDirection>();
+            services.AddSingleton<LeftDirection>();
+            services.AddSingleton<RightDirection>();
+            services.AddSingleton<DirectionRetriever>();
         }
     }
 }

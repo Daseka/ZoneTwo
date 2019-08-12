@@ -92,7 +92,6 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0-preview7.19362.4\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -133,6 +132,9 @@
     </Compile>
     <Compile Include="MazeLogic\Keybindings\Keybindings.cs" />
     <Compile Include="MazeLogic\MazeNodes\Location.cs" />
+    <Compile Include="MazeLogic\Visualizer\NodeVisualizer.cs" />
+    <Compile Include="MazeLogic\Visualizer\NodeVisualizerInfo.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\DirectionRetriever.cs" />
     <Compile Include="MazeLogic\Settings\DefaultSettings.cs" />
     <Compile Include="MazeLogic\Movement\MovementCube.cs" />
     <Compile Include="MazeLogic\Rotation\AxisFactory.cs" />
@@ -142,10 +144,10 @@
     <Compile Include="MazeLogic\MazeNodes\Settings\IMazeNodeDataBuilderSettings.cs" />
     <Compile Include="MazeLogic\MazeNodes\Settings\MazeNodeDataBuilderSettings.cs" />
     <Compile Include="MazeLogic\Movement\Animator.cs" />
-    <Compile Include="MazeLogic\Movement\DownDirection.cs" />
-    <Compile Include="MazeLogic\Movement\LeftDirection.cs" />
-    <Compile Include="MazeLogic\Movement\RightDirection.cs" />
-    <Compile Include="MazeLogic\Movement\UpDirection.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\DownDirection.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\LeftDirection.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\RightDirection.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\UpDirection.cs" />
     <Compile Include="MazeLogic\MazeNodes\NodeBuilder.cs" />
     <Compile Include="MazeLogic\Randomizer.cs" />
     <Compile Include="MazeLogic\Units\BaseUnit.cs" />
@@ -158,7 +160,7 @@
     <Compile Include="MazeLogic\Rotation\IAxis.cs" />
     <Compile Include="MazeLogic\Rotation\IAxisFactory.cs" />
     <Compile Include="MazeLogic\CollectableItems\ICollectableItem.cs" />
-    <Compile Include="MazeLogic\Movement\IDirection.cs" />
+    <Compile Include="MazeLogic\Movement\Directions\IDirection.cs" />
     <Compile Include="MazeLogic\MazeNodes\ILocation.cs" />
     <Compile Include="MazeLogic\MazeNodes\IMazeNodeData.cs" />
     <Compile Include="MazeLogic\MazeViews\IMazeViewData.cs" />

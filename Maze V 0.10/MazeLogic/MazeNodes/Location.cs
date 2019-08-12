@@ -1,22 +1,24 @@
-﻿using MazeV.MazeLogic.MazeNodes;
+﻿using MazeV.MazeLogic.Movement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MazeV.MazeLogic.MazeNodes
 {
-    public class Location : ILocation, IEquatable<Location>
+    public sealed class Location : ILocation, IEquatable<Location>
     {
-        private static readonly ILocation[] fVectors = new ILocation[]{
-                                                new Location(1,0,0),new Location(-1,0,0),
-                                                new Location(0,1,0),new Location(0,-1,0),
-                                                new Location(0,0,1),new Location(0,0,-1)
-                                             };
+        private static readonly ILocation[] _vectors = new ILocation[]
+        {
+            new Location(1,0,0),
+            new Location(-1,0,0),
+            new Location(0,1,0),
+            new Location(0,-1,0),
+            new Location(0,0,1),
+            new Location(0,0,-1),
+        };
 
         public RoundedDouble PointX { get; set; }
-
         public RoundedDouble PointY { get; set; }
-
         public RoundedDouble PointZ { get; set; }
 
         public Location()
@@ -26,21 +28,26 @@ namespace MazeV.MazeLogic.MazeNodes
             PointZ = 0;
         }
 
-        public Location(double x, double y, double z)
+        public Location(double pointX, double pointY, double pointZ)
         {
-            PointX = x;
-            PointY = y;
-            PointZ = z;
+            PointX = pointX;
+            PointY = pointY;
+            PointZ = pointZ;
         }
 
         public ILocation Add(ILocation location)
         {
+            double pointX = PointX + location.PointX;
+            double pointY = PointY + location.PointY;
+            double pointZ = PointZ + location.PointZ;
+
             var newLocation = new Location()
             {
-                PointX = PointX + location.PointX,
-                PointY = PointY + location.PointY,
-                PointZ = PointZ + location.PointZ,
+                PointX = pointX,
+                PointY = pointY,
+                PointZ = pointZ,
             };
+
             return newLocation;
         }
 
@@ -51,12 +58,15 @@ namespace MazeV.MazeLogic.MazeNodes
 
         public bool Equals(Location other)
         {
-            return PointX == other?.PointX && PointY == other?.PointY && PointZ == other?.PointZ;
+            return PointX == other?.PointX
+                && PointY == other?.PointY
+                && PointZ == other?.PointZ;
         }
 
-        public List<ILocation> GetAllPossibleNeighbours()
+        public IEnumerable<ILocation> GetAllPossibleNeighbours()
         {
-            return (from ILocation location in fVectors select Add(location)).ToList();
+            IEnumerable<ILocation> temp = _vectors.Select(item => Add(item));
+            return temp.ToList();
         }
 
         public ILocation GetCopy()

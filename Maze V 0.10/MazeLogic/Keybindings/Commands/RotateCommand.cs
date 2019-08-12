@@ -15,10 +15,10 @@ namespace MazeV.MazeLogic.Keybindings.Commands
         private readonly IRotation _rotation;
 
         public RotateCommand(
-            IRotation rotation, 
-            IUnit player, 
-            IMazeViewData mazeView, 
-            IMazeNodeData nodeData, 
+            IRotation rotation,
+            IUnit player,
+            IMazeViewData mazeView,
+            IMazeNodeData nodeData,
             IAxisFactory factory)
         {
             _rotation = rotation;

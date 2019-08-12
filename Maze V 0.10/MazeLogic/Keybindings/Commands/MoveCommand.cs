@@ -1,4 +1,4 @@
-using MazeV.MazeLogic.Movement;
+using MazeV.MazeLogic.Movement.Directions;
 using MazeV.MazeLogic.Units;
 
 namespace MazeV.MazeLogic.Keybindings.Commands

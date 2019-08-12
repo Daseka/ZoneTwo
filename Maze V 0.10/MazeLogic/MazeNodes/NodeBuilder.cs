@@ -1,25 +1,26 @@
 ﻿using MazeV.MazeLogic.CollectableItems;
 using MazeV.MazeLogic.Settings;
 using MazeV.MazeLogic.Validators;
+using MazeV.MazeLogic.Visualizer;
 
 namespace MazeV.MazeLogic.MazeNodes
 {
     public class NodeBuilder
     {
-        private readonly DefaultSettings _settings;
         private readonly CoinBuilder _coinBuilder;
-        private readonly Validator _validators;
+        private readonly NodeVisualizer _nodeVisualizer;
+        private readonly DefaultSettings _settings;
 
-        public NodeBuilder(DefaultSettings settings, CoinBuilder coinBuilder, Validator validators)
+        public NodeBuilder(DefaultSettings settings, CoinBuilder coinBuilder, NodeVisualizer nodeVisualizer)
         {
             _settings = settings;
             _coinBuilder = coinBuilder;
-            _validators = validators;
+            _nodeVisualizer = nodeVisualizer;
         }
 
         public Node Build()
         {
-            return new Node(_coinBuilder, _settings, _validators);
+            return new Node(_coinBuilder, _settings, _nodeVisualizer);
         }
     }
 }
